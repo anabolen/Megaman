@@ -577,18 +577,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  maxVertSpeed: 8
+  verticalSpeed: 0.1
   gcheckDimensions: {x: 0.97, y: 0.11}
   gcheckDistance: 0
   solids:
     serializedVersion: 2
     m_Bits: 8
-  sJumpLength: 0.2
-  lJumpLength: 0.3
+  sJumpUpTime: 0.2
+  lJumpTimeAddition: 0.5
+  hasDoubleJumped: 0
   jPressTime: 0.1
-  jumpTrigger: 0
+  keyPressTime: 0
   jumpTimer: 0
+  jumpTriggerIsKeptDown: 0
+  jumpingUp: 0
+  fallingDown: 0
   grounded: 0
+  longJumpTriggerTime: 0.1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
