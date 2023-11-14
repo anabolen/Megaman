@@ -5,60 +5,86 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    public float moveSpeed;
-    public float verticalSpeed;
+    public float maxHorizontalOffset;
+    public float maxVerticalOffset;
+    public float verticalOffset;
+    float currentVerticalOffset;
+    public float fallAccelerationDuration;
+    float verticalAccelerator = 0;
+
+    //groundCheck
+    public LayerMask solids;
     public Vector2 gcheckDimensions;
     public float gcheckDistance;
-    public LayerMask solids;
-    public float sJumpUpTime = 1f;
-    public float lJumpTimeAddition = 1f;
-    public bool hasDoubleJumped = false;
-    public float jPressTime;
-    public float keyPressTime = 0;
-    float moveDirection;
-    //float jumpTime;
-    int verticalDirection = -1;
-    public float jumpTimer;
-    float jPressTimer;
-    public bool jumpTriggerIsKeptDown;
-    public bool jumpingUp;
-    public bool fallingDown;
-    public bool grounded;
+
+    bool hasLongJumped = false;
     bool hasReleasedJumpDuringJump = true;
-    public float longJumpTriggerTime = 0.1f;
-    //Rigidbody2D rb;
+
+    //jump times
+    public float shortJumpTime;
+    public float longJumpTimeAddition;
+    float jumpTime;
+    float currentJumpDuration;
+
+    //jump key press times
+    float jumpKeyPressTimer;
+    public float longJumpTriggerTime;
+   
+    //movement directions/speeds
+    float moveDirection;
+    public int verticalDirection = -1;
+    float xOffset;
+    public float yOffset;
+
+    bool jumpingUp;
+    public bool grounded;
+    public bool offSetting = false;
+
+    Rigidbody2D rb;
 
     void Awake() {
-        //rb = GetComponent<Rigidbody2D>();
-        jumpTimer = 0;
-        //jPressTimer = 0;
-        jumpTriggerIsKeptDown = false;
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    private float GetNewHorizontalPosition(Vector3 previousPosition)
+    Vector3 GetNewPosition(Vector3 previousPosition)
     {
         moveDirection = Input.GetAxisRaw("Horizontal");
-        var horzSpeed = moveDirection * moveSpeed * Time.deltaTime;
-        return horzSpeed + previousPosition.x;
+        xOffset = moveDirection * maxHorizontalOffset * Time.deltaTime;
+        if (!grounded)
+            yOffset = verticalOffset * Time.deltaTime;
+        else
+            yOffset = 0;
+        return new Vector3(xOffset + previousPosition.x, yOffset + previousPosition.y, previousPosition.z);
     }
 
     IEnumerator Jump()
     {
         hasReleasedJumpDuringJump = false;
-        hasDoubleJumped = false;
+        hasLongJumped = false;
         grounded = false;
         jumpingUp = true;
         verticalDirection = 1;
-        jPressTimer += sJumpUpTime;
-        while (jPressTimer > 0)
+        jumpTime += shortJumpTime;
+        while (jumpTime > 0)
         {
             //Debug.Log(jPressTimer);
-            jPressTimer -= Time.deltaTime;
+            jumpTime -= Time.deltaTime;
+            verticalAccelerator += Time.deltaTime;
             yield return null;
         }
         verticalDirection = -1;
-        fallingDown = true;
         jumpingUp = false;
+    }
+
+    IEnumerator ChangeVerticalSpeed(float speed, int currentDirection) {
+        verticalAccelerator = 0;
+        offSetting = true;
+        while (verticalDirection == currentDirection) {
+            verticalOffset = speed;
+        yield return null;
+        }
+        verticalAccelerator = 0;
+        offSetting = false;
     }
 
     void Update()
@@ -69,21 +95,15 @@ public class PlayerController : MonoBehaviour {
         {
             StartCoroutine(Jump());
         }
-
-        if (!grounded)
+        //counts the time jump key is being pressed
+        if (playerVerticalInput != 0 && !hasLongJumped)
         {
-            float yOffset = verticalSpeed * verticalDirection;
-            transform.position = new Vector2(transform.position.x, transform.position.y + yOffset);
-        }
-
-        if (playerVerticalInput != 0 && !hasDoubleJumped)
-        {
-            keyPressTime += Time.deltaTime;
+            jumpKeyPressTimer += Time.deltaTime;
         }
 
         if (playerVerticalInput == 0)
         {
-            keyPressTime = 0;            
+            jumpKeyPressTimer = 0;            
         }
 
         if (playerVerticalInput == 0 && grounded)
@@ -91,15 +111,49 @@ public class PlayerController : MonoBehaviour {
             hasReleasedJumpDuringJump = true;
         }
 
-        if (keyPressTime > longJumpTriggerTime)
+        if (jumpKeyPressTimer > longJumpTriggerTime)
         {
-            jPressTimer += lJumpTimeAddition;
-            hasDoubleJumped = true;
-            keyPressTime = 0;
+            jumpTime += longJumpTimeAddition;
+            currentJumpDuration = jumpTime + longJumpTimeAddition;
+            hasLongJumped = true;
+            jumpKeyPressTimer = 0;
+        } else
+            currentJumpDuration = shortJumpTime;
+        
+
+        var fallOffset = Mathf.Sin((verticalAccelerator / Mathf.PI/2)
+                            / fallAccelerationDuration+Mathf.PI) * maxVerticalOffset;
+
+        var jumpOffset = -Mathf.Sin((verticalAccelerator / Mathf.PI / 2)
+                            / currentJumpDuration+Mathf.PI) * maxVerticalOffset + 8;
+        print(jumpOffset);
+
+        if (verticalDirection == 1) { 
+            rb.gravityScale = 0;
+            verticalOffset = jumpOffset;
+        }
+        else if (verticalDirection == -1) { 
+            rb.gravityScale = 1.5f;
+            verticalOffset = 0;
         }
 
-        //GetNewHorizontalPosition();
+        if (verticalDirection != 0 && !offSetting)
+        {
+            StartCoroutine(ChangeVerticalSpeed(verticalOffset, verticalDirection));
+        }
 
+        transform.position = GetNewPosition(transform.position);
+
+        //var x = 
+        //if (true)
+        //{
+        //    8;
+        //} else
+        //{
+        //    10;
+        //}
+
+        //x = true ? 8 : 10;
 
         //if (jumpTimer > 0 && jumpingUp)
         //    jumpTimer -= Time.deltaTime;
@@ -150,27 +204,9 @@ public class PlayerController : MonoBehaviour {
         //}
         //else if (grounded)
         //    verticalDirection = 0;
-
-
-        //var vertSpeed = verticalDirection * maxVertSpeed * Time.deltaTime;
-
-        ////Move player
-        //MovePlayer();
-
-        ////transform.position = new Vector2(currentPosition.x + horzSpeed, currentPosition.y+vertSpeed);
     }
 
-    private void MovePlayer()
-    {
-        var currentPosition = transform.position;
-        float xPos = GetNewHorizontalPosition(currentPosition);
-        float yPos = 0;
-        transform.position = new Vector2(xPos, yPos);
-    }
-
-    private void FixedUpdate()
-    { 
-
+    void FixedUpdate() { 
         if(jumpingUp) return;
         grounded = null != Physics2D.OverlapBox(transform.position, gcheckDimensions,
                             0, solids);
