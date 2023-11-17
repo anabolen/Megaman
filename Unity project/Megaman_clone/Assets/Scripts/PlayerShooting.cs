@@ -22,7 +22,7 @@ public class PlayerShooting : MonoBehaviour
         }
 
         if (projectiles.Count < maxprojectiles) {
-            if (Input.GetKeyDown(KeyCode.Space)) {
+            if (Input.GetKeyDown(KeyCode.F)) {
                 Instantiate(projectile, transform.position, transform.rotation);
             }
         }
