@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour {
     float currentVerticalOffset;
     public float fallAccelerationDuration;
     float verticalAccelerator = 0;
+    float jumpOffset;
+
+    bool goingRight = true;
 
     //groundCheck
     public LayerMask solids;
@@ -49,11 +52,19 @@ public class PlayerController : MonoBehaviour {
     Vector3 GetNewPosition(Vector3 previousPosition)
     {
         moveDirection = Input.GetAxisRaw("Horizontal");
+        if (moveDirection == 1)
+            goingRight = true;
+        else if (moveDirection == -1)
+            goingRight = false;
         xOffset = moveDirection * maxHorizontalOffset * Time.deltaTime;
-        if (!grounded)
+        if (!grounded || jumpingUp) { 
             yOffset = verticalOffset * Time.deltaTime;
-        else
+            print("falling");
+        }
+        else { 
             yOffset = 0;
+            offSetting = false;
+        }
         return new Vector3(xOffset + previousPosition.x, yOffset + previousPosition.y, previousPosition.z);
     }
 
@@ -76,14 +87,15 @@ public class PlayerController : MonoBehaviour {
         jumpingUp = false;
     }
 
-    IEnumerator ChangeVerticalSpeed(float speed, int currentDirection) {
-        verticalAccelerator = 0;
+    IEnumerator ChangeVerticalOffset(int currentDirection) {
+        
         offSetting = true;
+        verticalAccelerator = 0.01f;
         while (verticalDirection == currentDirection) {
-            verticalOffset = speed;
+
         yield return null;
         }
-        verticalAccelerator = 0;
+        verticalAccelerator = 0.01f;
         offSetting = false;
     }
 
@@ -121,25 +133,24 @@ public class PlayerController : MonoBehaviour {
             currentJumpDuration = shortJumpTime;
         
 
-        var fallOffset = Mathf.Sin((verticalAccelerator / Mathf.PI/2)
-                            / fallAccelerationDuration+Mathf.PI) * maxVerticalOffset;
+        if (verticalDirection != 0 && !offSetting) {
+            offSetting = true;
+            verticalAccelerator = 0.01f;
+        }
 
-        var jumpOffset = -Mathf.Sin((verticalAccelerator / Mathf.PI / 2)
-                            / currentJumpDuration+Mathf.PI) * maxVerticalOffset + 8;
-        print(jumpOffset);
+        var fallOffset = Mathf.Sin(Mathf.PI / 2 / Mathf.Clamp(verticalAccelerator, 0.01f, fallAccelerationDuration) / fallAccelerationDuration 
+                                   + Mathf.PI) * maxVerticalOffset;
 
-        if (verticalDirection == 1) { 
-            rb.gravityScale = 0;
+        if (jumpingUp) { 
+            jumpOffset = -Mathf.Sin(Mathf.PI / 2 / Mathf.Clamp(verticalAccelerator, 0.01f, currentJumpDuration) / currentJumpDuration 
+                                        + Mathf.PI) * maxVerticalOffset + 8;
+        }
+
+        if (verticalDirection == 1) {       
             verticalOffset = jumpOffset;
         }
-        else if (verticalDirection == -1) { 
-            rb.gravityScale = 1.5f;
-            verticalOffset = 0;
-        }
-
-        if (verticalDirection != 0 && !offSetting)
-        {
-            StartCoroutine(ChangeVerticalSpeed(verticalOffset, verticalDirection));
+        else if (verticalDirection == -1) {
+            verticalOffset = fallOffset;
         }
 
         transform.position = GetNewPosition(transform.position);
