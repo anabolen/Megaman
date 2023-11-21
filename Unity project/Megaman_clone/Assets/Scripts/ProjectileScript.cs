@@ -11,7 +11,7 @@ public class ProjectileScript : MonoBehaviour
     {
         Destroy(gameObject,3f);
         playerobject = GameObject.Find("Player");
-        PlayerShooting playerscript = playerobject.GetComponent<PlayerShooting>();
+        PlayerShooting playerscript = playerobject.GetComponentInChildren<PlayerShooting>();
         playerscript.projectiles.Add(gameObject);
     }
 
