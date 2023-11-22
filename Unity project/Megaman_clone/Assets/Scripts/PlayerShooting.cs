@@ -7,13 +7,11 @@ public class PlayerShooting : MonoBehaviour
     public GameObject projectile;
     public List<GameObject> projectiles;
     public int maxprojectiles;
-    void Awake()
-    {
+    void Awake() {
         new List<GameObject>();
     }
 
-    void Update()
-    {
+    void Update() {
         foreach (GameObject p in projectiles) {
             if (p == null) {
                 projectiles.Remove(p);
