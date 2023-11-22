@@ -152,6 +152,9 @@ MonoBehaviour:
   projectile: {fileID: 201604576814130882, guid: 36ffcf6ff8ddd8d4da07c55984a8d4c4, type: 3}
   projectiles: []
   maxprojectiles: 3
+  defaultProjectileOffset: {x: 0.47, y: 1.1, z: 0}
+  playerOrientation: 0
+  projectileOffset: {x: 0.47, y: 1.04, z: 0}
 --- !u!1 &8131439427060688638
 GameObject:
   m_ObjectHideFlags: 0
