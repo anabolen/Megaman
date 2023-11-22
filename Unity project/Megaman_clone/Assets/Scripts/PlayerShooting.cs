@@ -10,7 +10,8 @@ public class PlayerShooting : MonoBehaviour
     public Vector3 defaultProjectileOffset;
     public float playerOrientation;
     public Vector3 projectileOffset;
-    void Awake() {
+    void Awake() 
+    {
         new List<GameObject>();
         projectileOffset = defaultProjectileOffset;
     }
