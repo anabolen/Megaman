@@ -6,14 +6,12 @@ using UnityEngine;
 public class ProjectileScript : MonoBehaviour
 {
     public float projectileSpeed;
-    GameObject playerobject;
-    PlayerShooting playerShootingScript;
+    GameObject playerCharacter;
     void Awake()
     {
-        Destroy(gameObject,3f);
-        playerobject = GameObject.Find("PlayerCharacter");
-        playerShootingScript = playerobject.GetComponent<PlayerShooting>();
+        var playerShootingScript = FindObjectOfType<PlayerShooting>();
         playerShootingScript.projectiles.Add(gameObject);
+        Destroy(gameObject, 3f);
     }
 
     void Update()

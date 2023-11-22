@@ -15,8 +15,7 @@ public class PlayerShooting : MonoBehaviour
         height.y = firingHeight;
     }
 
-    void Update()
-    {
+    void Update() {
         foreach (GameObject p in projectiles) {
             if (p == null) {
                 projectiles.Remove(p);

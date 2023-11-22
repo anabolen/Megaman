@@ -126,7 +126,7 @@ MonoBehaviour:
   moveDirection: 0
   defaultGravityScale: 10
   jumpWindow: 0.2
-  horizontalAccelerationTime: 0.15
+  horizontalAccelerationTime: 0.1
   initialHorizontalOffset: 0.1
   gcheckDimensions: {x: 0.64, y: 0.16}
   maxJumpTime: 0.3
