@@ -36,16 +36,12 @@ public class PlayerControllerNew : MonoBehaviour
             print("jumpingUp");
             jumpingUp = true;
         }
-        if (grounded)
+        if (grounded && Input.GetAxisRaw("Jump") == 0) 
             jumpingUp = false;
     }
 
     void FixedUpdate() {
         rb.velocity = new Vector2(verticalVelocity * moveDirection, rb.velocity.y);
-        if (jump) {
-            rb.AddForce(jumpForce, ForceMode2D.Impulse);
-            jump = false;
-        }
         if (!groundCheckAllowed) {
             grounded = false;
             return;
@@ -55,20 +51,18 @@ public class PlayerControllerNew : MonoBehaviour
     }
 
     IEnumerator Jump() {
-        StartCoroutine(JumpGroundCheck());
         while (Input.GetAxisRaw("Jump") != 0 && jumpKeyPressTimer < longJumpKeyPressTime) {
             jumpKeyPressTimer += Time.deltaTime;
             yield return null;
         }
+        StartCoroutine(JumpGroundCheck());
         if (jumpKeyPressTimer > longJumpKeyPressTime){
-            jumpKeyPressTimer = 0;
             jumpForce = longJumpForce;
-            jump = true;
         } else {
-            jumpKeyPressTimer = 0;
             jumpForce = shortJumpForce;
-            jump = true;
         }
+        jumpKeyPressTimer = 0;
+        rb.AddForce(jumpForce, ForceMode2D.Impulse);
     }
 
     IEnumerator JumpGroundCheck() {
