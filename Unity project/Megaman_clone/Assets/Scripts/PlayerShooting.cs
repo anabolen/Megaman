@@ -8,11 +8,11 @@ public class PlayerShooting : MonoBehaviour
     public List<GameObject> projectiles;
     public int maxprojectiles;
     public float firingHeight;
-    Vector3 height;
+    Vector3 heightVec;
     void Awake()
     {
         new List<GameObject>();
-        height.y = firingHeight;
+        heightVec.y = firingHeight;
     }
 
     void Update() {
@@ -25,7 +25,7 @@ public class PlayerShooting : MonoBehaviour
 
         if (projectiles.Count < maxprojectiles) {
             if (Input.GetKeyDown(KeyCode.F)) {
-                Instantiate(projectile, transform.position + height, transform.rotation);
+                Instantiate(projectile, transform.position + heightVec, transform.rotation);
             }
         }
     }
