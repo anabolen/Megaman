@@ -7,12 +7,9 @@ public class PlayerShooting : MonoBehaviour
     public GameObject projectile;
     public List<GameObject> projectiles;
     public int maxprojectiles;
-    public float firingHeight;
-    Vector3 heightVec;
     void Awake()
     {
         new List<GameObject>();
-        heightVec.y = firingHeight;
     }
 
     void Update() {
