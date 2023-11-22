@@ -6,7 +6,6 @@ public class CameraMovement : MonoBehaviour
 {
     Transform playerT;
     public bool followingP;
-    public float cOffset;
     void Start()
     {
         followingP = true;
@@ -23,7 +22,7 @@ public class CameraMovement : MonoBehaviour
 
         if (followingP == true) {
             var cameraPos = transform.position;
-            cameraPos.x = playerT.position.x - cOffset;
+            cameraPos.x = playerT.position.x;
             transform.position = cameraPos;
         }
 

@@ -7,12 +7,13 @@ public class ProjectileScript : MonoBehaviour
 {
     public float projectileSpeed;
     GameObject playerobject;
+    PlayerShooting playerShootingScript;
     void Awake()
     {
         Destroy(gameObject,3f);
-        playerobject = GameObject.Find("Player");
-        PlayerShooting playerscript = playerobject.GetComponentInChildren<PlayerShooting>();
-        playerscript.projectiles.Add(gameObject);
+        playerobject = GameObject.Find("PlayerCharacter");
+        playerShootingScript = playerobject.GetComponent<PlayerShooting>();
+        playerShootingScript.projectiles.Add(gameObject);
     }
 
     void Update()
