@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3380699979608494382}
   - component: {fileID: 2762555961834830135}
   - component: {fileID: 4763024786950256066}
+  - component: {fileID: 2636866119102720211}
   m_Layer: 7
   m_Name: 'PlayerCharacter '
   m_TagString: Untagged
@@ -119,20 +120,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81aa7dad545d624ca1198234032056d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultGravityScale: 10
+  jumpVelocity: 10
+  jumpWindow: 0.2
   maxHorizontalVelocity: 8
   minHorziontalVelocityMultiplier: 0.2
-  jumpVelocity: 10
   moveDirection: 0
-  defaultGravityScale: 10
-  jumpWindow: 0.2
   horizontalAccelerationTime: 0.1
   initialHorizontalOffset: 0.1
+  sprite: {fileID: 8131439427060688638}
+  shootingAnimationTime: 0
+  newShot: 0
   gcheckDimensions: {x: 0.64, y: 0.16}
   maxJumpTime: 0.3
   minJumpTime: 0.1
   solids:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &2636866119102720211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3758392127828716639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de42025fd2b49ca4488782bc089b2593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 201604576814130882, guid: 36ffcf6ff8ddd8d4da07c55984a8d4c4, type: 3}
+  projectiles: []
+  maxprojectiles: 3
 --- !u!1 &8131439427060688638
 GameObject:
   m_ObjectHideFlags: 0
