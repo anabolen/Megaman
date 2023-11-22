@@ -25,7 +25,10 @@ public class PlayerShooting : MonoBehaviour
 
         if (projectiles.Count < maxprojectiles) {
             if (Input.GetKeyDown(KeyCode.F)) {
-                Instantiate(projectile, transform.position + heightVec, transform.rotation);
+                var playerController = gameObject.GetComponent<PlayerController>();
+                playerController.newShot = true;
+                StartCoroutine(playerController.ShootingAnimations());
+                Instantiate(projectile, transform.position, transform.rotation);
             }
         }
     }
