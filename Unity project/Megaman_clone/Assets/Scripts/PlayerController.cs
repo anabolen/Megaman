@@ -25,16 +25,16 @@ public class PlayerController : MonoBehaviour
     public GameObject sprite;
 
     Dictionary<Enum, float> playerHorizontalOrientation = new();
-
     enum PlayerSpriteStates { Left, Right, Airborne, Idle, Step, Running }
     PlayerSpriteStates playerSpriteDirection;
     PlayerSpriteStates playerAnimation;
+
+    [SerializeField] float deathTime;
 
     Dictionary<Enum, Enum> correspondingShootingAnimations = new();
     enum ShootingAnimationStates { StandingShooting, RunningShooting, AirborneShooting }
     [SerializeField] float shootingAnimationTime;
     bool newShot;
-
 
     [SerializeField] Vector2 groundCheckDimensions;
 
@@ -85,6 +85,22 @@ public class PlayerController : MonoBehaviour
         CheckPlayerSpriteState(moveDirection);
         float rotation = playerHorizontalOrientation.GetValueOrDefault(playerSpriteDirection);
         spriteTransform.rotation = Quaternion.Euler(0, rotation, 0); 
+    }
+
+    public IEnumerator PlayerDeath() {
+        //Play death animation
+        //Disable collider and sprite
+        float deathTimer = 0;
+        while (deathTimer < deathTime) {
+            continue;
+        }
+        
+        yield return PlayerSpawn();
+
+    }
+
+    public IEnumerator PlayerSpawn() {
+        yield return null;
     }
 
     void CheckPlayerSpriteState(float orientation) { 

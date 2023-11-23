@@ -4,30 +4,29 @@ using UnityEngine;
 
 public class PickUpScript : MonoBehaviour
 {
-    public enum PickUpType { Hp,Shp,ExtraLife,Ammo,Sammo }
+    public enum PickUpType { BigHp,SmallHp,ExtraLife,BigAmmo,SmallAmmo }
     public PickUpType pickupType;
     public Vector2 gCheckVector;
     public LayerMask solids;
     public float dropSpeed;
-    public int bigHp;
-    public int smallHp;
-    public int bigAmmo;
-    public int smallAmmo;
-    public int ammoAmount;
-    public int hpAmount;
+    public int bigHpPickUp;
+    public int smallHpPickUp;
+    public int bigAmmoPickUp;
+    public int smallAmmoPickUp;
+    public int pickUpAmmoAmount;
+    public int pickUpHpAmount;
 
     void Awake() {
-        if (pickupType == PickUpType.Hp) {
-            hpAmount = bigHp;
-        } else if (pickupType == PickUpType.Shp) {
-            hpAmount = smallHp;
+        if (pickupType == PickUpType.BigHp) {
+            pickUpHpAmount = bigHpPickUp;
+        } else if (pickupType == PickUpType.SmallHp) {
+            pickUpHpAmount = smallHpPickUp;
         }
-        if (pickupType == PickUpType.Ammo) {
-            ammoAmount = bigAmmo;
-        } else if (pickupType == PickUpType.Sammo) {
-            ammoAmount = smallAmmo;
+        if (pickupType == PickUpType.BigAmmo) {
+            pickUpAmmoAmount = bigAmmoPickUp;
+        } else if (pickupType == PickUpType.SmallAmmo) {
+            pickUpAmmoAmount = smallAmmoPickUp;
         }       
-
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
@@ -38,12 +37,10 @@ public class PickUpScript : MonoBehaviour
         if (Physics2D.OverlapBox(transform.position, gCheckVector,0 , solids) == null) {
             transform.position += -transform.up * dropSpeed * Time.deltaTime;
         }
-        
     }
+
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position, gCheckVector);
     }
-
-
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2762555961834830135}
   - component: {fileID: 4763024786950256066}
   - component: {fileID: 7121940778540259767}
+  - component: {fileID: 4301215252530026446}
   m_Layer: 7
   m_Name: 'PlayerCharacter '
   m_TagString: Untagged
@@ -124,14 +125,15 @@ MonoBehaviour:
   shortJumpGravityScale: 10
   jumpVelocity: 10
   jumpWindow: 0.2
-  maxHorizontalVelocity: 8
+  maxHorizontalVelocity: 5
   minHorziontalVelocityMultiplier: 0.2
   moveDirection: 0
-  horizontalAccelerationTime: 0.1
+  horizontalAccelerationTime: 0.07
   initialHorizontalOffset: 0.1
   sprite: {fileID: 8131439427060688638}
+  deathTime: 0
   shootingAnimationTime: 0
-  groundCheckDimensions: {x: 0, y: 0}
+  groundCheckDimensions: {x: 0.66, y: 0.19}
   maxJumpTime: 0.25
   minJumpTime: 0.1
   solids:
@@ -155,6 +157,23 @@ MonoBehaviour:
   defaultProjectileOffset: {x: 0.52, y: 1.13, z: 0}
   playerOrientation: 0
   projectileOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &4301215252530026446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3758392127828716639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb3efb9ff72ddd842bea1a0fed61c8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  lives: 0
+  ammo: 0
+  maxHp: 20
+  maxAmmo: 0
 --- !u!1 &8131439427060688638
 GameObject:
   m_ObjectHideFlags: 0
