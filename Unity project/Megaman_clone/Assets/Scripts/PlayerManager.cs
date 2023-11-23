@@ -36,6 +36,7 @@ public class PlayerManager : MonoBehaviour
             if (pickupScript.pickupType == PickUpScript.PickUpType.BigHp || 
                 pickupScript.pickupType == PickUpScript.PickUpType.SmallHp) {
                 hp += pickupScript.pickUpHpAmount;
+                healthBarScript.UpdateHealthBar();
             }
             else if (pickupScript.pickupType == PickUpScript.PickUpType.BigAmmo ||
                      pickupScript.pickupType == PickUpScript.PickUpType.SmallAmmo) {

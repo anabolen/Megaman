@@ -175,15 +175,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf2e62cb8442e649ab3ffcb7820c2ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupType: 3
+  pickupType: 0
   gCheckVector: {x: 0.92, y: 0.22}
   solids:
     serializedVersion: 2
     m_Bits: 8
   dropSpeed: 2
-  bigHp: 15
-  smallHp: 5
-  bigAmmo: 10
-  smallAmmo: 5
-  ammoAmount: 0
-  hpAmount: 0
+  bigHpPickUp: 15
+  smallHpPickUp: 5
+  bigAmmoPickUp: 10
+  smallAmmoPickUp: 5
+  pickUpAmmoAmount: 0
+  pickUpHpAmount: 0
