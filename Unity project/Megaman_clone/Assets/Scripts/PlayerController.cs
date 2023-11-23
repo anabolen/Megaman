@@ -9,16 +9,16 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb;
 
+    [SerializeField] float defaultGravityScale;
+    [SerializeField] float shortJumpGravityScale;
+    [SerializeField] float jumpVelocity;
+    [SerializeField] float jumpWindow;
 
-    public float defaultGravityScale;
-    public float jumpVelocity;
-    public float jumpWindow;
-
-    public float maxHorizontalVelocity;
-    public float minHorziontalVelocityMultiplier;
-    public float moveDirection;
-    public float horizontalAccelerationTime;
-    public float initialHorizontalOffset;
+    [SerializeField] float maxHorizontalVelocity;
+    [SerializeField] float minHorziontalVelocityMultiplier;
+    [SerializeField] float moveDirection;
+    [SerializeField] float horizontalAccelerationTime;
+    [SerializeField] float initialHorizontalOffset;
     bool changingHorizontalDirection;
 
     Transform spriteTransform;
@@ -32,20 +32,20 @@ public class PlayerController : MonoBehaviour
 
     Dictionary<Enum, Enum> correspondingShootingAnimations = new();
     enum ShootingAnimationStates { StandingShooting, RunningShooting, AirborneShooting }
-    public float shootingAnimationTime;
-    public bool newShot;
+    [SerializeField] float shootingAnimationTime;
+    bool newShot;
 
 
-    public Vector2 gcheckDimensions;
+    [SerializeField] Vector2 groundCheckDimensions;
 
     float jumpKeyPressTimer;
-    public float maxJumpTime;
-    public float minJumpTime;
+    [SerializeField] float maxJumpTime;
+    [SerializeField] float minJumpTime;
 
     bool jumpingUp = false;
     bool groundCheckAllowed = true;
     bool grounded;
-    public LayerMask solids;
+    [SerializeField] LayerMask solids;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -121,10 +121,13 @@ public class PlayerController : MonoBehaviour
         while (Input.GetAxisRaw("Jump") != 0 && jumpKeyPressTimer < maxJumpTime) {
             rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
             jumpKeyPressTimer += Time.deltaTime;
+            if (jumpKeyPressTimer > minJumpTime)
+                rb.gravityScale = defaultGravityScale;
             yield return null;
         }
         while (jumpKeyPressTimer < minJumpTime) {
-            rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
+            //rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
+            rb.gravityScale = shortJumpGravityScale;
             jumpKeyPressTimer += Time.deltaTime;
             yield return null;
         }
@@ -133,8 +136,8 @@ public class PlayerController : MonoBehaviour
     }
 
     IEnumerator JumpGroundCheck() {
-        float jumpWindowTimer = 0;
         groundCheckAllowed = false;
+        float jumpWindowTimer = 0;
         while (jumpWindowTimer < jumpWindow) {
             jumpWindowTimer += Time.deltaTime;
             yield return null;
@@ -143,6 +146,8 @@ public class PlayerController : MonoBehaviour
     }
 
     public IEnumerator ShootingAnimations() {
+        newShot = true;
+        yield return null;
         float shootingAnimationTimer = 0;
         newShot = false;
         while (shootingAnimationTime > shootingAnimationTimer && !newShot) { 
@@ -158,13 +163,12 @@ public class PlayerController : MonoBehaviour
             grounded = false;
             return;
         }
-        grounded = null != Physics2D.OverlapBox(transform.position, gcheckDimensions,
+        grounded = null != Physics2D.OverlapBox(transform.position, groundCheckDimensions,
                                                     0, solids);
     }
 
-    void OnDrawGizmos()
-    {
+    void OnDrawGizmos() {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, gcheckDimensions);
+        Gizmos.DrawWireCube(transform.position, groundCheckDimensions);
     }
 }

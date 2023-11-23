@@ -120,7 +120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81aa7dad545d624ca1198234032056d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultGravityScale: 10
+  defaultGravityScale: 6
+  shortJumpGravityScale: 10
   jumpVelocity: 10
   jumpWindow: 0.2
   maxHorizontalVelocity: 8
@@ -130,9 +131,8 @@ MonoBehaviour:
   initialHorizontalOffset: 0.1
   sprite: {fileID: 8131439427060688638}
   shootingAnimationTime: 0
-  newShot: 0
-  gcheckDimensions: {x: 0.64, y: 0.16}
-  maxJumpTime: 0.3
+  groundCheckDimensions: {x: 0, y: 0}
+  maxJumpTime: 0.25
   minJumpTime: 0.1
   solids:
     serializedVersion: 2
