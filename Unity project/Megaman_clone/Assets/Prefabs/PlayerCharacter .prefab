@@ -131,7 +131,8 @@ MonoBehaviour:
   horizontalAccelerationTime: 0.07
   initialHorizontalOffset: 0.1
   sprite: {fileID: 8131439427060688638}
-  deathTime: 0
+  deathTime: 3
+  spawnTime: 3
   shootingAnimationTime: 0
   groundCheckDimensions: {x: 0.66, y: 0.19}
   maxJumpTime: 0.25
@@ -200,8 +201,8 @@ Transform:
   m_GameObject: {fileID: 8131439427060688638}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.02, z: 0}
-  m_LocalScale: {x: 0.9364613, y: 1.9524, z: 1}
+  m_LocalPosition: {x: -0.0217, y: 1.02, z: 0}
+  m_LocalScale: {x: 1.1766284, y: 1.9524, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5311405581944802196}

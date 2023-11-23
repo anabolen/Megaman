@@ -57,9 +57,7 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = sprite.GetComponent<SpriteRenderer>();
         spriteTransform = sprite.transform;
         groundCheckAllowed = true;
-        //Disable collider and sprite
-        col.enabled = false;
-        spriteRenderer.enabled = false;
+        StartCoroutine(PlayerSpawn());
 
         playerHorizontalOrientation.Add(PlayerSpriteStates.Left, -180);
         playerHorizontalOrientation.Add(PlayerSpriteStates.Right, 0);
