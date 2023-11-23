@@ -21,15 +21,10 @@ public class PlayerManager : MonoBehaviour
     }
 
     void Update() {
-        hp = Mathf.Clamp(hp, 0, maxHp);
-        ammo = Mathf.Clamp(ammo, 0, maxAmmo);
-        //Clamps hp and ammo between 0 and max so they never go above max or below 0
-        if (hp == 0)
-            controller.PlayerDeath();
     }
 
     void OnTriggerEnter2D(Collider2D coll) {
-        if (coll.gameObject.layer == 8) {
+        if (coll.gameObject.layer == 8 || coll.gameObject.layer == 10) {
             //Enemy collision
         }
         if (coll.gameObject.layer == 9) {
@@ -47,5 +42,18 @@ public class PlayerManager : MonoBehaviour
                 lives++;
             }
         }
+    }
+
+    public void EnemyCollision(int damage) { 
+        hp -= damage;
+        Clamp();
+        if (hp == 0)
+            StartCoroutine(controller.PlayerDeath());
+    }
+
+    void Clamp() {
+        hp = Mathf.Clamp(hp, 0, maxHp);
+        ammo = Mathf.Clamp(ammo, 0, maxAmmo);
+        //Clamps hp and ammo between 0 and max so they never go above max or below 0
     }
 }

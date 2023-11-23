@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,6 +9,7 @@ using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb;
+    Collider2D col;
 
     [SerializeField] float defaultGravityScale;
     [SerializeField] float shortJumpGravityScale;
@@ -22,6 +24,7 @@ public class PlayerController : MonoBehaviour
     bool changingHorizontalDirection;
 
     Transform spriteTransform;
+    SpriteRenderer spriteRenderer;
     public GameObject sprite;
 
     Dictionary<Enum, float> playerHorizontalOrientation = new();
@@ -30,6 +33,7 @@ public class PlayerController : MonoBehaviour
     PlayerSpriteStates playerAnimation;
 
     [SerializeField] float deathTime;
+    [SerializeField] float spawnTime;
 
     Dictionary<Enum, Enum> correspondingShootingAnimations = new();
     enum ShootingAnimationStates { StandingShooting, RunningShooting, AirborneShooting }
@@ -49,8 +53,13 @@ public class PlayerController : MonoBehaviour
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
+        spriteRenderer = sprite.GetComponent<SpriteRenderer>();
         spriteTransform = sprite.transform;
         groundCheckAllowed = true;
+        //Disable collider and sprite
+        col.enabled = false;
+        spriteRenderer.enabled = false;
 
         playerHorizontalOrientation.Add(PlayerSpriteStates.Left, -180);
         playerHorizontalOrientation.Add(PlayerSpriteStates.Right, 0);
@@ -89,19 +98,31 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator PlayerDeath() {
         //Play death animation
-        //Disable collider and sprite
-        float deathTimer = 0;
-        while (deathTimer < deathTime) {
-            continue;
-        }
-        
-        yield return PlayerSpawn();
-
+        yield return StartCoroutine(PlayerPause(deathTime));
+        yield return StartCoroutine(PlayerSpawn());
     }
 
     public IEnumerator PlayerSpawn() {
+        //transform.position = spawn location
+        //Play spawn animation
+        yield return StartCoroutine(PlayerPause(spawnTime));
+        col.enabled = true;
+        spriteRenderer.enabled = true;
+        rb.gravityScale = defaultGravityScale;
+    }
+
+    IEnumerator PlayerPause(float pauseTime) {
+        col.enabled = false;
+        spriteRenderer.enabled = false;
+        rb.gravityScale = 0;
+        rb.velocity = Vector2.zero;
+        float pauseTimer = 0;
+        while (pauseTimer < pauseTime) {
+            pauseTimer += Time.deltaTime;
+        }
         yield return null;
     }
+
 
     void CheckPlayerSpriteState(float orientation) { 
         if (orientation < 0)
