@@ -7,7 +7,7 @@ public class HealthBarScript : MonoBehaviour
 {
     Slider healthbar;
     PlayerManager playerManager;
-    void Start()
+    void Awake()
     {
         healthbar = GetComponentInChildren<Slider>();
         playerManager = FindObjectOfType<PlayerManager>();

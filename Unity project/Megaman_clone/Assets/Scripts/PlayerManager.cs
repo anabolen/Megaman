@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     public int maxHp;
     public int maxAmmo;
     PlayerController controller;
+    HealthBarScript healthBarScript;
     
 
     void Awake() {
@@ -18,6 +19,7 @@ public class PlayerManager : MonoBehaviour
         lives = 3;
         ammo = 0;
         controller = GetComponent<PlayerController>();
+        healthBarScript = FindObjectOfType<HealthBarScript>();
     }
 
     void Update() {
@@ -44,12 +46,15 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void EnemyCollision(int damage) { 
+    public void EnemyCollision(int damage) {
         hp -= damage;
         Clamp();
-        if (hp == 0)
-            StartCoroutine(controller.PlayerDeath());
+        healthBarScript.UpdateHealthBar();
+        if (hp == 0) { 
+        StartCoroutine(controller.PlayerDeath());
+        }
     }
+    
 
     void Clamp() {
         hp = Mathf.Clamp(hp, 0, maxHp);
