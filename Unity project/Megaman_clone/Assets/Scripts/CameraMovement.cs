@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    Transform playerT;
+    public Transform playerT;
     public bool followingP;
     void Start()
     {
         followingP = true;
-        playerT = GameObject.Find("Player").GetComponent<Transform>();
+        //playerT = GameObject.Find("PlayerCharacter").GetComponent<Transform>();
     }
 
     void Update()
     {
-        if (playerT.position.x > -3.6f) {
-            followingP = false;
-        } else {
-            followingP = true;
-        }
+        //if (playerT.position.x > -3.6f) {
+        //    followingP = false;
+        //} else {
+        //    followingP = true;
+        //}
 
         if (followingP == true) {
             var cameraPos = transform.position;

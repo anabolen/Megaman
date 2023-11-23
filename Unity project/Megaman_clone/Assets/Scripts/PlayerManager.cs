@@ -5,7 +5,7 @@ using UnityEngine.Rendering;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] int hp;
+    public int hp;
     [SerializeField] int lives;
     [SerializeField] int ammo;
     public int maxHp;
