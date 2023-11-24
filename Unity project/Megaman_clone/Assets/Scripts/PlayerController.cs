@@ -75,9 +75,9 @@ public class PlayerController : MonoBehaviour
     void Update() {
 
         if (scriptPaused) { 
-            var scriptPauseTimer = 0;
+            float scriptPauseTimer = 0;
             while (scriptPauseTime > scriptPauseTimer) {
-                scriptPauseTime += Time.deltaTime;
+                scriptPauseTimer += Time.deltaTime;
             }
             scriptPaused = false;
         }
