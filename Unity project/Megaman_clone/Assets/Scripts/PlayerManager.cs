@@ -5,20 +5,19 @@ using UnityEngine.Rendering;
 
 public class PlayerManager : MonoBehaviour
 {
-    public int hp;
+    public int playerHp;
+    public int playerMaxHp;
+    [SerializeField] static int playerAmmo;
+    public int playerMaxAmmo;
     [SerializeField] int lives;
-    [SerializeField] int ammo;
-    public int maxHp;
-    public int maxAmmo;
     public bool playingDeathAnimation;
     PlayerController controller;
     HealthBarScript healthBarScript;
     
-
     void Awake() {
-        UpdateHp(maxHp);
+        UpdatePlayerHp(playerMaxHp);
         lives = 3;
-        ammo = 0;
+        playerAmmo = 0;
         controller = GetComponent<PlayerController>();
         healthBarScript = FindObjectOfType<HealthBarScript>();
     }
@@ -36,33 +35,30 @@ public class PlayerManager : MonoBehaviour
             print(pickupScript.pickupType);
             if (pickupScript.pickupType == PickUpScript.PickUpType.BigHp || 
                 pickupScript.pickupType == PickUpScript.PickUpType.SmallHp) {
-                UpdateHp(pickupScript.pickUpHpAmount);
+                UpdatePlayerHp(pickupScript.pickUpHpAmount);
             }
             else if (pickupScript.pickupType == PickUpScript.PickUpType.BigAmmo ||
                      pickupScript.pickupType == PickUpScript.PickUpType.SmallAmmo) {
-                ammo += pickupScript.pickUpAmmoAmount;
+                playerAmmo += pickupScript.pickUpAmmoAmount;
             } else if (pickupScript.pickupType == PickUpScript.PickUpType.ExtraLife) {
                 lives++;
             }
         }
     }
 
-    public void UpdateHp(int hpChange) {
-        hp += hpChange;
-        HealthAndAmmoClamp();
+    public void UpdatePlayerHp(int hpChange) {
+        playerHp = Mathf.Clamp(playerHp += hpChange, 0, playerMaxHp);
         if (healthBarScript != null) { 
         healthBarScript.UpdateHealthBar();
         }
-        if (hp == 0 && !playingDeathAnimation) { 
+        if (playerHp == 0 && !playingDeathAnimation) { 
             StartCoroutine(controller.PlayerDeath());
             playingDeathAnimation = true;
         }
     }
     
-
     void HealthAndAmmoClamp() {
-        hp = Mathf.Clamp(hp, 0, maxHp);
-        ammo = Mathf.Clamp(ammo, 0, maxAmmo);
+        playerAmmo = Mathf.Clamp(playerAmmo, 0, playerMaxAmmo);
         //Clamps hp and ammo between 0 and max so they never go above max or below 0
     }
 }

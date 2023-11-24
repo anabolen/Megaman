@@ -7,7 +7,6 @@ public class PlayerProjectileScript : MonoBehaviour
 {
     public float projectileSpeed;
     PlayerShooting playerShootingScript;
-    GameObject playerCharacter;
     float projectileDirection;
     [SerializeField] int damageAmount;
     //damage type enum?
@@ -27,7 +26,7 @@ public class PlayerProjectileScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.layer == 8) {
-            coll.gameObject.GetComponent<PlayerManager>().UpdateHp(-damageAmount);
+            coll.gameObject.GetComponent<EnemyManager>().UpdateEnemyHp(-damageAmount);
         }
         Destroy(gameObject);
     }
