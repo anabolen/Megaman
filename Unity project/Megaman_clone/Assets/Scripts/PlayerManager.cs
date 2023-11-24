@@ -15,11 +15,11 @@ public class PlayerManager : MonoBehaviour
     HealthBarScript healthBarScript;
     
     void Awake() {
-        UpdatePlayerHp(playerMaxHp);
         lives = 3;
         playerAmmo = 0;
         controller = GetComponent<PlayerController>();
         healthBarScript = FindObjectOfType<HealthBarScript>();
+        UpdatePlayerHp(playerMaxHp);
     }
 
     void Update() {
@@ -49,9 +49,9 @@ public class PlayerManager : MonoBehaviour
     public void UpdatePlayerHp(int hpChange) {
         playerHp = Mathf.Clamp(playerHp += hpChange, 0, playerMaxHp);
         if (healthBarScript != null) { 
-        healthBarScript.UpdateHealthBar();
+            healthBarScript.UpdateHealthBar();
         }
-        if (playerHp == 0 && !playingDeathAnimation) { 
+        if (playerHp == 0 && !playingDeathAnimation) {
             StartCoroutine(controller.PlayerDeath());
             playingDeathAnimation = true;
         }
