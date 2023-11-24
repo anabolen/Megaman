@@ -131,8 +131,8 @@ MonoBehaviour:
   horizontalAccelerationTime: 0.07
   initialHorizontalOffset: 0.1
   sprite: {fileID: 8131439427060688638}
-  deathTime: 3
-  spawnTime: 3
+  deathTime: 1
+  spawnTime: 1
   shootingAnimationTime: 0
   groundCheckDimensions: {x: 0.66, y: 0.19}
   maxJumpTime: 0.25
@@ -170,11 +170,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb3efb9ff72ddd842bea1a0fed61c8fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
+  playerHp: 0
+  playerMaxHp: 20
+  playerMaxAmmo: 0
   lives: 0
-  ammo: 0
-  maxHp: 20
-  maxAmmo: 0
   playingDeathAnimation: 0
 --- !u!1 &8131439427060688638
 GameObject:

@@ -6,7 +6,7 @@ public class PlayerShooting : MonoBehaviour
 {
     public GameObject projectile;
     public List<GameObject> projectiles;
-    int maxprojectiles;
+    public int maxprojectiles;
     public Vector3 defaultProjectileOffset;
     public float playerOrientation;
     public Vector3 projectileOffset;

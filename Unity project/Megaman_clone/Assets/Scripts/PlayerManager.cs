@@ -5,7 +5,7 @@ using UnityEngine.Rendering;
 
 public class PlayerManager : MonoBehaviour
 {
-    public int playerHp;
+    [HideInInspector] public int playerHp;
     public int playerMaxHp;
     [SerializeField] static int playerAmmo;
     public int playerMaxAmmo;
