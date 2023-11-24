@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyScript : MonoBehaviour
 {
     public int health;
+    [SerializeField] int damageAmount;
 
     void Update()
     {
@@ -17,5 +18,10 @@ public class EnemyScript : MonoBehaviour
         if (coll.gameObject.layer == 6) {
             health--;
         }
+        if (coll.gameObject.layer == 7) {
+            coll.gameObject.GetComponent<PlayerManager>().UpdateHp(-damageAmount);
+            print("damaged player");
+        }
     }
+
 }

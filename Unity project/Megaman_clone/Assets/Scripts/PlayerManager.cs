@@ -10,16 +10,17 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] int ammo;
     public int maxHp;
     public int maxAmmo;
+    public bool playingDeathAnimation;
     PlayerController controller;
     HealthBarScript healthBarScript;
     
 
     void Awake() {
-        hp = maxHp;
+        UpdateHp(maxHp);
         lives = 3;
         ammo = 0;
         controller = GetComponent<PlayerController>();
-        healthBarScript = FindObjectOfType<HealthBarScript>();
+        healthBarScript = Camera.main.GetComponentInChildren<HealthBarScript>();
     }
 
     void Update() {
@@ -35,8 +36,7 @@ public class PlayerManager : MonoBehaviour
             print(pickupScript.pickupType);
             if (pickupScript.pickupType == PickUpScript.PickUpType.BigHp || 
                 pickupScript.pickupType == PickUpScript.PickUpType.SmallHp) {
-                hp += pickupScript.pickUpHpAmount;
-                healthBarScript.UpdateHealthBar();
+                UpdateHp(pickupScript.pickUpHpAmount);
             }
             else if (pickupScript.pickupType == PickUpScript.PickUpType.BigAmmo ||
                      pickupScript.pickupType == PickUpScript.PickUpType.SmallAmmo) {
@@ -47,17 +47,20 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void EnemyCollision(int damage) {
-        hp -= damage;
-        Clamp();
+    public void UpdateHp(int hpChange) {
+        hp += hpChange;
+        HealthAndAmmoClamp();
+        if (healthBarScript != null) { 
         healthBarScript.UpdateHealthBar();
-        if (hp == 0) { 
-        StartCoroutine(controller.PlayerDeath());
+        }
+        if (hp == 0 && !playingDeathAnimation) { 
+            StartCoroutine(controller.PlayerDeath());
+            playingDeathAnimation = true;
         }
     }
     
 
-    void Clamp() {
+    void HealthAndAmmoClamp() {
         hp = Mathf.Clamp(hp, 0, maxHp);
         ammo = Mathf.Clamp(ammo, 0, maxAmmo);
         //Clamps hp and ammo between 0 and max so they never go above max or below 0

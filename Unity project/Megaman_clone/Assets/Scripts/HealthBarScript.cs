@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBarScript : MonoBehaviour
-{
+public class HealthBarScript : MonoBehaviour {
     Slider healthbar;
     PlayerManager playerManager;
-    void Awake()
-    {
+    void Awake() {
         healthbar = GetComponentInChildren<Slider>();
         playerManager = FindObjectOfType<PlayerManager>();
         healthbar.maxValue = playerManager.maxHp;

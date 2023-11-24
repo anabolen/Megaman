@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -34,6 +35,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float deathTime;
     [SerializeField] float spawnTime;
+    float scriptPauseTime;
+    bool scriptPaused;
 
     Dictionary<Enum, Enum> correspondingShootingAnimations = new();
     enum ShootingAnimationStates { StandingShooting, RunningShooting, AirborneShooting }
@@ -67,10 +70,17 @@ public class PlayerController : MonoBehaviour
         correspondingShootingAnimations.Add(PlayerSpriteStates.Step, ShootingAnimationStates.StandingShooting);
         correspondingShootingAnimations.Add(PlayerSpriteStates.Running, ShootingAnimationStates.RunningShooting);
         correspondingShootingAnimations.Add(PlayerSpriteStates.Airborne, ShootingAnimationStates.AirborneShooting);
-
     }
 
     void Update() {
+
+        if (scriptPaused) { 
+            var scriptPauseTimer = 0;
+            while (scriptPauseTime > scriptPauseTimer) {
+                scriptPauseTime += Time.deltaTime;
+            }
+            scriptPaused = false;
+        }
 
         if (Input.GetAxisRaw("Horizontal") != 0 && !changingHorizontalDirection) {
             StartCoroutine(HorizontalOffsetChange());
@@ -96,28 +106,33 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator PlayerDeath() {
         //Play death animation
-        yield return StartCoroutine(PlayerPause(deathTime));
-        yield return StartCoroutine(PlayerSpawn());
+        col.enabled = false;
+        spriteRenderer.enabled = false;
+        rb.gravityScale = 0;
+        rb.velocity = Vector2.zero;
+        scriptPaused = true;
+        scriptPauseTime = deathTime;
+        yield return new WaitForSeconds(deathTime);
+        yield return StartCoroutine(QuitTransitionAnimations());
     }
 
     public IEnumerator PlayerSpawn() {
         //transform.position = spawn location
         //Play spawn animation
-        yield return StartCoroutine(PlayerPause(spawnTime));
-        col.enabled = true;
-        spriteRenderer.enabled = true;
-        rb.gravityScale = defaultGravityScale;
-    }
-
-    IEnumerator PlayerPause(float pauseTime) {
         col.enabled = false;
         spriteRenderer.enabled = false;
         rb.gravityScale = 0;
         rb.velocity = Vector2.zero;
-        float pauseTimer = 0;
-        while (pauseTimer < pauseTime) {
-            pauseTimer += Time.deltaTime;
-        }
+        scriptPaused = true;
+        scriptPauseTime = spawnTime;
+        yield return new WaitForSeconds(spawnTime);
+        yield return StartCoroutine(QuitTransitionAnimations());
+    }
+
+    IEnumerator QuitTransitionAnimations() {
+        col.enabled = true;
+        spriteRenderer.enabled = true;
+        rb.gravityScale = defaultGravityScale;
         yield return null;
     }
 
