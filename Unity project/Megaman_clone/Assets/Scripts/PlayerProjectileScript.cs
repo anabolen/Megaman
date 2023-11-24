@@ -30,5 +30,4 @@ public class PlayerProjectileScript : MonoBehaviour
         }
         Destroy(gameObject);
     }
-
 }

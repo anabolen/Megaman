@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public Transform playerT;
+    Transform playerT;
     public bool followingP;
     void Start()
     {
         followingP = true;
-        //playerT = GameObject.Find("PlayerCharacter").GetComponent<Transform>();
+        playerT = GameObject.Find("PlayerCharacter ").GetComponent<Transform>();
     }
 
     void Update()

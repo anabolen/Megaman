@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EenmyProjectileScript : MonoBehaviour
+public class EnemyProjectileScript : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] int damageAmount;
