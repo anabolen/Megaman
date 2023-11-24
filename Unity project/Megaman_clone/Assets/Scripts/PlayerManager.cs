@@ -20,7 +20,7 @@ public class PlayerManager : MonoBehaviour
         lives = 3;
         ammo = 0;
         controller = GetComponent<PlayerController>();
-        healthBarScript = Camera.main.GetComponentInChildren<HealthBarScript>();
+        healthBarScript = FindObjectOfType<HealthBarScript>();
     }
 
     void Update() {
