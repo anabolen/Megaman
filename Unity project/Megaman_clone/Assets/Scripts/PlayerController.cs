@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float deathTime;
     [SerializeField] float spawnTime;
     float scriptPausedTime;
-    float scriptPausedTimer;
     bool scriptPaused;
 
     Dictionary<Enum, Enum> correspondingShootingAnimations = new();

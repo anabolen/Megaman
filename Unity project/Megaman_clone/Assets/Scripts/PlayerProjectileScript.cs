@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ProjectileScript : MonoBehaviour
+public class PlayerProjectileScript : MonoBehaviour
 {
     public float projectileSpeed;
     PlayerShooting playerShootingScript;
     GameObject playerCharacter;
     float projectileDirection;
+    [SerializeField] int damageAmount;
+    //damage type enum?
+
     void Awake()
     {
         playerShootingScript = FindObjectOfType<PlayerShooting>();
@@ -22,7 +25,10 @@ public class ProjectileScript : MonoBehaviour
         transform.position += transform.right * projectileSpeed * Time.deltaTime * projectileDirection;
     }
 
-    void OnCollisionEnter2D(Collision2D collision) {
+    void OnCollisionEnter2D(Collision2D coll) {
+        if (coll.gameObject.layer == 8) {
+            coll.gameObject.GetComponent<PlayerManager>().UpdateHp(-damageAmount);
+        }
         Destroy(gameObject);
     }
 
