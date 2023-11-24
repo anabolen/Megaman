@@ -35,7 +35,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float deathTime;
     [SerializeField] float spawnTime;
-    float scriptPauseTime;
+    float scriptPausedTime;
+    float scriptPausedTimer;
     bool scriptPaused;
 
     Dictionary<Enum, Enum> correspondingShootingAnimations = new();
@@ -74,12 +75,8 @@ public class PlayerController : MonoBehaviour
 
     void Update() {
 
-        if (scriptPaused) { 
-            float scriptPauseTimer = 0;
-            while (scriptPauseTime > scriptPauseTimer) {
-                scriptPauseTimer += Time.deltaTime;
-            }
-            scriptPaused = false;
+        if (scriptPaused) {
+            return;
         }
 
         if (Input.GetAxisRaw("Horizontal") != 0 && !changingHorizontalDirection) {
@@ -111,7 +108,7 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = 0;
         rb.velocity = Vector2.zero;
         scriptPaused = true;
-        scriptPauseTime = deathTime;
+        scriptPausedTime = deathTime;
         yield return new WaitForSeconds(deathTime);
         yield return StartCoroutine(QuitTransitionAnimations());
     }
@@ -124,7 +121,7 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = 0;
         rb.velocity = Vector2.zero;
         scriptPaused = true;
-        scriptPauseTime = spawnTime;
+        scriptPausedTime = spawnTime;
         yield return new WaitForSeconds(spawnTime);
         yield return StartCoroutine(QuitTransitionAnimations());
     }
@@ -132,6 +129,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator QuitTransitionAnimations() {
         col.enabled = true;
         spriteRenderer.enabled = true;
+        scriptPaused = false;
         rb.gravityScale = defaultGravityScale;
         yield return null;
     }
