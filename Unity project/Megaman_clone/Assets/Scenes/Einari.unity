@@ -756,11 +756,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4763024786950256066, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: deathTime
-      value: 1000
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4763024786950256066, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: spawnTime
-      value: 1000
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5311405581944802196, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: m_LocalPosition.x

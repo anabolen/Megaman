@@ -20,7 +20,6 @@ public class EnemyScript : MonoBehaviour
         }
         if (coll.gameObject.layer == 7) {
             coll.gameObject.GetComponent<PlayerManager>().UpdateHp(-damageAmount);
-            print("damaged player");
         }
     }
 
