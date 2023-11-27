@@ -16,7 +16,7 @@ public class FoxJumpAbility : ISpecialAbilities {
         return abilityName;
     }
 
-    public AnimatorController AbilitySprites() {
+    public AnimatorController AbilityPlayerAnimations() {
         var playerAbilitySprites = Resources.Load<AnimatorController>("PlayerAnimations/FoxJumpAbilityAnimations");
         return playerAbilitySprites;
     }

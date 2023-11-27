@@ -14,7 +14,7 @@ public interface ISpecialAbilities {
 
     string AbilityName();
 
-    AnimatorController AbilitySprites();
+    AnimatorController AbilityPlayerAnimations();
 
     void AbilitySequence();
 
