@@ -7,8 +7,8 @@ public class PlayerShooting : MonoBehaviour
     public GameObject projectile;
     public List<GameObject> projectiles;
     public int maxprojectiles;
-    public Vector3 defaultProjectileOffset;
     public float playerOrientation;
+    public Vector3 defaultProjectileOffset;
     public Vector3 projectileOffset;
     void Awake() 
     {

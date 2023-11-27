@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float maxHorizontalVelocity;
     [SerializeField] float minHorziontalVelocityMultiplier;
-    [SerializeField] float moveDirection;
+    [SerializeField] float movementMultiplier;
     [SerializeField] float horizontalAccelerationTime;
     [SerializeField] float initialHorizontalOffset;
     bool changingHorizontalDirection;
@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
                 playerAnimation = PlayerSpriteStates.Idle;
         }
 
-        CheckPlayerSpriteState(moveDirection);
+        CheckPlayerSpriteState(movementMultiplier);
         float rotation = playerHorizontalOrientation.GetValueOrDefault(playerSpriteDirection);
         spriteTransform.rotation = Quaternion.Euler(0, rotation, 0); 
     }
@@ -143,21 +143,21 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator HorizontalOffsetChange() {
         float horizontalAccelerationTimer = 0;
-        moveDirection = Input.GetAxisRaw("Horizontal") * minHorziontalVelocityMultiplier;
-        rb.position = new Vector2(rb.position.x+initialHorizontalOffset*moveDirection/minHorziontalVelocityMultiplier
+        movementMultiplier = Input.GetAxisRaw("Horizontal") * minHorziontalVelocityMultiplier;
+        rb.position = new Vector2(rb.position.x+initialHorizontalOffset*movementMultiplier/minHorziontalVelocityMultiplier
                                   , rb.position.y);
         playerAnimation = PlayerSpriteStates.Step;
         while (horizontalAccelerationTimer < horizontalAccelerationTime && Input.GetAxisRaw("Horizontal")
-               == moveDirection / minHorziontalVelocityMultiplier) {
+               == movementMultiplier / minHorziontalVelocityMultiplier) {
             horizontalAccelerationTimer += Time.deltaTime;
             yield return null;
         }
-        moveDirection /= minHorziontalVelocityMultiplier;
+        movementMultiplier /= minHorziontalVelocityMultiplier;
         playerAnimation = PlayerSpriteStates.Running;
-        while (Input.GetAxisRaw("Horizontal") == moveDirection) {
+        while (Input.GetAxisRaw("Horizontal") == movementMultiplier) {
             yield return null;
         }
-        moveDirection = 0;
+        movementMultiplier = 0;
         changingHorizontalDirection = false;
     }
 
@@ -205,7 +205,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate() {
-        rb.velocity = new Vector2(maxHorizontalVelocity * moveDirection, rb.velocity.y);
+        rb.velocity = new Vector2(maxHorizontalVelocity * movementMultiplier, rb.velocity.y);
         if (!groundCheckAllowed) {
             grounded = false;
             return;
