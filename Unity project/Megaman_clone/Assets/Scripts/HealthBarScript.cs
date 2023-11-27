@@ -8,7 +8,7 @@ public class HealthBarScript : MonoBehaviour {
     PlayerManager playerManager;
     void Awake() {
         healthbar = GetComponentInChildren<Slider>();
-        playerManager = FindObjectOfType<PlayerManager>(); 
+        playerManager = FindObjectOfType<PlayerManager>();
         healthbar.maxValue = playerManager.playerMaxHp;
         UpdateHealthBar();
     }

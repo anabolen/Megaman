@@ -5,35 +5,35 @@ using UnityEngine;
 
 public class FlyingEnemyMovementScript : MonoBehaviour
 {
-    public float speed;
-    public float maxRange;
-    public float maxChaseTime;
-    public float maxWaitTime;
+    [SerializeField] float speed;
+    [SerializeField] float maxRange;
+    [SerializeField] float maxChaseTime;
+    [SerializeField] float maxWaitTime;
     [SerializeField] float waitTime;
-    [SerializeField] Vector3 direction;
     [SerializeField] bool chaseTimeReset;
     [SerializeField] float chaseTime;
     Transform playerTransform;
     [SerializeField] bool chasing;
+    Transform spriteTrans;
 
     void Awake()
     {
-        playerTransform = GameObject.Find("PlayerCharacter ").GetComponent<Transform>();
-        direction = playerTransform.position.normalized;
+        playerTransform = GameObject.Find("PlayerSprite").GetComponent<Transform>();
         chaseTime = 0;
         waitTime = maxWaitTime;
+        spriteTrans = GameObject.Find("FlyingEnemySprite").transform;
     }
 
     void Update()
     {
+        transform.LookAt(playerTransform);
         if (Vector3.Distance(transform.position, playerTransform.position) < maxRange) {
             chasing = true;
-            direction = playerTransform.position.normalized;
         } else {
             chasing = false;
         }
         if (chasing == true && chaseTime < maxChaseTime) {
-            transform.position += direction * speed * Time.deltaTime;
+            transform.position += transform.forward * speed * Time.deltaTime;
             chaseTime += Time.deltaTime; 
             chaseTimeReset = false;
         }
@@ -48,6 +48,7 @@ public class FlyingEnemyMovementScript : MonoBehaviour
             waitTime = maxWaitTime;
             chaseTimeReset = true;
         }
+        spriteTrans.position = transform.position;
 
     }
     void OnDrawGizmos() {
