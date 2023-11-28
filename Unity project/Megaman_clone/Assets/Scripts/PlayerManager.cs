@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
     public int playerMaxHp;
     [SerializeField] static int playerAmmo;
     public int playerMaxAmmo;
-    [SerializeField] int lives;
+    public int lives;
     public bool playingDeathAnimation;
     PlayerController controller;
     HealthBarScript healthBarScript;
