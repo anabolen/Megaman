@@ -19,6 +19,9 @@ public class PlayerManager : MonoBehaviour
         playerAmmo = 0;
         controller = GetComponent<PlayerController>();
         healthBarScript = FindObjectOfType<HealthBarScript>();
+    }
+
+    private void Start() {
         UpdatePlayerHp(playerMaxHp);
     }
 
