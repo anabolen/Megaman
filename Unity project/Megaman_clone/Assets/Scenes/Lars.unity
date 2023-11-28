@@ -496,7 +496,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 215290163136176860, guid: f21824aa1851a0a41816ec5a9dcd46b5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.01
+      value: -0.31
       objectReference: {fileID: 0}
     - target: {fileID: 215290163136176860, guid: f21824aa1851a0a41816ec5a9dcd46b5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -539,6 +539,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f21824aa1851a0a41816ec5a9dcd46b5, type: 3}
+--- !u!1 &1900308178 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1375493572995965478, guid: ae9956068fd715a4ab19c0b5e98b3b0b, type: 3}
+  m_PrefabInstance: {fileID: 206219609972625792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &206219609972625792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -633,7 +638,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8837826875128281679, guid: ae9956068fd715a4ab19c0b5e98b3b0b, type: 3}
       propertyPath: m_Name
-      value: HealthBar
+      value: UI_Canvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -648,6 +653,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8615253910148880057, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
+      propertyPath: inventoryMenu
+      value: 
+      objectReference: {fileID: 1900308178}
     - target: {fileID: 3758392127828716639, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: m_Name
       value: 'PlayerCharacter '
@@ -939,63 +948,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 123613702}
   m_SourcePrefab: {fileID: 100100000, guid: b620ef19b7a5bbe489cedacb7a396fa5, type: 3}
---- !u!1001 &8684673443433636937
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8057789345382451732, guid: 17081c0992d5ef748b0a1525e289fc55, type: 3}
-      propertyPath: m_Name
-      value: EnemyProjectile
-      objectReference: {fileID: 0}
-    - target: {fileID: 9187036827049314779, guid: 17081c0992d5ef748b0a1525e289fc55, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 9.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 9187036827049314779, guid: 17081c0992d5ef748b0a1525e289fc55, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 9187036827049314779, guid: 17081c0992d5ef748b0a1525e289fc55, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9187036827049314779, guid: 17081c0992d5ef748b0a1525e289fc55, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9187036827049314779, guid: 17081c0992d5ef748b0a1525e289fc55, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9187036827049314779, guid: 17081c0992d5ef748b0a1525e289fc55, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9187036827049314779, guid: 17081c0992d5ef748b0a1525e289fc55, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9187036827049314779, guid: 17081c0992d5ef748b0a1525e289fc55, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9187036827049314779, guid: 17081c0992d5ef748b0a1525e289fc55, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9187036827049314779, guid: 17081c0992d5ef748b0a1525e289fc55, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 17081c0992d5ef748b0a1525e289fc55, type: 3}
 --- !u!1001 &9059957670857857720
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1075,5 +1027,4 @@ SceneRoots:
   - {fileID: 7385755027039963446}
   - {fileID: 206219609972625792}
   - {fileID: 255480285}
-  - {fileID: 8684673443433636937}
   - {fileID: 1604664377818286408}

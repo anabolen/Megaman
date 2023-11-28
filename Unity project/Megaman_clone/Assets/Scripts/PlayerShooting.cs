@@ -10,9 +10,11 @@ public class PlayerShooting : MonoBehaviour
     public float playerOrientation;
     public Vector3 defaultProjectileOffset;
     public Vector3 projectileOffset;
+    InventoryMenuScript invScript;
     void Awake() 
     {
         new List<GameObject>();
+        invScript = FindObjectOfType<InventoryMenuScript>();
         projectileOffset = defaultProjectileOffset;
     }
 
@@ -30,7 +32,7 @@ public class PlayerShooting : MonoBehaviour
             projectileOffset = new Vector3(defaultProjectileOffset.x * playerOrientation, defaultProjectileOffset.y, defaultProjectileOffset.z);
         }
 
-        if (projectiles.Count < maxprojectiles) {
+        if (projectiles.Count < maxprojectiles && invScript.paused == false) {
             if (Input.GetKeyDown(KeyCode.F)) {
                 var playerController = gameObject.GetComponent<PlayerController>();
                 StartCoroutine(playerController.ShootingAnimations());
