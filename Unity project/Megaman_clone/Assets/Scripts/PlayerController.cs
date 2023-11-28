@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Threading;
@@ -77,10 +78,7 @@ public class PlayerController : MonoBehaviour
         spriteTransform = sprite.transform;
         jumpAllowed = true;
         StartCoroutine(PlayerSpawn());
-        checkpoint = -1;
-
-
-
+        checkpoint = -1; //why?
 
         playerHorizontalOrientation.Add(PlayerSpriteStates.Left, -180);
         playerHorizontalOrientation.Add(PlayerSpriteStates.Right, 0);
@@ -183,7 +181,8 @@ public class PlayerController : MonoBehaviour
     }
 
     public IEnumerator PlayerSpawn() {
-        transform.position = checkpoints[checkpoint].transform.position;
+        if (checkpoints.Any())
+            transform.position = checkpoints[checkpoint].transform.position;
         //Play spawn animation
         col.enabled = false;
         spriteRenderer.enabled = false;
