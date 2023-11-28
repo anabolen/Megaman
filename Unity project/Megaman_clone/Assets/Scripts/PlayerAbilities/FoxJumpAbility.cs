@@ -21,8 +21,15 @@ public class FoxJumpAbility : ISpecialAbilities {
         return playerAbilitySprites;
     }
 
-    public void AbilitySequence() { 
-        //Launches fox object on front of the player
+    public static bool foxJumpProjectileExists;
+
+    public GameObject AbilityProjectile()
+    {
+        if (foxJumpProjectileExists == true)
+            return null;
+        else
+            foxJumpProjectileExists = true;
+            return Resources.Load<GameObject>("PlayerProjectiles/FoxJumpProjectile");
     }
 
     public Sprite UIAbilitySprite() {

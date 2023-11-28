@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Animations;
 
-public class GunAbility : ISpecialAbilities {
+public class SuperGunAbility : ISpecialAbilities {
 
     public int AbilityID() {
         int abilityID = 1;
@@ -16,12 +16,14 @@ public class GunAbility : ISpecialAbilities {
     }
 
     public AnimatorController AbilityPlayerAnimations() {
-        var playerAbilitySprites = Resources.Load<AnimatorController>("PlayerAnimations/GunAbilityAnimations");
+        var playerAbilitySprites = Resources.Load<AnimatorController>("PlayerAnimations/SuperGunAbilityAnimations");
         return playerAbilitySprites;
     }
 
-    public void AbilitySequence() {
-        //Launches super gun projectile(s)
+    public GameObject AbilityProjectile()
+    {
+        var projectile = Resources.Load<GameObject>("PlayerProjectiles/SuperGunProjectile");
+        return projectile;
     }
 
     public Sprite UIAbilitySprite() {

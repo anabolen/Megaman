@@ -27,7 +27,8 @@ public class PlayerInventory : MonoBehaviour
 
     void Awake() {
         AddItem(new FoxJumpAbility());
-        AddItem(new GunAbility());
+        AddItem(new SuperGunAbility());
+        AddItem(new NormalGunAbility());
         currentAbilityString = specialAbilities[currentAbilityID].AbilityName();
         print(currentAbilityString);
         paused = false;
@@ -35,11 +36,6 @@ public class PlayerInventory : MonoBehaviour
     }
 
     void Update() {
-
-        if (Input.GetKeyDown(KeyCode.F) && paused)
-        {
-            specialAbilities[currentAbilityID].AbilitySequence();
-        }
 
         int changeDirection = (int)Input.GetAxisRaw("Vertical");
 

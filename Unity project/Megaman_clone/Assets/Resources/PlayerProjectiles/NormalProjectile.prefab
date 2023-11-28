@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8224954740884442067}
   - component: {fileID: -4102972808695444150}
   m_Layer: 6
-  m_Name: PlayerProjectile
+  m_Name: NormalProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,6 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileSpeed: 10
   damageAmount: 1
+  projectileLifeTime: 1.5
 --- !u!50 &-4102972808695444150
 Rigidbody2D:
   serializedVersion: 4

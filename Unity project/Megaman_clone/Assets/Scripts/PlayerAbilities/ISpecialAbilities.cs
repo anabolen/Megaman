@@ -14,9 +14,9 @@ public interface ISpecialAbilities {
 
     string AbilityName();
 
-    AnimatorController AbilityPlayerAnimations();
+    GameObject AbilityProjectile();
 
-    void AbilitySequence();
+    AnimatorController AbilityPlayerAnimations();
 
     Sprite UIAbilitySprite();
 
