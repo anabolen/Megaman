@@ -24,4 +24,8 @@ public class GunAbility : ISpecialAbilities {
         //Launches super gun projectile(s)
     }
 
+    public Sprite UIAbilitySprite() {
+        var UISprite = Resources.Load<Sprite>("UISprites/GunAbilityUISprite");
+        return UISprite;
+    }
 }

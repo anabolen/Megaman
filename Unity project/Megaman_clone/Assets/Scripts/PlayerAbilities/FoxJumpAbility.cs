@@ -25,5 +25,9 @@ public class FoxJumpAbility : ISpecialAbilities {
         //Launches fox object on front of the player
     }
 
+    public Sprite UIAbilitySprite() {
+        var UISprite = Resources.Load<Sprite>("UISprites/FoxJumpUISprite");
+        return UISprite;
+    }
 }
 

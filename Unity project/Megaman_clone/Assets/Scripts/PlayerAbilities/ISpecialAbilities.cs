@@ -18,4 +18,6 @@ public interface ISpecialAbilities {
 
     void AbilitySequence();
 
+    Sprite UIAbilitySprite();
+
 }
