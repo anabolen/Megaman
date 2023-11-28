@@ -66,6 +66,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] LayerMask solids;
 
+    public int checkpoint;
+    public GameObject[] checkpoints;
+
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
@@ -74,6 +77,10 @@ public class PlayerController : MonoBehaviour
         spriteTransform = sprite.transform;
         jumpAllowed = true;
         StartCoroutine(PlayerSpawn());
+        checkpoint = -1;
+
+
+
 
         playerHorizontalOrientation.Add(PlayerSpriteStates.Left, -180);
         playerHorizontalOrientation.Add(PlayerSpriteStates.Right, 0);
@@ -161,6 +168,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator PlayerDeath() {
         //Play death animation
+        playerManager.lives--;
         col.enabled = false;
         spriteRenderer.enabled = false;
         rb.gravityScale = 0;
@@ -169,10 +177,13 @@ public class PlayerController : MonoBehaviour
         scriptPausedTime = deathTime;
         yield return new WaitForSeconds(deathTime);
         yield return StartCoroutine(QuitTransitionAnimations());
+        if (playerManager.lives > 0) {
+            StartCoroutine(PlayerSpawn());
+        }
     }
 
     public IEnumerator PlayerSpawn() {
-        //transform.position = spawn location
+        transform.position = checkpoints[checkpoint].transform.position;
         //Play spawn animation
         col.enabled = false;
         spriteRenderer.enabled = false;
@@ -180,7 +191,9 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector2.zero;
         scriptPaused = true;
         scriptPausedTime = spawnTime;
+        //health bar fill animation
         yield return new WaitForSeconds(spawnTime);
+        playerManager.UpdatePlayerHp(playerManager.playerMaxHp);
         yield return StartCoroutine(QuitTransitionAnimations());
     }
 
