@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float initialHorizontalOffset;
     bool changingHorizontalDirection;
 
-    float verticalVelocity;
+    float verticalVelocityMultiplier;
 
     Transform spriteTransform;
     SpriteRenderer spriteRenderer;
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     PlayerManager playerManager;
 
     Dictionary<Enum, float> playerHorizontalOrientation = new();
-    enum PlayerSpriteStates { Left, Right, Airborne, Idle, Step, Running }
+    enum PlayerSpriteStates { Left, Right, Airborne, Idle, Step, Running, Hit }
     PlayerSpriteStates playerSpriteDirection;
     PlayerSpriteStates playerAnimation;
 
@@ -42,7 +42,10 @@ public class PlayerController : MonoBehaviour
     float scriptPausedTime;
     bool scriptPaused;
 
+    bool takingDamage;
     [SerializeField] float hitTime;
+    [SerializeField] float immunityTime;
+    [SerializeField] float immunitySpriteToggleTime;
     [SerializeField] Vector2 hitDirection;
     [SerializeField] float hitForce;
 
@@ -60,6 +63,7 @@ public class PlayerController : MonoBehaviour
     bool jumpingUp = false;
     bool jumpAllowed = true;
     bool grounded;
+
     [SerializeField] LayerMask solids;
 
     void Awake() {
@@ -111,15 +115,17 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        Physics2D.IgnoreLayerCollision(7, 8, takingDamage);
+
         if (scriptPaused) {
             return;
         }
         if (grounded) {
-            verticalVelocity = 0;
+            verticalVelocityMultiplier = 0;
         } else
+            verticalVelocityMultiplier = 1;
 
-            
-        rb.velocity = new Vector2(maxHorizontalVelocity * movementMultiplier, verticalVelocity);
+        rb.velocity = new Vector2(maxHorizontalVelocity * movementMultiplier, rb.velocity.y * verticalVelocityMultiplier);
 
         if (!jumpAllowed)
         {
@@ -128,15 +134,28 @@ public class PlayerController : MonoBehaviour
         }
         grounded = null != Physics2D.OverlapBox(transform.position, groundCheckDimensions,
                                                     0, solids);
+
     }
 
     public IEnumerator PlayerHit()
     {
-        if (playerManager.playerHp != 0) { 
+        if (playerManager.playerHp != 0 && takingDamage == false) { 
             scriptPaused = true;
+            takingDamage = true;
             rb.AddForce(hitDirection.normalized * hitForce, ForceMode2D.Impulse);
+            playerAnimation = PlayerSpriteStates.Hit;
             yield return new WaitForSeconds(hitTime);
             scriptPaused = false;
+            float immunityStartTime = Time.time;
+            while (immunityStartTime + immunityTime > Time.time) {
+                if (spriteRenderer.enabled) { 
+                    spriteRenderer.enabled = false;
+                } else
+                    spriteRenderer.enabled = true;
+                yield return new WaitForSeconds(immunitySpriteToggleTime);
+            }
+            spriteRenderer.enabled = true;
+            takingDamage = false;
         }
     }
 
@@ -184,8 +203,8 @@ public class PlayerController : MonoBehaviour
     IEnumerator HorizontalOffsetChange() {
         float horizontalAccelerationTimer = 0;
         movementMultiplier = Input.GetAxisRaw("Horizontal") * minHorziontalVelocityMultiplier;
-        rb.position = new Vector2(rb.position.x+initialHorizontalOffset*movementMultiplier/minHorziontalVelocityMultiplier
-                                  , rb.position.y);
+        rb.MovePosition(new Vector2(rb.position.x + initialHorizontalOffset * movementMultiplier / minHorziontalVelocityMultiplier
+                        , rb.position.y)); 
         playerAnimation = PlayerSpriteStates.Step;
         while (horizontalAccelerationTimer < horizontalAccelerationTime && Input.GetAxisRaw("Horizontal")
                == movementMultiplier / minHorziontalVelocityMultiplier) {
