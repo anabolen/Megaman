@@ -18,6 +18,7 @@ public class EnemyManager : MonoBehaviour
         }
         if (coll.gameObject.layer == 7) {
             coll.gameObject.GetComponent<PlayerManager>().UpdatePlayerHp(-damageAmount);
+            StartCoroutine(coll.gameObject.GetComponent<PlayerController>().PlayerHit());
         }
     }
 

@@ -9,13 +9,13 @@ public class HealthBarScript : MonoBehaviour {
     void Awake() {
         healthbar = GetComponentInChildren<Slider>();
         playerManager = FindObjectOfType<PlayerManager>();
-        if (playerManager == null ) { Debug.LogError("..."); }
+        //if (playerManager == null ) { Debug.LogError("..."); }
         healthbar.maxValue = playerManager.playerMaxHp;
         UpdateHealthBar();
     }
 
     public void UpdateHealthBar() {
-        if (playerManager == null) { Debug.LogError("..."); }
+        //if (playerManager == null) { Debug.LogError("..."); }
         var hp = playerManager.playerHp;
         healthbar.value = hp;
     }

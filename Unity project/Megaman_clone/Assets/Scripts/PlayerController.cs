@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -24,9 +25,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float initialHorizontalOffset;
     bool changingHorizontalDirection;
 
+    float verticalVelocity;
+
     Transform spriteTransform;
     SpriteRenderer spriteRenderer;
     public GameObject sprite;
+    PlayerManager playerManager;
 
     Dictionary<Enum, float> playerHorizontalOrientation = new();
     enum PlayerSpriteStates { Left, Right, Airborne, Idle, Step, Running }
@@ -37,6 +41,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float spawnTime;
     float scriptPausedTime;
     bool scriptPaused;
+
+    [SerializeField] float hitTime;
+    [SerializeField] Vector2 hitDirection;
+    [SerializeField] float hitForce;
 
     Dictionary<Enum, Enum> correspondingShootingAnimations = new();
     enum ShootingAnimationStates { StandingShooting, RunningShooting, AirborneShooting }
@@ -50,16 +58,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float minJumpTime;
 
     bool jumpingUp = false;
-    bool groundCheckAllowed = true;
+    bool jumpAllowed = true;
     bool grounded;
     [SerializeField] LayerMask solids;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
+        playerManager = GetComponent<PlayerManager>();
         spriteRenderer = sprite.GetComponent<SpriteRenderer>();
         spriteTransform = sprite.transform;
-        groundCheckAllowed = true;
+        jumpAllowed = true;
         StartCoroutine(PlayerSpawn());
 
         playerHorizontalOrientation.Add(PlayerSpriteStates.Left, -180);
@@ -98,6 +107,37 @@ public class PlayerController : MonoBehaviour
         CheckPlayerSpriteState(movementMultiplier);
         float rotation = playerHorizontalOrientation.GetValueOrDefault(playerSpriteDirection);
         spriteTransform.rotation = Quaternion.Euler(0, rotation, 0); 
+    }
+
+    void FixedUpdate()
+    {
+        if (scriptPaused) {
+            return;
+        }
+        if (grounded) {
+            verticalVelocity = 0;
+        } else
+
+            
+        rb.velocity = new Vector2(maxHorizontalVelocity * movementMultiplier, verticalVelocity);
+
+        if (!jumpAllowed)
+        {
+            grounded = false;
+            return;
+        }
+        grounded = null != Physics2D.OverlapBox(transform.position, groundCheckDimensions,
+                                                    0, solids);
+    }
+
+    public IEnumerator PlayerHit()
+    {
+        if (playerManager.playerHp != 0) { 
+            scriptPaused = true;
+            rb.AddForce(hitDirection.normalized * hitForce, ForceMode2D.Impulse);
+            yield return new WaitForSeconds(hitTime);
+            scriptPaused = false;
+        }
     }
 
     public IEnumerator PlayerDeath() {
@@ -183,13 +223,13 @@ public class PlayerController : MonoBehaviour
     }
 
     IEnumerator JumpGroundCheck() {
-        groundCheckAllowed = false;
+        jumpAllowed = false;
         float jumpWindowTimer = 0;
         while (jumpWindowTimer < jumpWindow) {
             jumpWindowTimer += Time.deltaTime;
             yield return null;
         }
-        groundCheckAllowed = true;
+        jumpAllowed = true;
     }
 
     public IEnumerator ShootingAnimations() {
@@ -202,16 +242,6 @@ public class PlayerController : MonoBehaviour
             correspondingShootingAnimations.GetValueOrDefault(playerAnimation);
             yield return null;
         }
-    }
-
-    void FixedUpdate() {
-        rb.velocity = new Vector2(maxHorizontalVelocity * movementMultiplier, rb.velocity.y);
-        if (!groundCheckAllowed) {
-            grounded = false;
-            return;
-        }
-        grounded = null != Physics2D.OverlapBox(transform.position, groundCheckDimensions,
-                                                    0, solids);
     }
 
     void OnDrawGizmos() {

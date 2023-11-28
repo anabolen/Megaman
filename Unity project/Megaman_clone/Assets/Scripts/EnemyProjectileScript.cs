@@ -19,6 +19,7 @@ public class EnemyProjectileScript : MonoBehaviour
     void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.layer == 7) {
             coll.gameObject.GetComponent<PlayerManager>().UpdatePlayerHp(-damageAmount);
+            StartCoroutine(coll.gameObject.GetComponent<PlayerController>().PlayerHit());
         }
         Destroy(gameObject);
     }
