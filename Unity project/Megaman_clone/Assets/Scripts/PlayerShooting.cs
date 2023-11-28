@@ -10,11 +10,11 @@ public class PlayerShooting : MonoBehaviour
     public float playerOrientation;
     public Vector3 defaultProjectileOffset;
     public Vector3 projectileOffset;
-    InventoryMenuScript invScript;
+    PlayerInventory invScript;
     void Awake() 
     {
         new List<GameObject>();
-        invScript = FindObjectOfType<InventoryMenuScript>();
+        invScript = FindObjectOfType<PlayerInventory>();
         projectileOffset = defaultProjectileOffset;
     }
 
