@@ -36,7 +36,7 @@ public class PlayerInventory : MonoBehaviour
 
     void Update() {
 
-        if (Input.GetKeyDown(KeyCode.Y))
+        if (Input.GetKeyDown(KeyCode.F) && paused)
         {
             specialAbilities[currentAbilityID].AbilitySequence();
         }
