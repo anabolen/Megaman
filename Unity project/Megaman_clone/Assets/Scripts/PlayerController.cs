@@ -34,9 +34,16 @@ public class PlayerController : MonoBehaviour
     PlayerManager playerManager;
 
     Dictionary<Enum, float> playerHorizontalOrientation = new();
-    enum PlayerSpriteStates { Left, Right, Airborne, Idle, Step, Running, Hit }
+    Dictionary<Enum, Enum> correspondingShootingAnimations = new();
+    //enum ShootingAnimationStates { StandingShooting, RunningShooting, AirborneShooting }
+    enum PlayerSpriteStates { Left, Right, Airborne, Idle, Step, Running, Hit, 
+                              StandingShooting, RunningShooting, AirborneShooting }
     PlayerSpriteStates playerSpriteDirection;
     PlayerSpriteStates playerAnimation;
+    
+
+    [SerializeField] float shootingAnimationTime;
+    bool newShot;
 
     [SerializeField] float deathTime;
     [SerializeField] float spawnTime;
@@ -50,10 +57,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector2 hitDirection;
     [SerializeField] float hitForce;
 
-    Dictionary<Enum, Enum> correspondingShootingAnimations = new();
-    enum ShootingAnimationStates { StandingShooting, RunningShooting, AirborneShooting }
-    [SerializeField] float shootingAnimationTime;
-    bool newShot;
 
     [SerializeField] Vector2 groundCheckDimensions;
 
@@ -84,10 +87,10 @@ public class PlayerController : MonoBehaviour
         playerHorizontalOrientation.Add(PlayerSpriteStates.Right, 0);
         playerSpriteDirection = PlayerSpriteStates.Right;
 
-        correspondingShootingAnimations.Add(PlayerSpriteStates.Idle, ShootingAnimationStates.StandingShooting);
-        correspondingShootingAnimations.Add(PlayerSpriteStates.Step, ShootingAnimationStates.StandingShooting);
-        correspondingShootingAnimations.Add(PlayerSpriteStates.Running, ShootingAnimationStates.RunningShooting);
-        correspondingShootingAnimations.Add(PlayerSpriteStates.Airborne, ShootingAnimationStates.AirborneShooting);
+        correspondingShootingAnimations.Add(PlayerSpriteStates.Idle, PlayerSpriteStates.StandingShooting);
+        correspondingShootingAnimations.Add(PlayerSpriteStates.Step, PlayerSpriteStates.StandingShooting);
+        correspondingShootingAnimations.Add(PlayerSpriteStates.Running, PlayerSpriteStates.RunningShooting);
+        correspondingShootingAnimations.Add(PlayerSpriteStates.Airborne, PlayerSpriteStates.AirborneShooting);
     }
 
     void Update() {
