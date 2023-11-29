@@ -14,11 +14,6 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        //if (playerT.position.x > -3.6f) {
-        //    followingP = false;
-        //} else {
-        //    followingP = true;
-        //}
 
         if (followingP == true) {
             var cameraPos = transform.position;
