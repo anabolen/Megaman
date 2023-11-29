@@ -44,6 +44,12 @@ public class NormalGunAbility : ISpecialAbilities
         return projectile;
     }
 
+    public (int ammoReturn, bool isFinite) AbilityAmmoReduction()
+    {
+        int ammoReturn = 0;
+        return (ammoReturn, false);
+    }
+
     public Sprite UIAbilitySprite()
     {
         var UISprite = Resources.Load<Sprite>("UISprites/GunAbilityUISprite");

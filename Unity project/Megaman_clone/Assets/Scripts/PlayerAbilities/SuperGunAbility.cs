@@ -22,8 +22,21 @@ public class SuperGunAbility : ISpecialAbilities {
 
     public GameObject AbilityProjectile()
     {
+        if (ammoAmount == 0)
+            return null;
+        //else
         var projectile = Resources.Load<GameObject>("PlayerProjectiles/SuperGunProjectile");
         return projectile;
+    }
+
+    public int ammoAmount = 20;
+    private int ammoReduction = 5;
+
+    public (int ammoReturn, bool isFinite) AbilityAmmoReduction()
+    {
+        int ammoReturn = ammoAmount - ammoReduction;
+        Mathf.Clamp(ammoReturn, 0, 20);
+        return (ammoReturn, true);
     }
 
     public Sprite UIAbilitySprite() {

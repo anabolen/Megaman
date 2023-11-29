@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerShooting : MonoBehaviour
 {
     public List<GameObject> projectiles;
@@ -10,15 +11,16 @@ public class PlayerShooting : MonoBehaviour
     public Vector3 defaultProjectileOffset;
     public Vector3 projectileOffset;
     PlayerInventory invScript;
+    List<ISpecialAbilities> usedProjectiles = new();
+
     void Awake() 
     {
-        new List<GameObject>();
         invScript = GetComponent<PlayerInventory>();
         projectileOffset = defaultProjectileOffset;
     }
 
     void Update() {
-
+        
         //foreach (GameObject p in normalProjectiles) {
         //    if (p == null) {
         //        normalProjectiles.Remove(p);
@@ -34,9 +36,12 @@ public class PlayerShooting : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.F)) {
-            var projectile = invScript.specialAbilities[invScript.currentAbilityID].AbilityProjectile();
-            if (projectile != null)
-                Instantiate(projectile, transform.position + projectileOffset, transform.rotation);
+            var projectileClass = invScript.specialAbilities[invScript.currentAbilityID];
+            if (projectileClass.AbilityProjectile() != null) {
+                projectileClass.AbilityAmmoReduction();
+                Physics2D.IgnoreLayerCollision(7, 9, FoxJumpAbility.ignorePlayerCollisions);
+                Instantiate(projectileClass.AbilityProjectile(), transform.position + projectileOffset, transform.rotation);
+            }
         }
         
         //if (projectiles.Count < maxprojectiles && invScript.paused == false) {

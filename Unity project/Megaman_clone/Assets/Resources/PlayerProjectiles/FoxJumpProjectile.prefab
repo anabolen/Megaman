@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2420463921954861685}
   - component: {fileID: 6347337337464077212}
   - component: {fileID: 8208119048519257907}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: FoxJumpProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,6 +111,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileForce: 5
   projectileLifeTime: 3
+  launchForce: 20
+  ignoreCollisionsTime: 0
 --- !u!1 &6231444900394613779
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3775918800316772748}
   - component: {fileID: 3148575593980321171}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: ProjectileSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

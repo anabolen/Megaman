@@ -12,6 +12,8 @@ public interface ISpecialAbilities {
 
     int AbilityID();
 
+    (int ammoReturn, bool isFinite) AbilityAmmoReduction();
+
     string AbilityName();
 
     GameObject AbilityProjectile();

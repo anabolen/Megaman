@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -22,15 +23,30 @@ public class FoxJumpAbility : ISpecialAbilities {
     }
 
     public static bool foxJumpProjectileExists;
+    public static bool ignorePlayerCollisions;
 
     public GameObject AbilityProjectile()
     {
-        if (foxJumpProjectileExists == true)
+        if (foxJumpProjectileExists == true || ammoAmount == 0)
             return null;
-        else
+        else { 
             foxJumpProjectileExists = true;
+            ignorePlayerCollisions = true;
+            Console.Write(ignorePlayerCollisions);
             return Resources.Load<GameObject>("PlayerProjectiles/FoxJumpProjectile");
+        }
     }
+
+    public int ammoAmount = 20;
+    private int ammoReduction = 5;
+
+    public (int ammoReturn, bool isFinite) AbilityAmmoReduction()
+    {
+        int ammoReturn = ammoAmount - ammoReduction;
+        Mathf.Clamp(ammoReturn, 0, 20);
+        return (ammoReturn, true);
+    }
+
 
     public Sprite UIAbilitySprite() {
         var UISprite = Resources.Load<Sprite>("UISprites/FoxJumpUISprite");
