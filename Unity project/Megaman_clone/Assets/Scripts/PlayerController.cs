@@ -36,11 +36,10 @@ public class PlayerController : MonoBehaviour
     Dictionary<Enum, float> playerHorizontalOrientation = new();
     Dictionary<Enum, Enum> correspondingShootingAnimations = new();
     //enum ShootingAnimationStates { StandingShooting, RunningShooting, AirborneShooting }
-    enum PlayerSpriteStates { Left, Right, Airborne, Idle, Step, Running, Hit, 
-                              StandingShooting, RunningShooting, AirborneShooting }
-    PlayerSpriteStates playerSpriteDirection;
-    PlayerSpriteStates playerAnimation;
-    
+    public enum PlayerAnimatorStates { Left, Right, Airborne, Idle, Step, Running, Hit, 
+                                       StandingShooting, RunningShooting, AirborneShooting }
+    PlayerAnimatorStates playerSpriteDirection;
+    public PlayerAnimatorStates playerAnimation;
 
     [SerializeField] float shootingAnimationTime;
     bool newShot;
@@ -83,14 +82,16 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(PlayerSpawn());
         checkpoint = -1; //why?
 
-        playerHorizontalOrientation.Add(PlayerSpriteStates.Left, -180);
-        playerHorizontalOrientation.Add(PlayerSpriteStates.Right, 0);
-        playerSpriteDirection = PlayerSpriteStates.Right;
+        playerHorizontalOrientation.Add(PlayerAnimatorStates.Left, -180);
+        playerHorizontalOrientation.Add(PlayerAnimatorStates.Right, 0);
+        playerSpriteDirection = PlayerAnimatorStates.Right;
 
-        correspondingShootingAnimations.Add(PlayerSpriteStates.Idle, PlayerSpriteStates.StandingShooting);
-        correspondingShootingAnimations.Add(PlayerSpriteStates.Step, PlayerSpriteStates.StandingShooting);
-        correspondingShootingAnimations.Add(PlayerSpriteStates.Running, PlayerSpriteStates.RunningShooting);
-        correspondingShootingAnimations.Add(PlayerSpriteStates.Airborne, PlayerSpriteStates.AirborneShooting);
+        correspondingShootingAnimations.Add(PlayerAnimatorStates.Idle, PlayerAnimatorStates.StandingShooting);
+        correspondingShootingAnimations.Add(PlayerAnimatorStates.Step, PlayerAnimatorStates.StandingShooting);
+        correspondingShootingAnimations.Add(PlayerAnimatorStates.Running, PlayerAnimatorStates.RunningShooting);
+        correspondingShootingAnimations.Add(PlayerAnimatorStates.Airborne, PlayerAnimatorStates.AirborneShooting);
+
+        playerAnimation = PlayerAnimatorStates.Idle;
     }
 
     void Update() {
@@ -109,11 +110,11 @@ public class PlayerController : MonoBehaviour
             jumpingUp = true;
         }
 
-        if (grounded) {
+        if (grounded && jumpAllowed) {
             if (Input.GetAxisRaw("Jump") == 0)
                 jumpingUp = false;
             if (Input.GetAxisRaw("Horizontal") == 0)
-                playerAnimation = PlayerSpriteStates.Idle;
+                playerAnimation = PlayerAnimatorStates.Idle;
         }
 
         CheckPlayerSpriteState(movementMultiplier);
@@ -151,7 +152,7 @@ public class PlayerController : MonoBehaviour
             scriptPaused = true;
             takingDamage = true;
             rb.AddForce(hitDirection.normalized * hitForce, ForceMode2D.Impulse);
-            playerAnimation = PlayerSpriteStates.Hit;
+            //playerAnimation = PlayerAnimatorStates.Hit;
             yield return new WaitForSeconds(hitTime);
             scriptPaused = false;
             float immunityStartTime = Time.time;
@@ -210,9 +211,9 @@ public class PlayerController : MonoBehaviour
 
     void CheckPlayerSpriteState(float orientation) { 
         if (orientation < 0)
-            playerSpriteDirection = PlayerSpriteStates.Left;
+            playerSpriteDirection = PlayerAnimatorStates.Left;
         else if (orientation > 0)
-            playerSpriteDirection = PlayerSpriteStates.Right;
+            playerSpriteDirection = PlayerAnimatorStates.Right;
     }
 
     IEnumerator HorizontalOffsetChange() {
@@ -220,14 +221,14 @@ public class PlayerController : MonoBehaviour
         movementMultiplier = Input.GetAxisRaw("Horizontal") * minHorziontalVelocityMultiplier;
         rb.MovePosition(new Vector2(rb.position.x + initialHorizontalOffset * movementMultiplier / minHorziontalVelocityMultiplier
                         , rb.position.y)); 
-        playerAnimation = PlayerSpriteStates.Step;
+        playerAnimation = PlayerAnimatorStates.Step;
         while (horizontalAccelerationTimer < horizontalAccelerationTime && Input.GetAxisRaw("Horizontal")
                == movementMultiplier / minHorziontalVelocityMultiplier) {
             horizontalAccelerationTimer += Time.deltaTime;
             yield return null;
         }
         movementMultiplier /= minHorziontalVelocityMultiplier;
-        playerAnimation = PlayerSpriteStates.Running;
+        playerAnimation = PlayerAnimatorStates.Running;
         while (Input.GetAxisRaw("Horizontal") == movementMultiplier) {
             yield return null;
         }
@@ -238,7 +239,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator Jump() {
         StartCoroutine(JumpGroundCheck());
         rb.gravityScale = 0;
-        playerAnimation = PlayerSpriteStates.Airborne;
+        playerAnimation = PlayerAnimatorStates.Airborne;
         while (Input.GetAxisRaw("Jump") != 0 && jumpKeyPressTimer < maxJumpTime) {
             rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
             jumpKeyPressTimer += Time.deltaTime;
@@ -273,7 +274,7 @@ public class PlayerController : MonoBehaviour
         newShot = false;
         while (shootingAnimationTime > shootingAnimationTimer && !newShot) { 
             shootingAnimationTimer += Time.deltaTime;
-            correspondingShootingAnimations.GetValueOrDefault(playerAnimation);
+            playerAnimation = (PlayerAnimatorStates)correspondingShootingAnimations.GetValueOrDefault(playerAnimation);
             yield return null;
         }
     }
