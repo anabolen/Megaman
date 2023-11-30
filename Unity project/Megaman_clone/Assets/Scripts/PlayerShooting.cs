@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,10 +38,11 @@ public class PlayerShooting : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F)) {
             var projectileClass = invScript.specialAbilities[invScript.currentAbilityID];
-            if (projectileClass.AbilityProjectile() != null) {
+            var projectile = projectileClass.AbilityProjectile();
+            if (projectile != null) {
                 projectileClass.AbilityAmmoReduction();
                 Physics2D.IgnoreLayerCollision(7, 9, FoxJumpAbility.ignorePlayerCollisions);
-                Instantiate(projectileClass.AbilityProjectile(), transform.position + projectileOffset, transform.rotation);
+                Instantiate(projectile, transform.position + projectileOffset, transform.rotation);
             }
         }
         

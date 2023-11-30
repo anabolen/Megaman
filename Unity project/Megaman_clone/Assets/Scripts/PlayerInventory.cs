@@ -30,7 +30,6 @@ public class PlayerInventory : MonoBehaviour
         AddItem(new SuperGunAbility());
         AddItem(new NormalGunAbility());
         currentAbilityString = specialAbilities[currentAbilityID].AbilityName();
-        print(currentAbilityString);
         paused = false;
         inventoryMenu.SetActive(false);
     }

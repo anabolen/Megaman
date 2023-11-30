@@ -34,9 +34,9 @@ public class SuperGunAbility : ISpecialAbilities {
 
     public (int ammoReturn, bool isFinite) AbilityAmmoReduction()
     {
-        int ammoReturn = ammoAmount - ammoReduction;
-        Mathf.Clamp(ammoReturn, 0, 20);
-        return (ammoReturn, true);
+        ammoAmount -= ammoReduction;
+        Mathf.Clamp(ammoAmount, 0, 20);
+        return (ammoAmount, true);
     }
 
     public Sprite UIAbilitySprite() {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Animations;
 using static UnityEngine.RuleTile.TilingRuleOutput;
+using System;
 
 public class NormalGunAbility : ISpecialAbilities
 {
@@ -32,12 +33,8 @@ public class NormalGunAbility : ISpecialAbilities
     {
         var projectile = Resources.Load<GameObject>("PlayerProjectiles/NormalProjectile");
 
-        //foreach (GameObject p in projectiles) {
-        //    if (p == null) {
-        //        projectiles.Remove(p);
-        //    }
-        //}
         if (normalProjectiles.Count + 1 > maxprojectiles) {
+            Console.WriteLine("lol");
             return null;
         }
         normalProjectiles.Add(projectile);

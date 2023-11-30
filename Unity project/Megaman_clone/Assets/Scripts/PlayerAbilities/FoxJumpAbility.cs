@@ -27,12 +27,13 @@ public class FoxJumpAbility : ISpecialAbilities {
 
     public GameObject AbilityProjectile()
     {
-        if (foxJumpProjectileExists == true || ammoAmount == 0)
+        Console.WriteLine(ammoAmount);
+        if (foxJumpProjectileExists == true || ammoAmount == 0) { 
             return null;
-        else { 
+        }
+        else {
             foxJumpProjectileExists = true;
             ignorePlayerCollisions = true;
-            Console.Write(ignorePlayerCollisions);
             return Resources.Load<GameObject>("PlayerProjectiles/FoxJumpProjectile");
         }
     }
@@ -42,9 +43,9 @@ public class FoxJumpAbility : ISpecialAbilities {
 
     public (int ammoReturn, bool isFinite) AbilityAmmoReduction()
     {
-        int ammoReturn = ammoAmount - ammoReduction;
-        Mathf.Clamp(ammoReturn, 0, 20);
-        return (ammoReturn, true);
+        ammoAmount -= ammoReduction;
+        Mathf.Clamp(ammoAmount, 0, 20);
+        return (ammoAmount, true);
     }
 
 
