@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
     void Update() {
 
-        if (scriptPaused) {
+        if (scriptPaused || Time.timeScale == 0) {
             return;
         }
 

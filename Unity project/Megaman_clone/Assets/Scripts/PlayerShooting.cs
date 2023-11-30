@@ -12,7 +12,6 @@ public class PlayerShooting : MonoBehaviour
     public Vector3 defaultProjectileOffset;
     public Vector3 projectileOffset;
     PlayerInventory invScript;
-    List<ISpecialAbilities> usedProjectiles = new();
 
     void Awake() 
     {
@@ -21,13 +20,9 @@ public class PlayerShooting : MonoBehaviour
     }
 
     void Update() {
-        
-        //foreach (GameObject p in normalProjectiles) {
-        //    if (p == null) {
-        //        normalProjectiles.Remove(p);
-        //        return;
-        //    }
-        //}
+
+        if (Time.timeScale == 0)
+            return;
         
         playerOrientation = Input.GetAxisRaw("Horizontal");
 

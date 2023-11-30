@@ -1074,37 +1074,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1833702238221283847, guid: b2a539e07ff751c4c951f8985b7838be, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5524087094022182576, guid: b2a539e07ff751c4c951f8985b7838be, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5524087094022182576, guid: b2a539e07ff751c4c951f8985b7838be, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -4.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5524087094022182576, guid: b2a539e07ff751c4c951f8985b7838be, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5524087094022182576, guid: b2a539e07ff751c4c951f8985b7838be, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5524087094022182576, guid: b2a539e07ff751c4c951f8985b7838be, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5925834428808880078, guid: b2a539e07ff751c4c951f8985b7838be, type: 3}
       propertyPath: m_Name
       value: Camera&Grid
-      objectReference: {fileID: 0}
-    - target: {fileID: 6113961110649421820, guid: b2a539e07ff751c4c951f8985b7838be, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.031
       objectReference: {fileID: 0}
     - target: {fileID: 7235946875998528177, guid: b2a539e07ff751c4c951f8985b7838be, type: 3}
       propertyPath: m_LocalPosition.x

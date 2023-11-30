@@ -36,42 +36,32 @@ public class PlayerInventory : MonoBehaviour
 
     void Update() {
 
+        if (Input.GetKeyDown(KeyCode.P) && !paused) {
+            OpenPauseMenu();
+        }
+        else if (Input.GetKeyDown(KeyCode.P) && paused) {
+            ClosePauseMenu();
+        }
+
         int changeDirection = (int)Input.GetAxisRaw("Vertical");
 
         if (incrementTimer > 0 && changeDirection == previousIncrementDirection && changeDirection != 0) { 
-            incrementTimer -= Time.deltaTime;
+            incrementTimer -= Time.unscaledDeltaTime;
             return;
         }
 
         incrementTimer = 0;
 
         if (changeDirection != 0 && currentAbilityID + changeDirection 
-            == Mathf.Clamp(currentAbilityID + changeDirection, 0, specialAbilities.Count - 1)) 
+            == Mathf.Clamp(currentAbilityID + changeDirection, 0, specialAbilities.Count - 1) && paused) 
         {
             ChangeCurrentAbilitySelection(changeDirection);
             incrementTimer = incrementTime;
             previousIncrementDirection = changeDirection;
-        }
-        if (Input.GetKeyDown(KeyCode.P) && paused == false) {
-            OpenPauseMenu();
-        } else if (Input.GetKeyDown(KeyCode.P) && paused == true) {
-            ClosePauseMenu();
+            return;
         }
     }
 
-    void ChangeCurrentAbilitySelection(int changeDirection) {
-        int previousAbilityID = currentAbilityID;
-        currentAbilityID += changeDirection;
-        while (specialAbilities[currentAbilityID] == null && currentAbilityID + changeDirection
-               == Mathf.Clamp(currentAbilityID + changeDirection, 0, specialAbilities.Count - 1))
-        {
-            currentAbilityID += changeDirection;
-        }
-        if (specialAbilities[currentAbilityID] == null)
-            currentAbilityID = previousAbilityID;
-        currentAbilityString = specialAbilities[currentAbilityID].AbilityName();
-        print(currentAbilityString);
-    }
     void OpenPauseMenu() {
         print("Paused");
         Time.timeScale = 0;
@@ -84,5 +74,20 @@ public class PlayerInventory : MonoBehaviour
         Time.timeScale = 1;
         paused = false;
         inventoryMenu.SetActive(false);
+    }
+    void ChangeCurrentAbilitySelection(int changeDirection) {
+        int previousAbilityID = currentAbilityID;
+        currentAbilityID += changeDirection;
+        while (specialAbilities[currentAbilityID] == null && currentAbilityID + changeDirection
+               == Mathf.Clamp(currentAbilityID + changeDirection, 0, specialAbilities.Count - 1))
+        {
+            currentAbilityID += changeDirection;
+        }
+        if (specialAbilities[currentAbilityID] == null) { 
+            currentAbilityID = previousAbilityID;
+        }
+        currentAbilityString = specialAbilities[currentAbilityID].AbilityName();
+
+        print(currentAbilityString);
     }
 }
