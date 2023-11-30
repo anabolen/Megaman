@@ -8,7 +8,7 @@ using UnityEngine;
 public class FoxJumpAbility : ISpecialAbilities { 
 
     public int AbilityID() {
-        int abilityID = 0;
+        int abilityID = 1;
         return (abilityID);
     }
 

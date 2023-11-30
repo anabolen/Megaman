@@ -6,7 +6,7 @@ using UnityEditor.Animations;
 public class SuperGunAbility : ISpecialAbilities {
 
     public int AbilityID() {
-        int abilityID = 1;
+        int abilityID = 2;
         return (abilityID);
     }
 

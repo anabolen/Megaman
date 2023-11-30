@@ -10,7 +10,7 @@ public class NormalGunAbility : ISpecialAbilities
 
     public int AbilityID()
     {
-        int abilityID = 2;
+        int abilityID = 0;
         return (abilityID);
     }
 
