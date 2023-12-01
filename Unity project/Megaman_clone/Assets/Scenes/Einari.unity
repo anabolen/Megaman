@@ -1317,6 +1317,14 @@ PrefabInstance:
       propertyPath: inventoryMenu
       value: 
       objectReference: {fileID: 2035620471}
+    - target: {fileID: 4763024786950256066, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
+      propertyPath: freeseBugTime
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4763024786950256066, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
+      propertyPath: freezeBugTime
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5311405581944802196, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

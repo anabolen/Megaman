@@ -12,7 +12,9 @@ public interface ISpecialAbilities {
 
     int AbilityID();
 
-    (int ammoReturn, bool isFinite) AbilityAmmoReduction();
+    (int ammoReturn, bool isFinite) AbilityAmmoIncrement(int increment);
+
+    int AmmoReductionPerShot();
 
     string AbilityName();
 

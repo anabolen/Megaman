@@ -8,26 +8,35 @@ using UnityEngine;
 public class FoxJumpAbility : ISpecialAbilities { 
 
     public int AbilityID() {
-        int abilityID = 1;
-        return (abilityID);
+        return (1);
     }
 
     public string AbilityName() {
-        string abilityName = "Fox jump";
-        return abilityName;
+        return "Fox jump";
     }
 
     public AnimatorController AbilityPlayerAnimations() {
-        var playerAbilitySprites = Resources.Load<AnimatorController>("PlayerAnimations/FoxJumpAbilityAnimations");
-        return playerAbilitySprites;
+        return Resources.Load<AnimatorController>("PlayerAnimations/FoxJumpAbilityAnimations");
     }
 
     public static bool foxJumpProjectileExists;
     public static bool ignorePlayerCollisions;
 
+    public int AmmoReductionPerShot() {
+        return -5;
+    }
+
+    public int ammoAmount = 20;
+
+    public (int ammoReturn, bool isFinite) AbilityAmmoIncrement(int increment)
+    {
+        ammoAmount += increment;
+        Mathf.Clamp(ammoAmount, 0, 20);
+        return (ammoAmount, true);
+    }
+
     public GameObject AbilityProjectile()
     {
-        Console.WriteLine(ammoAmount);
         if (foxJumpProjectileExists == true || ammoAmount == 0) { 
             return null;
         }
@@ -38,20 +47,9 @@ public class FoxJumpAbility : ISpecialAbilities {
         }
     }
 
-    public int ammoAmount = 20;
-    private int ammoReduction = 5;
-
-    public (int ammoReturn, bool isFinite) AbilityAmmoReduction()
-    {
-        ammoAmount -= ammoReduction;
-        Mathf.Clamp(ammoAmount, 0, 20);
-        return (ammoAmount, true);
-    }
-
 
     public Sprite UIAbilitySprite() {
-        var UISprite = Resources.Load<Sprite>("UISprites/FoxJumpUISprite");
-        return UISprite;
+        return Resources.Load<Sprite>("UISprites/FoxJumpUISprite"); 
     }
 }
 

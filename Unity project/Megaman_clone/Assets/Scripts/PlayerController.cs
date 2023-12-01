@@ -41,13 +41,15 @@ public class PlayerController : MonoBehaviour
     PlayerAnimatorStates playerSpriteDirection;
     public PlayerAnimatorStates playerAnimation;
 
+    bool stepping;
+
     [SerializeField] float shootingAnimationTime;
     bool newShot;
 
     [SerializeField] float deathTime;
     [SerializeField] float spawnTime;
     float scriptPausedTime;
-    bool scriptPaused;
+    public bool scriptPaused;
 
     bool takingDamage;
     [SerializeField] float hitTime;
@@ -55,6 +57,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float immunitySpriteToggleTime;
     [SerializeField] Vector2 hitDirection;
     [SerializeField] float hitForce;
+    [SerializeField] float freezeBugTime;
+    float freezeBugTimer;
 
 
     [SerializeField] Vector2 groundCheckDimensions;
@@ -81,6 +85,7 @@ public class PlayerController : MonoBehaviour
         jumpAllowed = true;
         StartCoroutine(PlayerSpawn());
         checkpoint = -1; //why?
+        stepping = false;
 
         playerHorizontalOrientation.Add(PlayerAnimatorStates.Left, -180);
         playerHorizontalOrientation.Add(PlayerAnimatorStates.Right, 0);
@@ -97,6 +102,9 @@ public class PlayerController : MonoBehaviour
     void Update() {
 
         if (scriptPaused || Time.timeScale == 0) {
+            if(freezeBugTime > freezeBugTimer)
+                scriptPaused = false;
+            freezeBugTimer += Time.deltaTime;
             return;
         }
 
@@ -110,16 +118,22 @@ public class PlayerController : MonoBehaviour
             jumpingUp = true;
         }
 
-        if (grounded && jumpAllowed) {
-            if (Input.GetAxisRaw("Jump") == 0)
-                jumpingUp = false;
-            if (Input.GetAxisRaw("Horizontal") == 0)
-                playerAnimation = PlayerAnimatorStates.Idle;
-        }
-
         CheckPlayerSpriteState(movementMultiplier);
         float rotation = playerHorizontalOrientation.GetValueOrDefault(playerSpriteDirection);
-        spriteTransform.rotation = Quaternion.Euler(0, rotation, 0); 
+        spriteTransform.rotation = Quaternion.Euler(0, rotation, 0);
+
+        if (grounded) {
+            if (Input.GetAxisRaw("Jump") == 0 && jumpAllowed)
+                jumpingUp = false;
+            if (Input.GetAxisRaw("Horizontal") != 0 && !stepping) { 
+                playerAnimation = PlayerAnimatorStates.Running;
+                return;
+            }
+            if(!stepping)
+                playerAnimation = PlayerAnimatorStates.Idle;
+        } else {
+            playerAnimation = PlayerAnimatorStates.Airborne;
+        }
     }
 
     void FixedUpdate()
@@ -220,13 +234,15 @@ public class PlayerController : MonoBehaviour
         float horizontalAccelerationTimer = 0;
         movementMultiplier = Input.GetAxisRaw("Horizontal") * minHorziontalVelocityMultiplier;
         rb.MovePosition(new Vector2(rb.position.x + initialHorizontalOffset * movementMultiplier / minHorziontalVelocityMultiplier
-                        , rb.position.y)); 
+                        , rb.position.y));
+        stepping = true;
         playerAnimation = PlayerAnimatorStates.Step;
         while (horizontalAccelerationTimer < horizontalAccelerationTime && Input.GetAxisRaw("Horizontal")
                == movementMultiplier / minHorziontalVelocityMultiplier) {
             horizontalAccelerationTimer += Time.deltaTime;
             yield return null;
         }
+        stepping = false;
         movementMultiplier /= minHorziontalVelocityMultiplier;
         playerAnimation = PlayerAnimatorStates.Running;
         while (Input.GetAxisRaw("Horizontal") == movementMultiplier) {
@@ -239,7 +255,6 @@ public class PlayerController : MonoBehaviour
     IEnumerator Jump() {
         StartCoroutine(JumpGroundCheck());
         rb.gravityScale = 0;
-        playerAnimation = PlayerAnimatorStates.Airborne;
         while (Input.GetAxisRaw("Jump") != 0 && jumpKeyPressTimer < maxJumpTime) {
             rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
             jumpKeyPressTimer += Time.deltaTime;

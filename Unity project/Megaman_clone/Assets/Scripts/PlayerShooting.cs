@@ -35,7 +35,7 @@ public class PlayerShooting : MonoBehaviour
             var projectileClass = invScript.specialAbilities[invScript.currentAbilityID];
             var projectile = projectileClass.AbilityProjectile();
             if (projectile != null) {
-                projectileClass.AbilityAmmoReduction();
+                projectileClass.AbilityAmmoIncrement(projectileClass.AmmoReductionPerShot());
                 Physics2D.IgnoreLayerCollision(7, 9, FoxJumpAbility.ignorePlayerCollisions);
                 Instantiate(projectile, transform.position + projectileOffset, transform.rotation);
             }
