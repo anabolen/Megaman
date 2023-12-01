@@ -140,11 +140,12 @@ MonoBehaviour:
   hitTime: 0.3
   immunityTime: 2
   immunitySpriteToggleTime: 0.03
-  hitForce: 10
+  hitForce: 7
   freezeBugTime: 3
   groundCheckDimensions: {x: 0.7, y: 1.23}
   rightCheckDimensions: {x: 0.7, y: 1.23}
   leftCheckDimensions: {x: 0, y: 0}
+  hitDirectionVector: {x: 1, y: 0.5}
   maxJumpTime: 0.25
   minJumpTime: 0.1
   solids:

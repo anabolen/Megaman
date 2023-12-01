@@ -71,7 +71,8 @@ public class PlayerController : MonoBehaviour
     bool grounded;
     bool rightHit;
     bool leftHit;
-    float hitDirection;
+    [SerializeField] Vector2 hitDirectionVector;
+    float xhitDirection;
 
     float jumpKeyPressTimer;
     [SerializeField] float maxJumpTime;
@@ -156,9 +157,9 @@ public class PlayerController : MonoBehaviour
         Physics2D.IgnoreLayerCollision(7, 8, takingDamage);
 
         rightHit = null != Physics2D.OverlapBox(new Vector2(transform.position.x + 0.2f, transform.position.y + sidecheckMidPosition),
-                             groundCheckDimensions, 0, enemies, enemyProjectiles);
+                             groundCheckDimensions, 0, enemies);
         leftHit = null != Physics2D.OverlapBox(new Vector2(transform.position.x - 0.2f, transform.position.y + sidecheckMidPosition),
-                             groundCheckDimensions, 0, enemies, enemyProjectiles);
+                             groundCheckDimensions, 0, enemies);
 
         if (scriptPaused) {
             return;
@@ -168,7 +169,7 @@ public class PlayerController : MonoBehaviour
         } else
             verticalVelocityMultiplier = 1;
 
-        rb.velocity = new Vector2(maxHorizontalVelocity * movementMultiplier, rb.velocity.y * verticalVelocityMultiplier);
+        rb.velocity = new Vector2(maxHorizontalVelocity * movementMultiplier, rb.velocity.y);
 
         if (!jumpAllowed)
         {
@@ -182,14 +183,14 @@ public class PlayerController : MonoBehaviour
     public IEnumerator PlayerHit()
     {
         if (rightHit)
-            hitDirection = -1;
+            xhitDirection = -1;
         else
-            hitDirection = 1;
+            xhitDirection = 1;
 
         if (playerManager.playerHp != 0 && takingDamage == false) { 
             scriptPaused = true;
             takingDamage = true;
-            rb.AddForce(hitDirection * hitForce * Vector2.right, ForceMode2D.Impulse);
+            rb.AddForce(hitForce * new Vector2(hitDirectionVector.x * xhitDirection, hitDirectionVector.y).normalized, ForceMode2D.Impulse);
             //playerAnimation = PlayerAnimatorStates.Hit;
             yield return new WaitForSeconds(hitTime);
             scriptPaused = false;
