@@ -10,6 +10,7 @@ public class PlayerInventory : MonoBehaviour
     public List<ISpecialAbilities> specialAbilities = new();
     public int currentAbilityID = 0;
     public GameObject inventoryMenu;
+    public GameObject UISprite;
     public bool paused;
     string currentAbilityString;
     [SerializeField] float incrementTime = 0.05f;
@@ -29,9 +30,11 @@ public class PlayerInventory : MonoBehaviour
         AddItem(new FoxJumpAbility());
         AddItem(new SuperGunAbility());
         AddItem(new NormalGunAbility());
+        UISprite = GameObject.Find("CurrentlySelectedAbility");
         currentAbilityString = specialAbilities[currentAbilityID].AbilityName();
         paused = false;
         inventoryMenu.SetActive(false);
+        UpdatePauseMenuSprite();
     }
 
     void Update() {
@@ -75,6 +78,12 @@ public class PlayerInventory : MonoBehaviour
         paused = false;
         inventoryMenu.SetActive(false);
     }
+
+    void UpdatePauseMenuSprite() {
+        var spriteRenderer = UISprite.GetComponent<UnityEngine.UI.Image>();
+        spriteRenderer.sprite = specialAbilities[currentAbilityID].UIAbilitySprite();
+    }
+
     void ChangeCurrentAbilitySelection(int changeDirection) {
         int previousAbilityID = currentAbilityID;
         currentAbilityID += changeDirection;
@@ -87,7 +96,9 @@ public class PlayerInventory : MonoBehaviour
             currentAbilityID = previousAbilityID;
         }
         currentAbilityString = specialAbilities[currentAbilityID].AbilityName();
-
+        UpdatePauseMenuSprite();
         print(currentAbilityString);
     }
+
+
 }

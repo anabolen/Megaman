@@ -49,6 +49,6 @@ public class NormalGunAbility : ISpecialAbilities
 
     public Sprite UIAbilitySprite()
     {
-        return Resources.Load<Sprite>("UISprites/GunAbilityUISprite"); ;
+        return Resources.Load<Sprite>("UISprites/NormalGunUISprite"); ;
     }
 }
