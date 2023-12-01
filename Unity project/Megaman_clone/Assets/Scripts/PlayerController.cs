@@ -8,9 +8,11 @@ using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+
     Rigidbody2D rb;
     Collider2D col;
 
@@ -55,7 +57,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float hitTime;
     [SerializeField] float immunityTime;
     [SerializeField] float immunitySpriteToggleTime;
-    [SerializeField] Vector2 hitDirection;
     [SerializeField] float hitForce;
     [SerializeField] float freezeBugTime;
     float freezeBugTimer;
@@ -63,15 +64,25 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Vector2 groundCheckDimensions;
 
+    [SerializeField] Vector2 rightCheckDimensions;
+    [SerializeField] Vector2 leftCheckDimensions;
+    float sidecheckMidPosition;
+
+    bool grounded;
+    bool rightHit;
+    bool leftHit;
+    float hitDirection;
+
     float jumpKeyPressTimer;
     [SerializeField] float maxJumpTime;
     [SerializeField] float minJumpTime;
 
     bool jumpingUp = false;
     bool jumpAllowed = true;
-    bool grounded;
 
     [SerializeField] LayerMask solids;
+    [SerializeField] LayerMask enemies;
+    [SerializeField] LayerMask enemyProjectiles;
 
     public int checkpoint;
     public GameObject[] checkpoints;
@@ -86,6 +97,9 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(PlayerSpawn());
         checkpoint = -1; //why?
         stepping = false;
+
+        BoxCollider2D box = GetComponent<BoxCollider2D>();
+        sidecheckMidPosition = box.size.y/2;
 
         playerHorizontalOrientation.Add(PlayerAnimatorStates.Left, -180);
         playerHorizontalOrientation.Add(PlayerAnimatorStates.Right, 0);
@@ -102,11 +116,12 @@ public class PlayerController : MonoBehaviour
     void Update() {
 
         if (scriptPaused || Time.timeScale == 0) {
-            if(freezeBugTime > freezeBugTimer)
+            if(freezeBugTime < freezeBugTimer)
                 scriptPaused = false;
             freezeBugTimer += Time.deltaTime;
             return;
         }
+        freezeBugTimer = 0;
 
         if (Input.GetAxisRaw("Horizontal") != 0 && !changingHorizontalDirection) {
             StartCoroutine(HorizontalOffsetChange());
@@ -140,6 +155,11 @@ public class PlayerController : MonoBehaviour
     {
         Physics2D.IgnoreLayerCollision(7, 8, takingDamage);
 
+        rightHit = null != Physics2D.OverlapBox(new Vector2(transform.position.x + 0.2f, transform.position.y + sidecheckMidPosition),
+                             groundCheckDimensions, 0, enemies, enemyProjectiles);
+        leftHit = null != Physics2D.OverlapBox(new Vector2(transform.position.x - 0.2f, transform.position.y + sidecheckMidPosition),
+                             groundCheckDimensions, 0, enemies, enemyProjectiles);
+
         if (scriptPaused) {
             return;
         }
@@ -157,15 +177,19 @@ public class PlayerController : MonoBehaviour
         }
         grounded = null != Physics2D.OverlapBox(transform.position, groundCheckDimensions,
                                                     0, solids);
-
     }
 
     public IEnumerator PlayerHit()
     {
+        if (rightHit)
+            hitDirection = -1;
+        else
+            hitDirection = 1;
+
         if (playerManager.playerHp != 0 && takingDamage == false) { 
             scriptPaused = true;
             takingDamage = true;
-            rb.AddForce(hitDirection.normalized * hitForce, ForceMode2D.Impulse);
+            rb.AddForce(hitDirection * hitForce * Vector2.right, ForceMode2D.Impulse);
             //playerAnimation = PlayerAnimatorStates.Hit;
             yield return new WaitForSeconds(hitTime);
             scriptPaused = false;
@@ -295,7 +319,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void OnDrawGizmos() {
+        BoxCollider2D box = GetComponent<BoxCollider2D>();
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, groundCheckDimensions);
+        Gizmos.DrawWireCube(new Vector2(transform.position.x + 0.2f, transform.position.y + box.size.y/2), groundCheckDimensions);
+        Gizmos.DrawWireCube(new Vector2(transform.position.x - 0.2f, transform.position.y + box.size.y / 2), rightCheckDimensions);
+        Gizmos.DrawWireCube(transform.position, leftCheckDimensions);
     }
 }

@@ -1267,11 +1267,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2762555961834830135, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: m_Offset.x
-      value: -0.03692895
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2762555961834830135, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: m_Offset.y
-      value: 0.66389966
+      value: 0.62
       objectReference: {fileID: 0}
     - target: {fileID: 2762555961834830135, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
@@ -1303,7 +1303,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3266935712254115381, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7
+      value: 0.64
       objectReference: {fileID: 0}
     - target: {fileID: 3266935712254115381, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -1323,7 +1323,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4763024786950256066, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: freezeBugTime
-      value: 0.4
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4763024786950256066, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
+      propertyPath: enemies.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 4763024786950256066, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
+      propertyPath: rightCheckDimensions.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4763024786950256066, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
+      propertyPath: rightCheckDimensions.y
+      value: 1.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 4763024786950256066, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
+      propertyPath: enemyProjectiles.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4763024786950256066, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
+      propertyPath: groundCheckDimensions.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4763024786950256066, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
+      propertyPath: groundCheckDimensions.y
+      value: 1.23
       objectReference: {fileID: 0}
     - target: {fileID: 5311405581944802196, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1331,7 +1355,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5311405581944802196, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.69
+      value: -3.64
       objectReference: {fileID: 0}
     - target: {fileID: 5311405581944802196, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: m_LocalPosition.z

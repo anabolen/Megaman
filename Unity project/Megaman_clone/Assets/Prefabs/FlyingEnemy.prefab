@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7626031296037093428}
   - component: {fileID: 7596835212889533593}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FlyingEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
