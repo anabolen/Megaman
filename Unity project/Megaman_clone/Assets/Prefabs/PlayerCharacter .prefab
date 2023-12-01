@@ -122,15 +122,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81aa7dad545d624ca1198234032056d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultGravityScale: 6
-  shortJumpGravityScale: 10
-  jumpVelocity: 10
+  defaultGravityScale: 5.5
+  shortJumpGravityScale: 17
+  jumpVelocity: 12
   jumpWindow: 0.2
-  maxHorizontalVelocity: 5
+  maxHorizontalVelocity: 4
   minHorziontalVelocityMultiplier: 0.2
   movementMultiplier: 0
-  horizontalAccelerationTime: 0.07
-  initialHorizontalOffset: 0.1
+  horizontalAccelerationTime: 0.1
+  initialHorizontalOffset: 0.15
   sprite: {fileID: 8131439427060688638}
   playerAnimation: 0
   shootingAnimationTime: 0
@@ -146,8 +146,8 @@ MonoBehaviour:
   rightCheckDimensions: {x: 0.7, y: 1.23}
   leftCheckDimensions: {x: 0, y: 0}
   hitDirectionVector: {x: 1, y: 0.5}
-  maxJumpTime: 0.25
-  minJumpTime: 0.1
+  maxJumpTime: 0.15
+  minJumpTime: 0.12
   solids:
     serializedVersion: 2
     m_Bits: 8

@@ -258,8 +258,10 @@ public class PlayerController : MonoBehaviour
     IEnumerator HorizontalOffsetChange() {
         float horizontalAccelerationTimer = 0;
         movementMultiplier = Input.GetAxisRaw("Horizontal") * minHorziontalVelocityMultiplier;
-        rb.MovePosition(new Vector2(rb.position.x + initialHorizontalOffset * movementMultiplier / minHorziontalVelocityMultiplier
-                        , rb.position.y));
+        if(grounded) { 
+            rb.MovePosition(new Vector2(rb.position.x + initialHorizontalOffset * movementMultiplier / minHorziontalVelocityMultiplier
+                            , rb.position.y));
+        }
         stepping = true;
         playerAnimation = PlayerAnimatorStates.Step;
         while (horizontalAccelerationTimer < horizontalAccelerationTime && Input.GetAxisRaw("Horizontal")
