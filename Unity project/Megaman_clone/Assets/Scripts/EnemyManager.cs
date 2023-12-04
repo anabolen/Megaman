@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] int enemyHp;
-    [SerializeField] int enemyMaxHp;
+    public int enemyHp;
+    public int enemyMaxHp;
     [SerializeField] int damageAmount;
 
     private void Awake() {
@@ -24,8 +24,5 @@ public class EnemyManager : MonoBehaviour
 
     public void UpdateEnemyHp(int hpChange) {
         enemyHp = Mathf.Clamp(enemyHp += hpChange, 0, enemyMaxHp);
-        if (enemyHp == 0) {
-            Destroy(gameObject);
-        }
     }
 }

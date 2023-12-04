@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7626031296037093428}
-  - component: {fileID: 7596835212889533593}
+  - component: {fileID: 7874981655433246253}
   m_Layer: 8
   m_Name: FlyingEnemy
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 5330487055051193384}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7596835212889533593
+--- !u!114 &7874981655433246253
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1764271542607091884}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e51ae82b86bb5b74d90ca8bfd523b4c3, type: 3}
+  m_Script: {fileID: 11500000, guid: e377c85bf529b8943b71716f685fe3e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1781677073706235608

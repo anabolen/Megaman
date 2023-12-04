@@ -286,6 +286,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'PlayerCharacter '
       objectReference: {fileID: 0}
+    - target: {fileID: 4301215252530026446, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
+      propertyPath: playerMaxHp
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301215252530026446, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
+      propertyPath: playerMaxAmmo
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715667978466890856, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
+      propertyPath: UISprite
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4715667978466890856, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: inventoryMenu
       value: 
@@ -905,7 +917,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7626031296037093428, guid: 3c4260d38fc575e4799ea46f22e4e4f0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.2
+      value: 21.09
       objectReference: {fileID: 0}
     - target: {fileID: 7626031296037093428, guid: 3c4260d38fc575e4799ea46f22e4e4f0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1210,6 +1222,7 @@ SceneRoots:
   - {fileID: 4528044057331760718}
   - {fileID: 1266567285}
   - {fileID: 83103154}
+  - {fileID: 1334407955}
   - {fileID: 742791239}
   - {fileID: 7385755027039963446}
   - {fileID: 206219609972625792}
@@ -1220,5 +1233,4 @@ SceneRoots:
   - {fileID: 1072857636}
   - {fileID: 4601729337074460370}
   - {fileID: 4400022769446907079}
-  - {fileID: 1334407955}
   - {fileID: 2002781047}
