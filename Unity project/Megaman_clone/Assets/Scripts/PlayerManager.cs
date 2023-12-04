@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -13,19 +15,40 @@ public class PlayerManager : MonoBehaviour
     public bool playingDeathAnimation;
     PlayerController controller;
     HealthBarScript healthBarScript;
+    PlayerClimbing climbingScript;
+    public bool justClimbed;
     
     void Awake() {
         lives = 3;
         playerAmmo = 0;
         controller = GetComponent<PlayerController>();
         healthBarScript = FindObjectOfType<HealthBarScript>();
+        climbingScript = GetComponent<PlayerClimbing>();
+
     }
 
     private void Start() {
         UpdatePlayerHp(playerMaxHp);
+        climbingScript = null;
     }
 
     void Update() {
+        if (climbingScript == null) {
+            justClimbed = false;
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D coll) {
+        if (coll.gameObject.layer == 12 && !justClimbed) {
+            controller.enabled = false;
+            climbingScript = GetComponent<PlayerClimbing>();
+            climbingScript.StartClimbing(coll.GetComponent<Transform>());
+        }
+        
+    }
+
+    void OnTriggerExit2D(Collider2D collision) {
+        climbingScript = null;
     }
 
     void OnTriggerEnter2D(Collider2D coll) {
@@ -59,7 +82,7 @@ public class PlayerManager : MonoBehaviour
             playingDeathAnimation = true;
         }
     }
-    
+
     void HealthAndAmmoClamp() {
         playerAmmo = Mathf.Clamp(playerAmmo, 0, playerMaxAmmo);
         //Clamps hp and ammo between 0 and max so they never go above max or below 0

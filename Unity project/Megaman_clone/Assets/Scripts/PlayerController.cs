@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Collider2D col;
 
-    [SerializeField] float defaultGravityScale;
+    public float defaultGravityScale;
     [SerializeField] float shortJumpGravityScale;
     [SerializeField] float jumpVelocity;
     [SerializeField] float jumpWindow;

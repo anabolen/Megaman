@@ -12,10 +12,12 @@ public class PlayerShooting : MonoBehaviour
     public Vector3 defaultProjectileOffset;
     public Vector3 projectileOffset;
     PlayerInventory invScript;
+    PlayerClimbing playerClimbing;
 
     void Awake() 
     {
         invScript = GetComponent<PlayerInventory>();
+        playerClimbing = GetComponent<PlayerClimbing>();
         projectileOffset = defaultProjectileOffset;
     }
 
@@ -25,7 +27,7 @@ public class PlayerShooting : MonoBehaviour
             return;
         
         playerOrientation = Input.GetAxisRaw("Horizontal");
-
+        
         if (playerOrientation != 0) {
             projectileOffset = new Vector3(defaultProjectileOffset.x * playerOrientation
                                             , defaultProjectileOffset.y, defaultProjectileOffset.z);
