@@ -17,6 +17,8 @@ public class PlayerManager : MonoBehaviour
     HealthBarScript healthBarScript;
     PlayerClimbing climbingScript;
     public bool justClimbed;
+    bool canStartClimbing = false;
+    Transform ladderTransform;
     
     void Awake() {
         lives = 3;
@@ -36,19 +38,25 @@ public class PlayerManager : MonoBehaviour
         if (climbingScript == null) {
             justClimbed = false;
         }
+        if (canStartClimbing && Input.GetAxisRaw("Vertical") != 0) {
+            climbingScript.StartClimbing(ladderTransform);
+            controller.enabled = false;
+        }
     }
 
     void OnTriggerStay2D(Collider2D coll) {
         if (coll.gameObject.layer == 12 && !justClimbed) {
-            controller.enabled = false;
             climbingScript = GetComponent<PlayerClimbing>();
-            climbingScript.StartClimbing(coll.GetComponent<Transform>());
+            ladderTransform = coll.transform;
+            canStartClimbing = true;
         }
         
     }
 
     void OnTriggerExit2D(Collider2D collision) {
         climbingScript = null;
+        ladderTransform = null;
+        canStartClimbing = false;
     }
 
     void OnTriggerEnter2D(Collider2D coll) {

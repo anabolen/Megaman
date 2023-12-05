@@ -46,9 +46,6 @@ public class PlayerClimbing : MonoBehaviour
         }
 
         rb.gravityScale = 0;
-        var verticalDirection = Input.GetAxisRaw("Vertical");
-        rb.MovePosition(new Vector2(ladderTransform.position.x, rb.position.y + Input.GetAxisRaw("Vertical") * ladderClimbSpeed * Time.deltaTime));
-        if (verticalDirection != 0)
 
         if (climbingSpriteSwitchTime < climbingSpriteSwitchTimer) {
             climbingSpriteSwitchTimer = 0;
@@ -68,6 +65,14 @@ public class PlayerClimbing : MonoBehaviour
             playerManager.justClimbed = true;
             playerController.enabled = true;
         }
+    }
+
+    void FixedUpdate() {
+        if (!climbing) {
+            startedClimbing = false;
+            return;
+        }
+        rb.MovePosition(new Vector2(ladderTransform.position.x, rb.position.y + Input.GetAxisRaw("Vertical") * ladderClimbSpeed * Time.fixedDeltaTime));
     }
 
     void SpriteStateSwitch() {
