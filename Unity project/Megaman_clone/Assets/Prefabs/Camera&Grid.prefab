@@ -173,7 +173,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.251691, g: 0.3592619, b: 0.5283019, a: 0}
+  m_BackGroundColor: {r: 0.30159232, g: 0.5294118, b: 0.2509804, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -202,7 +202,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2047
+    m_Bits: 6143
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 211dcc26f6cd86f4fa1f8b87622922a6, type: 2}
   m_TargetDisplay: 0
@@ -250,7 +250,19 @@ MonoBehaviour:
   roomCoords: {x: 0, y: 0}
   roomStart:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   roomReset:
     m_PersistentCalls:
       m_Calls: []
