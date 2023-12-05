@@ -27,6 +27,7 @@ public class PlayerManager : MonoBehaviour
         healthBarScript = FindObjectOfType<HealthBarScript>();
         climbingScript = GetComponent<PlayerClimbing>();
 
+        HomingProjectile.playerTransform = transform;
     }
 
     private void Start() {
