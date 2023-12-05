@@ -30,6 +30,7 @@ public class PlayerInventory : MonoBehaviour
         AddItem(new FoxJumpAbility());
         AddItem(new SuperGunAbility());
         AddItem(new NormalGunAbility());
+        //specialAbilities[currentAbilityID].AbilityAmmoIncrement(5);
         UISprite = GameObject.Find("CurrentlySelectedAbility");
         currentAbilityString = specialAbilities[currentAbilityID].AbilityName();
         paused = false;
