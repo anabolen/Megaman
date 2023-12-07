@@ -134,7 +134,7 @@ MonoBehaviour:
   initialHorizontalOffset: 0.15
   sprite: {fileID: 8131439427060688638}
   playerAnimation: 0
-  shootingAnimationTime: 0
+  shootingAnimationTime: 0.2
   deathTime: 1
   spawnTime: 1
   scriptPaused: 0
@@ -224,8 +224,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   climbing: 0
-  ladderClimbSpeed: 10
-  climbingSpriteSwitchTime: 0.5
+  ladderClimbSpeed: 5
+  climbingSpriteSwitchTime: 0.2
 --- !u!1 &8131439427060688638
 GameObject:
   m_ObjectHideFlags: 0
