@@ -47,17 +47,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 035a93917dd2c6f4fb7eb052506d458f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialLaunchForce: 10
-  carrotProjectileThrottleForce: 1
-  timeBeforeTrottle: 0.2
-  timeBeforeSplitting: 0.5
+  initialLaunchForce: 1
+  carrotProjectileThrottleForce: 0.1
+  timeBeforeTrottle: 0.1
+  timeBeforeSplitting: 0.3
   smallRockets:
   - {fileID: 2288367013420096804, guid: e172c00f1a6d3bc499eb4e42ccc61e92, type: 3}
   - {fileID: 2288367013420096804, guid: e172c00f1a6d3bc499eb4e42ccc61e92, type: 3}
   - {fileID: 2288367013420096804, guid: e172c00f1a6d3bc499eb4e42ccc61e92, type: 3}
-  smallRocketLaunchForce: 10
-  smallRocketThrottleForce: 1
-  smallRocketTimeBeforeThrottle: 0.3
+  smallRocketLaunchForce: 5
+  smallRocketThrottleForce: 0.2
+  smallRocketTimeBeforeThrottle: 0.1
+  smallRockerVelocityMulitplier: 0.8
 --- !u!50 &2546524083705300538
 Rigidbody2D:
   serializedVersion: 4
@@ -155,13 +156,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5554453125764015294}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.16074246, w: 0.98699635}
+  m_LocalRotation: {x: -0.16074246, y: 0.98699635, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.28, y: 0.28, z: 0.28}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7172462752708082203}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -18.5}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: -18.5}
 --- !u!212 &8326802198134401440
 SpriteRenderer:
   m_ObjectHideFlags: 0
