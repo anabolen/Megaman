@@ -10,14 +10,24 @@ public class Elevatorscript : MonoBehaviour
     public int startingPoint;
     public Transform[] points;
     private int i;
+    bool started;
+    Vector2Int startRoomCoords;
+    Vector2 startPos;
+    CameraMovement cam;
     void Start()
     {
         transform.position = points[startingPoint].position;
+        startPos = transform.position;
+        var grid = FindObjectOfType<Grid>();
+        cam = FindObjectOfType<CameraMovement>();
+        cam.roomStart.AddListener(RoomStart);
+        cam.roomReset.AddListener(RoomReset);
+        startRoomCoords = (Vector2Int)grid.WorldToCell(transform.position);
     }
 
 
-    void Update()
-    {// Checking the distance of the platform and the point
+    void Update() {
+        // Checking the distance of the platform and the point
         if (Vector2.Distance(transform.position, points[i].position) < 0.02f)
         {
             i++;
@@ -26,16 +36,26 @@ public class Elevatorscript : MonoBehaviour
                 i = 0;
             }
         }// moving the platform to the point position with the index
-        transform.position = Vector2.MoveTowards(transform.position, points[i].position, speed * Time.deltaTime);
-
+        if (started == true) {
+            transform.position = Vector2.MoveTowards(transform.position, points[i].position, speed * Time.deltaTime);
+        }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-
-    {
+    private void OnCollisionEnter2D(Collision2D collision) {
         collision.transform.SetParent(transform);
     }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
+    private void OnCollisionExit2D(Collision2D collision) {
         collision.transform.SetParent(null);
+    }
+    void RoomReset(Vector2Int roomCoords) {
+        if (roomCoords != startRoomCoords) return;
+        print(name + " resetting");
+        transform.position = startPos;
+        started = false;
+    }
+
+    void RoomStart(Vector2Int roomCoords) {
+        if (roomCoords != startRoomCoords) return;
+        print(name + " starting");
+        started = true;
     }
 }

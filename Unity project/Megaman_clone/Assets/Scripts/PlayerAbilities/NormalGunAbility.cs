@@ -3,26 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Animations;
 using static UnityEngine.RuleTile.TilingRuleOutput;
+using System;
 
 public class NormalGunAbility : ISpecialAbilities
 {
 
     public int AbilityID()
     {
-        int abilityID = 2;
-        return (abilityID);
+        return (0);
     }
 
     public string AbilityName()
     {
-        string abilityName = "Normal gun";
-        return abilityName;
+        return "Normal gun";
     }
 
     public AnimatorController AbilityPlayerAnimations()
     {
-        var playerAbilitySprites = Resources.Load<AnimatorController>("PlayerAnimations/NormalAbilityAnimations");
-        return playerAbilitySprites;
+        return Resources.Load<AnimatorController>("PlayerAnimations/NormalAbilityAnimations"); ;
     }
 
     public static List<GameObject> normalProjectiles = new();
@@ -32,11 +30,6 @@ public class NormalGunAbility : ISpecialAbilities
     {
         var projectile = Resources.Load<GameObject>("PlayerProjectiles/NormalProjectile");
 
-        //foreach (GameObject p in projectiles) {
-        //    if (p == null) {
-        //        projectiles.Remove(p);
-        //    }
-        //}
         if (normalProjectiles.Count + 1 > maxprojectiles) {
             return null;
         }
@@ -44,15 +37,18 @@ public class NormalGunAbility : ISpecialAbilities
         return projectile;
     }
 
-    public (int ammoReturn, bool isFinite) AbilityAmmoReduction()
+    public int AmmoReductionPerShot()
     {
-        int ammoReturn = 0;
-        return (ammoReturn, false);
+        return 0;
+    }
+
+    public (int ammoReturn, bool isFinite) AbilityAmmoIncrement(int increment)
+    {
+        return (0, false);
     }
 
     public Sprite UIAbilitySprite()
     {
-        var UISprite = Resources.Load<Sprite>("UISprites/GunAbilityUISprite");
-        return UISprite;
+        return Resources.Load<Sprite>("UISprites/NormalGunUISprite"); ;
     }
 }

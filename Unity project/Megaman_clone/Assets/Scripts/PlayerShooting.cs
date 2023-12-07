@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,25 +12,22 @@ public class PlayerShooting : MonoBehaviour
     public Vector3 defaultProjectileOffset;
     public Vector3 projectileOffset;
     PlayerInventory invScript;
-    List<ISpecialAbilities> usedProjectiles = new();
+    PlayerClimbing playerClimbing;
 
     void Awake() 
     {
         invScript = GetComponent<PlayerInventory>();
+        playerClimbing = GetComponent<PlayerClimbing>();
         projectileOffset = defaultProjectileOffset;
     }
 
     void Update() {
-        
-        //foreach (GameObject p in normalProjectiles) {
-        //    if (p == null) {
-        //        normalProjectiles.Remove(p);
-        //        return;
-        //    }
-        //}
+
+        if (Time.timeScale == 0)
+            return;
         
         playerOrientation = Input.GetAxisRaw("Horizontal");
-
+        
         if (playerOrientation != 0) {
             projectileOffset = new Vector3(defaultProjectileOffset.x * playerOrientation
                                             , defaultProjectileOffset.y, defaultProjectileOffset.z);
@@ -37,10 +35,11 @@ public class PlayerShooting : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F)) {
             var projectileClass = invScript.specialAbilities[invScript.currentAbilityID];
-            if (projectileClass.AbilityProjectile() != null) {
-                projectileClass.AbilityAmmoReduction();
+            var projectile = projectileClass.AbilityProjectile();
+            if (projectile != null) {
+                projectileClass.AbilityAmmoIncrement(projectileClass.AmmoReductionPerShot());
                 Physics2D.IgnoreLayerCollision(7, 9, FoxJumpAbility.ignorePlayerCollisions);
-                Instantiate(projectileClass.AbilityProjectile(), transform.position + projectileOffset, transform.rotation);
+                Instantiate(projectile, transform.position + projectileOffset, transform.rotation);
             }
         }
         

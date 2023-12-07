@@ -8,13 +8,15 @@ using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+
     Rigidbody2D rb;
     Collider2D col;
 
-    [SerializeField] float defaultGravityScale;
+    public float defaultGravityScale;
     [SerializeField] float shortJumpGravityScale;
     [SerializeField] float jumpVelocity;
     [SerializeField] float jumpWindow;
@@ -41,23 +43,36 @@ public class PlayerController : MonoBehaviour
     PlayerAnimatorStates playerSpriteDirection;
     public PlayerAnimatorStates playerAnimation;
 
+    bool stepping;
+
     [SerializeField] float shootingAnimationTime;
     bool newShot;
 
     [SerializeField] float deathTime;
     [SerializeField] float spawnTime;
     float scriptPausedTime;
-    bool scriptPaused;
+    public bool scriptPaused;
 
     bool takingDamage;
     [SerializeField] float hitTime;
     [SerializeField] float immunityTime;
     [SerializeField] float immunitySpriteToggleTime;
-    [SerializeField] Vector2 hitDirection;
     [SerializeField] float hitForce;
+    [SerializeField] float freezeBugTime;
+    float freezeBugTimer;
 
 
     [SerializeField] Vector2 groundCheckDimensions;
+
+    [SerializeField] Vector2 rightCheckDimensions;
+    [SerializeField] Vector2 leftCheckDimensions;
+    float sidecheckMidPosition;
+
+    bool grounded;
+    bool rightHit;
+    bool leftHit;
+    [SerializeField] Vector2 hitDirectionVector;
+    float xhitDirection;
 
     float jumpKeyPressTimer;
     [SerializeField] float maxJumpTime;
@@ -65,9 +80,10 @@ public class PlayerController : MonoBehaviour
 
     bool jumpingUp = false;
     bool jumpAllowed = true;
-    bool grounded;
 
     [SerializeField] LayerMask solids;
+    [SerializeField] LayerMask enemies;
+    [SerializeField] LayerMask enemyProjectiles;
 
     public int checkpoint;
     public GameObject[] checkpoints;
@@ -81,6 +97,10 @@ public class PlayerController : MonoBehaviour
         jumpAllowed = true;
         StartCoroutine(PlayerSpawn());
         checkpoint = -1; //why?
+        stepping = false;
+
+        BoxCollider2D box = GetComponent<BoxCollider2D>();
+        sidecheckMidPosition = box.size.y/2;
 
         playerHorizontalOrientation.Add(PlayerAnimatorStates.Left, -180);
         playerHorizontalOrientation.Add(PlayerAnimatorStates.Right, 0);
@@ -96,9 +116,13 @@ public class PlayerController : MonoBehaviour
 
     void Update() {
 
-        if (scriptPaused) {
+        if (scriptPaused || Time.timeScale == 0) {
+            if(freezeBugTime < freezeBugTimer)
+                scriptPaused = false;
+            freezeBugTimer += Time.deltaTime;
             return;
         }
+        freezeBugTimer = 0;
 
         if (Input.GetAxisRaw("Horizontal") != 0 && !changingHorizontalDirection) {
             StartCoroutine(HorizontalOffsetChange());
@@ -110,21 +134,32 @@ public class PlayerController : MonoBehaviour
             jumpingUp = true;
         }
 
-        if (grounded && jumpAllowed) {
-            if (Input.GetAxisRaw("Jump") == 0)
-                jumpingUp = false;
-            if (Input.GetAxisRaw("Horizontal") == 0)
-                playerAnimation = PlayerAnimatorStates.Idle;
-        }
-
         CheckPlayerSpriteState(movementMultiplier);
         float rotation = playerHorizontalOrientation.GetValueOrDefault(playerSpriteDirection);
-        spriteTransform.rotation = Quaternion.Euler(0, rotation, 0); 
+        spriteTransform.rotation = Quaternion.Euler(0, rotation, 0);
+
+        if (grounded) {
+            if (Input.GetAxisRaw("Jump") == 0 && jumpAllowed)
+                jumpingUp = false;
+            if (Input.GetAxisRaw("Horizontal") != 0 && !stepping) { 
+                playerAnimation = PlayerAnimatorStates.Running;
+                return;
+            }
+            if(!stepping)
+                playerAnimation = PlayerAnimatorStates.Idle;
+        } else {
+            playerAnimation = PlayerAnimatorStates.Airborne;
+        }
     }
 
     void FixedUpdate()
     {
         Physics2D.IgnoreLayerCollision(7, 8, takingDamage);
+
+        rightHit = null != Physics2D.OverlapBox(new Vector2(transform.position.x + 0.2f, transform.position.y + sidecheckMidPosition),
+                             groundCheckDimensions, 0, enemies);
+        leftHit = null != Physics2D.OverlapBox(new Vector2(transform.position.x - 0.2f, transform.position.y + sidecheckMidPosition),
+                             groundCheckDimensions, 0, enemies);
 
         if (scriptPaused) {
             return;
@@ -134,7 +169,7 @@ public class PlayerController : MonoBehaviour
         } else
             verticalVelocityMultiplier = 1;
 
-        rb.velocity = new Vector2(maxHorizontalVelocity * movementMultiplier, rb.velocity.y * verticalVelocityMultiplier);
+        rb.velocity = new Vector2(maxHorizontalVelocity * movementMultiplier, rb.velocity.y);
 
         if (!jumpAllowed)
         {
@@ -143,15 +178,19 @@ public class PlayerController : MonoBehaviour
         }
         grounded = null != Physics2D.OverlapBox(transform.position, groundCheckDimensions,
                                                     0, solids);
-
     }
 
     public IEnumerator PlayerHit()
     {
+        if (rightHit)
+            xhitDirection = -1;
+        else
+            xhitDirection = 1;
+
         if (playerManager.playerHp != 0 && takingDamage == false) { 
             scriptPaused = true;
             takingDamage = true;
-            rb.AddForce(hitDirection.normalized * hitForce, ForceMode2D.Impulse);
+            rb.AddForce(hitForce * new Vector2(hitDirectionVector.x * xhitDirection, hitDirectionVector.y).normalized, ForceMode2D.Impulse);
             //playerAnimation = PlayerAnimatorStates.Hit;
             yield return new WaitForSeconds(hitTime);
             scriptPaused = false;
@@ -219,14 +258,18 @@ public class PlayerController : MonoBehaviour
     IEnumerator HorizontalOffsetChange() {
         float horizontalAccelerationTimer = 0;
         movementMultiplier = Input.GetAxisRaw("Horizontal") * minHorziontalVelocityMultiplier;
-        rb.MovePosition(new Vector2(rb.position.x + initialHorizontalOffset * movementMultiplier / minHorziontalVelocityMultiplier
-                        , rb.position.y)); 
+        if(grounded) { 
+            rb.MovePosition(new Vector2(rb.position.x + initialHorizontalOffset * movementMultiplier / minHorziontalVelocityMultiplier
+                            , rb.position.y));
+        stepping = true;
+        }
         playerAnimation = PlayerAnimatorStates.Step;
         while (horizontalAccelerationTimer < horizontalAccelerationTime && Input.GetAxisRaw("Horizontal")
                == movementMultiplier / minHorziontalVelocityMultiplier) {
             horizontalAccelerationTimer += Time.deltaTime;
             yield return null;
         }
+        stepping = false;
         movementMultiplier /= minHorziontalVelocityMultiplier;
         playerAnimation = PlayerAnimatorStates.Running;
         while (Input.GetAxisRaw("Horizontal") == movementMultiplier) {
@@ -239,7 +282,6 @@ public class PlayerController : MonoBehaviour
     IEnumerator Jump() {
         StartCoroutine(JumpGroundCheck());
         rb.gravityScale = 0;
-        playerAnimation = PlayerAnimatorStates.Airborne;
         while (Input.GetAxisRaw("Jump") != 0 && jumpKeyPressTimer < maxJumpTime) {
             rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
             jumpKeyPressTimer += Time.deltaTime;
@@ -280,7 +322,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void OnDrawGizmos() {
+        BoxCollider2D box = GetComponent<BoxCollider2D>();
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, groundCheckDimensions);
+        Gizmos.DrawWireCube(new Vector2(transform.position.x + 0.2f, transform.position.y + box.size.y/2), groundCheckDimensions);
+        Gizmos.DrawWireCube(new Vector2(transform.position.x - 0.2f, transform.position.y + box.size.y / 2), rightCheckDimensions);
+        Gizmos.DrawWireCube(transform.position, leftCheckDimensions);
     }
 }

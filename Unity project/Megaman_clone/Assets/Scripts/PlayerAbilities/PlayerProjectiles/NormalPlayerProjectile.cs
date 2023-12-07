@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -38,7 +39,8 @@ public class NormalPlayerProjectile : MonoBehaviour
 
     void DestroyProjectile()
     {
-        NormalGunAbility.normalProjectiles.RemoveAt(0);
+        if(NormalGunAbility.normalProjectiles.Any())
+            NormalGunAbility.normalProjectiles.RemoveAt(0);
         Destroy(gameObject);
     }
 

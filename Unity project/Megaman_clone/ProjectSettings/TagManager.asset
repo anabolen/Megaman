@@ -19,7 +19,7 @@ TagManager:
   - PickUps
   - EnemyProjectiles
   - FinalRenderQuad
-  - 
+  - Climbable Objects
   - 
   - 
   - 
@@ -40,6 +40,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 4217647971
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

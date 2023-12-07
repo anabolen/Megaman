@@ -6,41 +6,38 @@ using UnityEditor.Animations;
 public class SuperGunAbility : ISpecialAbilities {
 
     public int AbilityID() {
-        int abilityID = 1;
-        return (abilityID);
+        return (2);
     }
 
     public string AbilityName() {
-        string abilityName = "Super gun";
-        return abilityName;
+        return "Super gun";
     }
 
     public AnimatorController AbilityPlayerAnimations() {
-        var playerAbilitySprites = Resources.Load<AnimatorController>("PlayerAnimations/SuperGunAbilityAnimations");
-        return playerAbilitySprites;
+        return Resources.Load<AnimatorController>("PlayerAnimations/SuperGunAbilityAnimations"); ;
     }
 
     public GameObject AbilityProjectile()
     {
         if (ammoAmount == 0)
             return null;
-        //else
-        var projectile = Resources.Load<GameObject>("PlayerProjectiles/SuperGunProjectile");
-        return projectile;
+        return Resources.Load<GameObject>("PlayerProjectiles/SuperGunProjectile");
+    }
+
+    public int AmmoReductionPerShot() {
+        return -5;
     }
 
     public int ammoAmount = 20;
-    private int ammoReduction = 5;
 
-    public (int ammoReturn, bool isFinite) AbilityAmmoReduction()
+    public (int ammoReturn, bool isFinite) AbilityAmmoIncrement(int increment)
     {
-        int ammoReturn = ammoAmount - ammoReduction;
-        Mathf.Clamp(ammoReturn, 0, 20);
-        return (ammoReturn, true);
+        ammoAmount += increment;
+        ammoAmount = Mathf.Clamp(ammoAmount, 0, 20);
+        return (ammoAmount, true);
     }
 
     public Sprite UIAbilitySprite() {
-        var UISprite = Resources.Load<Sprite>("UISprites/GunAbilityUISprite");
-        return UISprite;
+        return Resources.Load<Sprite>("UISprites/SuperGunUISprite"); ;
     }
 }

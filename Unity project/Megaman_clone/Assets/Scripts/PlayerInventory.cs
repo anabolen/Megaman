@@ -10,6 +10,7 @@ public class PlayerInventory : MonoBehaviour
     public List<ISpecialAbilities> specialAbilities = new();
     public int currentAbilityID = 0;
     public GameObject inventoryMenu;
+    public GameObject UISprite;
     public bool paused;
     string currentAbilityString;
     [SerializeField] float incrementTime = 0.05f;
@@ -29,50 +30,42 @@ public class PlayerInventory : MonoBehaviour
         AddItem(new FoxJumpAbility());
         AddItem(new SuperGunAbility());
         AddItem(new NormalGunAbility());
+        //specialAbilities[currentAbilityID].AbilityAmmoIncrement(5);
+        UISprite = GameObject.Find("CurrentlySelectedAbility");
         currentAbilityString = specialAbilities[currentAbilityID].AbilityName();
-        print(currentAbilityString);
         paused = false;
         inventoryMenu.SetActive(false);
+        UpdatePauseMenuSprite();
     }
 
     void Update() {
 
+        if (Input.GetKeyDown(KeyCode.P) && !paused) {
+            OpenPauseMenu();
+        }
+        else if (Input.GetKeyDown(KeyCode.P) && paused) {
+            ClosePauseMenu();
+        }
+
         int changeDirection = (int)Input.GetAxisRaw("Vertical");
 
         if (incrementTimer > 0 && changeDirection == previousIncrementDirection && changeDirection != 0) { 
-            incrementTimer -= Time.deltaTime;
+            incrementTimer -= Time.unscaledDeltaTime;
             return;
         }
 
         incrementTimer = 0;
 
         if (changeDirection != 0 && currentAbilityID + changeDirection 
-            == Mathf.Clamp(currentAbilityID + changeDirection, 0, specialAbilities.Count - 1)) 
+            == Mathf.Clamp(currentAbilityID + changeDirection, 0, specialAbilities.Count - 1) && paused) 
         {
             ChangeCurrentAbilitySelection(changeDirection);
             incrementTimer = incrementTime;
             previousIncrementDirection = changeDirection;
-        }
-        if (Input.GetKeyDown(KeyCode.P) && paused == false) {
-            OpenPauseMenu();
-        } else if (Input.GetKeyDown(KeyCode.P) && paused == true) {
-            ClosePauseMenu();
+            return;
         }
     }
 
-    void ChangeCurrentAbilitySelection(int changeDirection) {
-        int previousAbilityID = currentAbilityID;
-        currentAbilityID += changeDirection;
-        while (specialAbilities[currentAbilityID] == null && currentAbilityID + changeDirection
-               == Mathf.Clamp(currentAbilityID + changeDirection, 0, specialAbilities.Count - 1))
-        {
-            currentAbilityID += changeDirection;
-        }
-        if (specialAbilities[currentAbilityID] == null)
-            currentAbilityID = previousAbilityID;
-        currentAbilityString = specialAbilities[currentAbilityID].AbilityName();
-        print(currentAbilityString);
-    }
     void OpenPauseMenu() {
         print("Paused");
         Time.timeScale = 0;
@@ -86,4 +79,27 @@ public class PlayerInventory : MonoBehaviour
         paused = false;
         inventoryMenu.SetActive(false);
     }
+
+    void UpdatePauseMenuSprite() {
+        var spriteRenderer = UISprite.GetComponent<UnityEngine.UI.Image>();
+        spriteRenderer.sprite = specialAbilities[currentAbilityID].UIAbilitySprite();
+    }
+
+    void ChangeCurrentAbilitySelection(int changeDirection) {
+        int previousAbilityID = currentAbilityID;
+        currentAbilityID += changeDirection;
+        while (specialAbilities[currentAbilityID] == null && currentAbilityID + changeDirection
+               == Mathf.Clamp(currentAbilityID + changeDirection, 0, specialAbilities.Count - 1))
+        {
+            currentAbilityID += changeDirection;
+        }
+        if (specialAbilities[currentAbilityID] == null) { 
+            currentAbilityID = previousAbilityID;
+        }
+        currentAbilityString = specialAbilities[currentAbilityID].AbilityName();
+        UpdatePauseMenuSprite();
+        print(currentAbilityString);
+    }
+
+
 }
