@@ -48,17 +48,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialLaunchForce: 1
-  carrotProjectileThrottleForce: 0.1
+  carrotProjectileThrottleForce: 0.2
   timeBeforeTrottle: 0.1
-  timeBeforeSplitting: 0.3
+  timeBeforeSplitting: 0.7
+  bossDirection: 1
   smallRockets:
   - {fileID: 2288367013420096804, guid: e172c00f1a6d3bc499eb4e42ccc61e92, type: 3}
   - {fileID: 2288367013420096804, guid: e172c00f1a6d3bc499eb4e42ccc61e92, type: 3}
   - {fileID: 2288367013420096804, guid: e172c00f1a6d3bc499eb4e42ccc61e92, type: 3}
   smallRocketLaunchForce: 5
-  smallRocketThrottleForce: 0.2
+  smallRocketThrottleForce: 0.05
   smallRocketTimeBeforeThrottle: 0.1
   smallRockerVelocityMulitplier: 0.8
+  smallRocketDestructionTime: 1
 --- !u!50 &2546524083705300538
 Rigidbody2D:
   serializedVersion: 4
