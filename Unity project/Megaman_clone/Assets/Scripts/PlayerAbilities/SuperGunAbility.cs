@@ -17,8 +17,7 @@ public class SuperGunAbility : ISpecialAbilities {
         return Resources.Load<AnimatorController>("PlayerAnimations/SuperGunAbilityAnimations"); ;
     }
 
-    public GameObject AbilityProjectile()
-    {
+    public GameObject AbilityProjectile() {
         if (ammoAmount == 0)
             return null;
         return Resources.Load<GameObject>("PlayerProjectiles/SuperGunProjectile");
@@ -30,8 +29,7 @@ public class SuperGunAbility : ISpecialAbilities {
 
     public int ammoAmount = 20;
 
-    public (int ammoReturn, bool isFinite) AbilityAmmoIncrement(int increment)
-    {
+    public (int ammoReturn, bool isFinite) AbilityAmmoIncrement(int increment) {
         ammoAmount += increment;
         ammoAmount = Mathf.Clamp(ammoAmount, 0, 20);
         return (ammoAmount, true);

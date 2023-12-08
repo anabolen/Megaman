@@ -13,14 +13,15 @@ public class BossCarrotProjecile : HomingProjectile {
     [SerializeField] float timeBeforeTrottle;
     [SerializeField] float timeBeforeSplitting;
     float initializationTime;
-    float bossDirection = 1;
+    public float bossDirection = 1;
 
     [Header("Small rocket settings")]
     [SerializeField] GameObject[] smallRockets;
-    [SerializeField] float smallRocketLaunchForce;
-    [SerializeField] float smallRocketThrottleForce;
-    [SerializeField] float smallRocketTimeBeforeThrottle;
-    [SerializeField] float smallRockerVelocityMulitplier;
+    [SerializeField] float smallRocketLaunchForce = 5f,
+                            smallRocketThrottleForce = 0.2f, 
+                            smallRocketTimeBeforeThrottle = 0.1f, 
+                            smallRockerVelocityMulitplier = 0.8f,
+                            smallRocketDestructionTime;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
 
@@ -38,7 +39,6 @@ public class BossCarrotProjecile : HomingProjectile {
         }
         if (initializationTime + timeBeforeSplitting < Time.time)
             SplitUp();
-
     }
 
     void SplitUp() {
@@ -51,7 +51,7 @@ public class BossCarrotProjecile : HomingProjectile {
         foreach (var rocket in smallRockets) {
             var r = Instantiate(rocket);
             var script = r.GetComponent<HomingMissile>();
-            script.LaunchProjectile(rb, smallRocketLaunchDirections[i], smallRocketLaunchForce, smallRocketTimeBeforeThrottle, smallRocketThrottleForce, smallRockerVelocityMulitplier);
+            script.LaunchProjectile(rb, smallRocketLaunchDirections[i], smallRocketLaunchForce, smallRocketTimeBeforeThrottle, smallRocketThrottleForce, smallRockerVelocityMulitplier, smallRocketDestructionTime);
             i++;
         }
         Destroy(gameObject);

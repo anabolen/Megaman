@@ -19,7 +19,7 @@ public class HomingMissile : HomingProjectile
         }
     }
 
-    public void LaunchProjectile(Rigidbody2D sourceRb, Vector2 launchDirection, float launchForce, float timeBeforeTh, float thForce, float vMultiplier) {
+    public void LaunchProjectile(Rigidbody2D sourceRb, Vector2 launchDirection, float launchForce, float timeBeforeTh, float thForce, float vMultiplier, float destructionTime) {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb.MovePosition(sourceRb.position);
@@ -30,6 +30,7 @@ public class HomingMissile : HomingProjectile
         velocityMultiplier = vMultiplier;
         initializationTime = Time.time;
         rb.AddForce(launchForce * launchDirection, ForceMode2D.Impulse);
+        Destroy(gameObject, destructionTime);
     }
 }
 
