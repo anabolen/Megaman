@@ -39,7 +39,6 @@ public class BossCarrotProjecile : HomingProjectile {
         }
         if (initializationTime + timeBeforeSplitting < Time.time)
             SplitUp();
-
     }
 
     void SplitUp() {

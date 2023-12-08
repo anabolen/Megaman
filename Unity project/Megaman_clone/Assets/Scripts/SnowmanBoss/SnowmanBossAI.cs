@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class SnowmanBossAI : MonoBehaviour {
 
-    [SerializeField] SnowmanBossAbility[] bossAbilities;
+    public SnowmanBossAbility[] bossAbilities;
     [SerializeField] float[] phaseTransitionPercentages;
+    Animator animator;
     SnowmanBossHealth healthScript;
     float maxHealth;
 
@@ -15,6 +16,7 @@ public class SnowmanBossAI : MonoBehaviour {
 
     void Awake() {
         healthScript = GetComponent<SnowmanBossHealth>();
+        animator = GetComponentInChildren<Animator>();
         maxHealth = healthScript.maxHealth;
     }
 
@@ -35,13 +37,21 @@ public class SnowmanBossAI : MonoBehaviour {
     void FirstPhaseBehaviour() {
         BehaviourStartTime = Time.time;
         BehaviourCooldownDuration = CarrotRocketCooldownDuration;
-        bossAbilities[0].AbilityBehaviour();
-        var carrot = (bossAbilities[0] as CarrotRocketAbility);
-        carrot.LaunchCarrot();
+        //bossAbilities[0].AbilityBehaviour();
+        //var carrot = (bossAbilities[0] as CarrotRocketAbility);
+        //carrot.LaunchCarrot();
+        StartCoroutine(AbilityAnimation("BossButtSlam", "BossIdle"));
+    }
+
+    IEnumerator AbilityAnimation(string ability, string idle)  {
+        animator.Play(ability);
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(ability))
+            yield return null;
+        animator.Play(idle);
     }
 
     void SecondPhaseBehaviour() {
-
+        StartCoroutine(AbilityAnimation("BossShoot", "BossIdle"));
     }
 
     void ThirdPhaseBehaviour() {

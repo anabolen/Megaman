@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 125607249912385819}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.21, y: 3.1, z: 0.00763609}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5.24, y: 5.24, z: 5.24}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 035a93917dd2c6f4fb7eb052506d458f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialLaunchForce: 1
-  carrotProjectileThrottleForce: 0.2
-  timeBeforeTrottle: 0.1
+  initialLaunchForce: 5
+  carrotProjectileThrottleForce: 0.4
+  timeBeforeTrottle: 0.2
   timeBeforeSplitting: 0.7
   bossDirection: 1
   smallRockets:

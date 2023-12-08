@@ -18,5 +18,7 @@ public class CarrotRocketAbility : SnowmanBossAbility
     public void LaunchCarrot() {
         var projectile = Instantiate(carrotProjectile);
         projectile.GetComponent<BossCarrotProjecile>().bossDirection = direction;
+        var bossPosition = GameObject.Find("SnowmanBoss").GetComponent<Transform>().position;
+        projectile.transform.position = new Vector2(bossPosition.x, bossPosition.y + 3);
     }
 }
