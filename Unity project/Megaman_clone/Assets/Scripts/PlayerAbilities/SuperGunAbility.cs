@@ -25,7 +25,7 @@ public class SuperGunAbility : ISpecialAbilities {
     }
 
     public int AmmoReductionPerShot() {
-        return -5;
+        return -1;
     }
 
     public int ammoAmount = 20;
