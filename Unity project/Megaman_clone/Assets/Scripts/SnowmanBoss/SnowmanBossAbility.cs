@@ -6,7 +6,5 @@ public abstract class SnowmanBossAbility : MonoBehaviour
 {
     public abstract void AbilityBehaviour();
 
-    public abstract Animation AbilityAnimation();
-
 
 }

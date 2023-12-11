@@ -9,10 +9,7 @@ public class CarrotRocketAbility : SnowmanBossAbility
 
     public override void AbilityBehaviour() {
         carrotProjectile = Resources.Load<GameObject>("Prefabs/BossPrefabs/IntercontinentalCarrot");
-    }
-
-    public override Animation AbilityAnimation() {
-        return null;
+        LaunchCarrot();
     }
 
     public void LaunchCarrot() {

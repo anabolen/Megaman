@@ -7,6 +7,7 @@ public class EnemyManager : MonoBehaviour
     public int enemyHp;
     public int enemyMaxHp;
     [SerializeField] int damageAmount;
+    [SerializeField] float knockbackForce;
 
     private void Awake() {
         UpdateEnemyHp(enemyMaxHp);
@@ -17,8 +18,10 @@ public class EnemyManager : MonoBehaviour
             enemyHp--;
         }
         if (coll.gameObject.layer == 7) {
+            var vectorToPlayer = coll.gameObject.GetComponent<Transform>().position - transform.position;
+            float hitDirection = new Vector2(vectorToPlayer.x, 0).normalized.x;
             coll.gameObject.GetComponent<PlayerManager>().UpdatePlayerHp(-damageAmount);
-            StartCoroutine(coll.gameObject.GetComponent<PlayerController>().PlayerHit());
+            StartCoroutine(coll.gameObject.GetComponent<PlayerController>().PlayerHit(knockbackForce, hitDirection));
         }
     }
 
