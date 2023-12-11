@@ -13,11 +13,13 @@ public class PlayerShooting : MonoBehaviour
     public Vector3 projectileOffset;
     PlayerInventory invScript;
     PlayerClimbing playerClimbing;
+    PlayerManager playerManager;
 
     void Awake() 
     {
         invScript = GetComponent<PlayerInventory>();
         playerClimbing = GetComponent<PlayerClimbing>();
+        playerManager = FindObjectOfType<PlayerManager>();
         projectileOffset = defaultProjectileOffset;
     }
 
@@ -40,6 +42,10 @@ public class PlayerShooting : MonoBehaviour
                 projectileClass.AbilityAmmoIncrement(projectileClass.AmmoReductionPerShot());
                 Physics2D.IgnoreLayerCollision(7, 9, FoxJumpAbility.ignorePlayerCollisions);
                 Instantiate(projectile, transform.position + projectileOffset, transform.rotation);
+                var ammo = projectileClass.AbilityAmmoIncrement(0).ammoReturn;
+                print(ammo);
+                playerManager.playerAmmo = ammo;
+                playerManager.UpdatePlayerAmmo(ammo);
             }
         }
         
