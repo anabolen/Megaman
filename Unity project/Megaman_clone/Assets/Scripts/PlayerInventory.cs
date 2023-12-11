@@ -16,6 +16,8 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] float incrementTime = 0.05f;
     float incrementTimer;
     int previousIncrementDirection = 0;
+    GameObject ammoBar;
+    PlayerManager playerManager;
 
     public void AddItem(ISpecialAbilities ability) {
         int ID = ability.AbilityID();
@@ -36,6 +38,8 @@ public class PlayerInventory : MonoBehaviour
         paused = false;
         inventoryMenu.SetActive(false);
         UpdatePauseMenuSprite();
+        ammoBar = GameObject.Find("AmmoBarBackround");
+        playerManager = FindObjectOfType<PlayerManager>();
     }
 
     void Update() {
@@ -63,6 +67,12 @@ public class PlayerInventory : MonoBehaviour
             incrementTimer = incrementTime;
             previousIncrementDirection = changeDirection;
             return;
+        }
+
+        if (currentAbilityString == "Super gun" || currentAbilityString == "Fox jump") {
+            ammoBar.SetActive(true);
+        } else {
+            ammoBar.SetActive(false);
         }
     }
 
@@ -98,6 +108,7 @@ public class PlayerInventory : MonoBehaviour
         }
         currentAbilityString = specialAbilities[currentAbilityID].AbilityName();
         UpdatePauseMenuSprite();
+        playerManager.UpdatePlayerAmmo(specialAbilities[currentAbilityID].AbilityAmmoIncrement(0).ammoReturn);
         print(currentAbilityString);
     }
 
