@@ -7,6 +7,8 @@ public class SnowmanAnimFunctions : MonoBehaviour {
     CarrotRocketAbility carrotRocketAbility;
     SnowmanBossAI bossAI;
     Collider2D splashDamageCollider;
+    Collider2D whirlDamageCollider;
+    Collider2D defaultCollider;
     Rigidbody2D rb;
     Animator animator;
 
@@ -23,17 +25,64 @@ public class SnowmanAnimFunctions : MonoBehaviour {
     [SerializeField] float splashShockWaveSpeed;
     float timeOfSplash;
     public bool splashing = false;
+    public bool whirling = false;
     float splashDamageArea_x;
+
+    [Header("Whirl settings")]
+    [SerializeField] float whirlAccelerationForce;
+    [SerializeField] float whirlDeaccelerationForce;
+    [SerializeField] float whirlAccelerationTime;
+    [SerializeField] float whirlDeaccelerationTime;
+    bool stopWhirling;
+    float whirlStartTime;
+    float whirlStopTime;
 
 
     void Awake() {
         rb = GetComponentInParent<Rigidbody2D>();
+        whirlStartTime = -10;
+        whirlStopTime = -10;
         animator = GetComponent<Animator>();
         bossAI = GetComponentInParent<SnowmanBossAI>();
         splashDamageCollider = GameObject.Find("SplashDamageCollider").GetComponent<Collider2D>();
+        whirlDamageCollider = GameObject.Find("WhirlDamageCollider").GetComponent<Collider2D>();
+        defaultCollider = GameObject.Find("BossHitboxes").GetComponent<Collider2D>();
+        whirlDamageCollider.enabled = false;
+        splashDamageCollider.enabled = false;
+
     }
 
     private void FixedUpdate() {
+        SplashUpdate();
+        if (whirling)
+            WhirlUpdate();
+    }
+
+    void WhirlUpdate() {
+
+        if (whirlStopTime + whirlDeaccelerationTime > Time.time && stopWhirling) { 
+            rb.AddRelativeForce(new Vector2(bossAI.bossDirection, 0) * whirlDeaccelerationForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
+        }
+        else if (whirlStopTime + whirlDeaccelerationTime < Time.time && stopWhirling) { 
+            rb.velocity = Vector2.zero;
+            whirling = false;
+            whirlDamageCollider.enabled = false;
+            defaultCollider.enabled = true;
+            ReturnToIdleAnimation();
+        }
+
+        if (stopWhirling)
+            return;
+
+        rb.AddRelativeForce(new Vector2(-bossAI.bossDirection, 0) * whirlAccelerationForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
+        if (whirlStartTime + whirlAccelerationTime < Time.time) {
+            stopWhirling = true;
+            whirlDeaccelerationTime = Time.time;
+        }
+    }
+
+    void SplashUpdate() {
+
         if (!splashing) {
             splashDamageArea_x = 0;
             splashDamageCollider.transform.localScale = Vector2.one;
@@ -46,6 +95,14 @@ public class SnowmanAnimFunctions : MonoBehaviour {
 
         if (timeOfSplash + splashDuration < Time.time)
             splashing = false;
+    }
+
+    public void Whirl() {
+        defaultCollider.enabled = false;
+        whirlDamageCollider.enabled = true;
+        whirling = true;
+        stopWhirling = false;
+        whirlStartTime = Time.time;
     }
 
     public void Shoot() {

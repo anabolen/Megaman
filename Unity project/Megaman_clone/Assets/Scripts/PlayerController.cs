@@ -193,8 +193,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    public IEnumerator PlayerHit(float knockbackForce, float hitDirection)
-    {
+    public IEnumerator PlayerHit(float knockbackForce, float hitDirection) {
         scriptPaused = true;
         rb.AddForce(knockbackForce * new Vector2(hitDirection, 1).normalized, ForceMode2D.Impulse);
         //playerAnimation = PlayerAnimatorStates.Hit;
