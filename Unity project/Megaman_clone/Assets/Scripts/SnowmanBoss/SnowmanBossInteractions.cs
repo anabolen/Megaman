@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class SnowmanBossInteractions : MonoBehaviour {
 
-    SnowmanBossAI BossAI;
+    SnowmanBossAI bossAI;
     float knockback;
     int damageAmount;
-    BossAnimations animations;
+    SnowmanAnimFunctions animations;
     float hitTime;
     [SerializeField] float playerImmunityTime;
 
     void Start () {
-        animations = GameObject.Find("BossSprite").GetComponent<BossAnimations>();
-        BossAI = GetComponentInParent<SnowmanBossAI>();
+        animations = GameObject.Find("BossSprite").GetComponent<SnowmanAnimFunctions>();
+        bossAI = GetComponentInParent<SnowmanBossAI>();
     }
 
     private void OnTriggerEnter2D(Collider2D coll) {
@@ -27,9 +27,8 @@ public class SnowmanBossInteractions : MonoBehaviour {
                 knockback = SnowmanBossAI.splashKnockback;
                 damageAmount = SnowmanBossAI.buttSlamDamage;
             }
-
             coll.gameObject.GetComponent<PlayerManager>().UpdatePlayerHp(-damageAmount);
-            StartCoroutine(coll.gameObject.GetComponent<PlayerController>().PlayerHit(knockback, -BossAI.bossDirection));
+            StartCoroutine(coll.gameObject.GetComponent<PlayerController>().PlayerHit(knockback, -bossAI.bossDirection));
         }
     }
 

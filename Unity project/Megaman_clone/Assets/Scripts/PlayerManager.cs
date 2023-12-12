@@ -19,6 +19,9 @@ public class PlayerManager : MonoBehaviour
     public bool justClimbed;
     bool canStartClimbing = false;
     Transform ladderTransform;
+
+    [SerializeField] float initialImmunityDuration;
+    public static float timeOfHit;
     
     void Awake() {
         lives = 3;
@@ -55,19 +58,17 @@ public class PlayerManager : MonoBehaviour
     }
 
     void OnTriggerExit2D(Collider2D collision) {
-        climbingScript = null;
-        ladderTransform = null;
-        canStartClimbing = false;
+        if (collision.gameObject.layer == 12) { 
+            climbingScript = null;
+            ladderTransform = null;
+            canStartClimbing = false;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D coll) {
-        if (coll.gameObject.layer == 8 || coll.gameObject.layer == 10) {
-            //Enemy collision
-        }
         if (coll.gameObject.layer == 9) {
             //PickUpCollision
             var pickupScript = coll.gameObject.GetComponent<PickUpScript>();
-            print(pickupScript.pickupType);
             if (pickupScript.pickupType == PickUpScript.PickUpType.BigHp || 
                 pickupScript.pickupType == PickUpScript.PickUpType.SmallHp) {
                 UpdatePlayerHp(pickupScript.pickUpHpAmount);
@@ -87,6 +88,13 @@ public class PlayerManager : MonoBehaviour
     }
 
     public void UpdatePlayerHp(int hpChange) {
+
+        if (hpChange < 0 && initialImmunityDuration + timeOfHit > Time.time) {
+            return;
+        } else if (hpChange < 0) {
+            timeOfHit = Time.time;
+        }
+
         playerHp = Mathf.Clamp(playerHp += hpChange, 0, playerMaxHp);
         if (healthBarScript != null) { 
             healthBarScript.UpdateHealthBar();

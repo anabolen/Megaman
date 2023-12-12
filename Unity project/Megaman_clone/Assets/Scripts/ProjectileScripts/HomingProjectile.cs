@@ -5,6 +5,8 @@ using UnityEngine;
 public abstract class HomingProjectile : MonoBehaviour {
 
     public static Transform playerTransform;
+    public static float previousTimeOfCollision;
+    public static List<GameObject> projectiles = new();
 
     public void FindPlayerTransform() {
         playerTransform = GameObject.Find("PlayerCharacter ").GetComponent<Transform>();
@@ -18,5 +20,4 @@ public abstract class HomingProjectile : MonoBehaviour {
         spriteTf.localRotation
             = Quaternion.Euler(0, 180 * Mathf.Clamp(-direction, 0, 1), -18.5f);
     }
-
 }

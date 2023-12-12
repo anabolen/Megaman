@@ -43,7 +43,7 @@ public class FoxJumpPlayerProjectile : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision) {
         FoxJumpAbility.ignorePlayerCollisions = false;
-        Physics2D.IgnoreLayerCollision(7, 9, FoxJumpAbility.ignorePlayerCollisions);
+        Physics2D.IgnoreLayerCollision(7, 14, FoxJumpAbility.ignorePlayerCollisions);
         rb.constraints = RigidbodyConstraints2D.FreezePositionX;
         if(collision.gameObject.layer == 7) { 
             LaunchPlayer();
