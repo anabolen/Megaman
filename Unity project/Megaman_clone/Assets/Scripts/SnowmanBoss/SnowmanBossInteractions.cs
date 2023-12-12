@@ -24,9 +24,14 @@ public class SnowmanBossInteractions : MonoBehaviour {
             }
             hitTime = Time.time;
             if (animations.splashing) {
-                knockback = SnowmanBossAI.splashKnockback;
-                damageAmount = SnowmanBossAI.buttSlamDamage;
+                knockback = bossAI.splashKnockback;
+                damageAmount = bossAI.buttSlamDamage;
             }
+            if (animations.whirling) {
+                knockback = bossAI.whirlKnockback;
+                damageAmount = bossAI.whirlDamage;
+            }
+
             coll.gameObject.GetComponent<PlayerManager>().UpdatePlayerHp(-damageAmount);
             StartCoroutine(coll.gameObject.GetComponent<PlayerController>().PlayerHit(knockback, -bossAI.bossDirection));
         }

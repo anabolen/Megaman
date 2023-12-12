@@ -31,15 +31,35 @@ public class NormalPlayerProjectile : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D coll) {
+        //could've an abstract class for enemy and boss health to inherit from
         if (coll.gameObject.layer == 8) {
-            coll.gameObject.GetComponent<EnemyManager>().UpdateEnemyHp(-damageAmount);
+            if (coll.gameObject.TryGetComponent(out EnemyManager manager))
+                manager.UpdateEnemyHp(-damageAmount);
+        }
+        if (coll.gameObject.layer == 13) {
+            if (coll.gameObject.TryGetComponent(out BossHealth bossHealth))
+                bossHealth.UpdateBossHp(-damageAmount);
+        }
+        DestroyProjectile();
+    }
+
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        //could've an abstract class for enemy and boss health to inherit from
+        if (coll.gameObject.layer == 8) {
+            if (coll.gameObject.TryGetComponent(out EnemyManager manager))
+                manager.UpdateEnemyHp(-damageAmount);
+        }
+        if (coll.gameObject.layer == 13) {
+            if (coll.gameObject.TryGetComponent(out BossHealth bossHealth))
+                bossHealth.UpdateBossHp(-damageAmount);
         }
         DestroyProjectile();
     }
 
     void DestroyProjectile()
     {
-        if(NormalGunAbility.normalProjectiles.Any())
+        if (NormalGunAbility.normalProjectiles.Any())
             NormalGunAbility.normalProjectiles.RemoveAt(0);
         Destroy(gameObject);
     }

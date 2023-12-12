@@ -633,6 +633,11 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!4 &524624934 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4173074989676268938, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+  m_PrefabInstance: {fileID: 7713319623876235292}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &605513228
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,6 +1075,73 @@ Transform:
   - {fileID: 1451131603}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &952533894
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 952533895}
+  - component: {fileID: 952533896}
+  m_Layer: 8
+  m_Name: WhirlDamageCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &952533895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952533894}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 524624934}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &952533896
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952533894}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!1 &1027563909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1615,6 +1687,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: whirlTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: projectileOffset.x
       value: 0.66
       objectReference: {fileID: 0}
@@ -1622,17 +1698,72 @@ PrefabInstance:
       propertyPath: projectileOffset.y
       value: 0.27
       objectReference: {fileID: 0}
+    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: whirlAccelerationTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: whirlAccelerationForce
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: whirlDeaccelerationTime
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: whirlDeaccelerationForce
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: whirlForcePerFixedDeltaTime
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6585686505881497996, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: whirlKnockback
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 1173692139}
+    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: whirlCooldownDuration
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7023017951535292142, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: m_Name
       value: SnowmanBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 7023017951535292142, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7812634376568555995, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: m_Size.y
+      value: 4.60616
+      objectReference: {fileID: 0}
+    - target: {fileID: 7812634376568555995, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: m_Offset.y
+      value: 2.2822862
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720636930053067844, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8764239420366574386, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4173074989676268938, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 952533895}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
 --- !u!1001 &9133805593822197846

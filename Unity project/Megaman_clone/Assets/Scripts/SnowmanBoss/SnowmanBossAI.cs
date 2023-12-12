@@ -9,24 +9,27 @@ public class SnowmanBossAI : MonoBehaviour {
     [Header("Boss ability stats")]
     [SerializeField] float closeRangeDistance;
     [SerializeField] float carrotRocketCooldownDuration;
-    [SerializeField] float ButtSlamCooldownDuration;
-    public static int buttSlamDamage = 5;
-    public static float splashKnockback = 20;
+    [SerializeField] float buttSlamCooldownDuration;
+    [SerializeField] float whirlCooldownDuration;
+    public int buttSlamDamage = 5;
+    public float splashKnockback = 20;
+    public int whirlDamage = 5;
+    public float whirlKnockback = 20;
 
     [SerializeField] Transform playerTransform;
     Animator animator;
-    SnowmanBossHealth healthScript;
+    BossHealth healthScript;
     float maxHealth;
     string currentAbilityName;
     public float bossDirection;
     Vector2 distanceVectorFromPlayer; 
-    string bossShootAnim = "BossShoot", bossButtSlamAnim = "BossButtSlam";
+    string bossCarrotAnim = "BossShoot", bossButtSlamAnim = "BossButtSlam", bossWhirl = "BossWhirlWind";
 
 
     float behaviourStartTime, behaviourCooldownDuration;
 
     void Start() {
-        healthScript = GetComponent<SnowmanBossHealth>();
+        healthScript = GetComponent<BossHealth>();
         animator = GetComponentInChildren<Animator>();
         maxHealth = healthScript.maxHealth;
         //playerTransform = GameObject.Find("PlayerCharacter ").GetComponent<Transform>();
@@ -34,11 +37,14 @@ public class SnowmanBossAI : MonoBehaviour {
 
     void FixedUpdate() {
 
-        distanceVectorFromPlayer = transform.position - playerTransform.position;
-        bossDirection = new Vector2(distanceVectorFromPlayer.x, 0).normalized.x;
+        if (currentAbilityName == bossWhirl)
+            currentAbilityName = "BossWhirl";
 
         while (animator.GetCurrentAnimatorStateInfo(0).IsName(currentAbilityName))
             return;
+
+        distanceVectorFromPlayer = transform.position - playerTransform.position;
+        bossDirection = new Vector2(distanceVectorFromPlayer.x, 0).normalized.x;
 
         transform.rotation = Quaternion.Euler(0, 180 * Mathf.Clamp(bossDirection, 0, 1), 0);
 
@@ -65,16 +71,25 @@ public class SnowmanBossAI : MonoBehaviour {
         behaviourStartTime = Time.time;
         if (distanceVectorFromPlayer.magnitude < closeRangeDistance) {
             AbilityAnimation(bossButtSlamAnim);
-            behaviourCooldownDuration = ButtSlamCooldownDuration;
+            behaviourCooldownDuration = buttSlamCooldownDuration;
         }
         else { 
-            AbilityAnimation(bossShootAnim);
+            AbilityAnimation(bossCarrotAnim);
             behaviourCooldownDuration = carrotRocketCooldownDuration;
         }
 
     }
 
     void SecondPhaseBehaviour() {
+        behaviourStartTime = Time.time;
+        if (distanceVectorFromPlayer.magnitude < closeRangeDistance) {
+            AbilityAnimation(bossWhirl);
+            behaviourCooldownDuration = whirlCooldownDuration;
+        }
+        else {
+            AbilityAnimation(bossCarrotAnim);
+            behaviourCooldownDuration = carrotRocketCooldownDuration;
+        }
     }
 
     void ThirdPhaseBehaviour() {
