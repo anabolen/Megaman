@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4311575934757400592}
   - component: {fileID: 2546524083705300538}
   - component: {fileID: 7503222303221151498}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: IntercontinentalCarrot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,9 @@ MonoBehaviour:
   carrotProjectileThrottleForce: 0.4
   timeBeforeTrottle: 0.2
   timeBeforeSplitting: 0.7
-  bossDirection: 1
+  carrotDamage: 5
+  carrotKnockback: 5
+  direction: 1
   smallRockets:
   - {fileID: 2288367013420096804, guid: e172c00f1a6d3bc499eb4e42ccc61e92, type: 3}
   - {fileID: 2288367013420096804, guid: e172c00f1a6d3bc499eb4e42ccc61e92, type: 3}
@@ -60,7 +62,7 @@ MonoBehaviour:
   smallRocketThrottleForce: 0.05
   smallRocketTimeBeforeThrottle: 0.1
   smallRockerVelocityMulitplier: 0.8
-  smallRocketDestructionTime: 1
+  smallRocketDestructionTime: 0.5
 --- !u!50 &2546524083705300538
 Rigidbody2D:
   serializedVersion: 4
@@ -120,7 +122,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.01, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -131,7 +133,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.22, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &5554453125764015294
 GameObject:
@@ -143,7 +145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 293036047639532948}
   - component: {fileID: 8326802198134401440}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Carrot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

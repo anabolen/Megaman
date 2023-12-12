@@ -88,6 +88,9 @@ public class PlayerController : MonoBehaviour {
     public int checkpoint;
     public GameObject[] checkpoints;
 
+    float timeOfHit;
+    [SerializeField] float initialImmunityDuration;
+
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
         colliders = GetComponents<Collider2D>();
@@ -183,31 +186,31 @@ public class PlayerController : MonoBehaviour {
                                                     0, solids);
     }
 
+    public void PlayerHitCheck(float knockbackForce, float hitDirection) {
+        if (!takingDamage && playerManager.playerHp != 0) {
+            takingDamage = true;
+            StartCoroutine(PlayerHit(knockbackForce, hitDirection));
+        }
+    }
+
     public IEnumerator PlayerHit(float knockbackForce, float hitDirection)
     {
-        //if (rightHit)
-        //    xhitDirection = -1;
-        //else
-        //    xhitDirection = 1;
-
-        if (playerManager.playerHp != 0 && takingDamage == false) { 
-            scriptPaused = true;
-            takingDamage = true;
-            rb.AddForce(knockbackForce * new Vector2(hitDirection, 1).normalized, ForceMode2D.Impulse);
-            //playerAnimation = PlayerAnimatorStates.Hit;
-            yield return new WaitForSeconds(hitTime);
-            scriptPaused = false;
-            float immunityStartTime = Time.time;
-            while (immunityStartTime + immunityTime > Time.time) {
-                if (spriteRenderer.enabled) { 
-                    spriteRenderer.enabled = false;
-                } else
-                    spriteRenderer.enabled = true;
-                yield return new WaitForSeconds(immunitySpriteToggleTime);
+        scriptPaused = true;
+        rb.AddForce(knockbackForce * new Vector2(hitDirection, 1).normalized, ForceMode2D.Impulse);
+        //playerAnimation = PlayerAnimatorStates.Hit;
+        yield return new WaitForSeconds(hitTime);
+        scriptPaused = false;
+        float immunityStartTime = Time.time;
+        while (immunityStartTime + immunityTime > Time.time){
+            if (spriteRenderer.enabled) {
+                spriteRenderer.enabled = false;
             }
-            spriteRenderer.enabled = true;
-            takingDamage = false;
+            else
+                spriteRenderer.enabled = true;
+            yield return new WaitForSeconds(immunitySpriteToggleTime);
         }
+        spriteRenderer.enabled = true;
+        takingDamage = false;
     }
 
     public IEnumerator PlayerDeath() {

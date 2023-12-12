@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class BossAnimations : MonoBehaviour
-{
-    CarrotRocketAbility RocketScript;
-    SnowmanBossAI BossAI;
+public class SnowmanAnimFunctions : MonoBehaviour {
+    CarrotRocketAbility carrotRocketAbility;
+    SnowmanBossAI bossAI;
     Collider2D splashDamageCollider;
     Rigidbody2D rb;
     Animator animator;
 
     [Header("Shooting settings")]
     public bool shooting;
+    public Vector2 projectileOffset;
 
     [Header("Butt slam settings")]
     [SerializeField] float buttSlamJumpForce, buttSlamJumpGravityScale;
@@ -29,7 +29,7 @@ public class BossAnimations : MonoBehaviour
     void Awake() {
         rb = GetComponentInParent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        BossAI = GetComponentInParent<SnowmanBossAI>();
+        bossAI = GetComponentInParent<SnowmanBossAI>();
         splashDamageCollider = GameObject.Find("SplashDamageCollider").GetComponent<Collider2D>();
     }
 
@@ -49,9 +49,9 @@ public class BossAnimations : MonoBehaviour
     }
 
     public void Shoot() {
-        RocketScript = BossAI.bossAbilities[0] as CarrotRocketAbility;
+        carrotRocketAbility = bossAI.bossAbilities[0] as CarrotRocketAbility;
         shooting = true;
-        RocketScript.AbilityBehaviour();
+        carrotRocketAbility.AbilityBehaviour();
     }
 
     public void Splash() {
@@ -74,12 +74,14 @@ public class BossAnimations : MonoBehaviour
         rb.AddForce(buttSlamLandingForce * Vector2.down, ForceMode2D.Impulse);
     }
 
-
-
-
-
     public void TurnToBossDirection() { //not necessary
-        transform.position = new Vector3(transform.position.x * BossAI.bossDirection, transform.position.y, transform.position.z);;
+        transform.position = new Vector3(transform.position.x * bossAI.bossDirection, transform.position.y, transform.position.z);;
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, transform.position + (Vector3)projectileOffset);
+        
     }
 
 }

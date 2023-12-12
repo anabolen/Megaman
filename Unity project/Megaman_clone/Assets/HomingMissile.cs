@@ -11,6 +11,8 @@ public class HomingMissile : HomingProjectile
     SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
     float velocityMultiplier;
+    [SerializeField] int rocketDamage;
+    [SerializeField] float knockback;
 
     void FixedUpdate() {
         if (initializationTime + timeBeforeThrottle < Time.time && launched) {
@@ -31,6 +33,14 @@ public class HomingMissile : HomingProjectile
         initializationTime = Time.time;
         rb.AddForce(launchForce * launchDirection, ForceMode2D.Impulse);
         Destroy(gameObject, destructionTime);
+    }
+
+    void OnTriggerEnter2D(Collider2D coll) {
+        if (coll.gameObject.layer == 7) {
+            coll.gameObject.GetComponent<PlayerManager>().UpdatePlayerHp(-rocketDamage);
+            float hitDirection = new Vector2(transform.TransformDirection(Vector2.right).normalized.x, 0).x;
+            coll.gameObject.GetComponent<PlayerController>().PlayerHitCheck(knockback, -hitDirection);
+        }
     }
 }
 
