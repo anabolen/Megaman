@@ -7,24 +7,27 @@ using UnityEngine.Rendering;
 
 public class PlayerManager : MonoBehaviour
 {
-    [HideInInspector] public int playerHp;
+    public int playerHp;
     public int playerMaxHp;
-    [SerializeField] static int playerAmmo;
+    public int playerAmmo;
     public int playerMaxAmmo;
     public int lives;
     public bool playingDeathAnimation;
     PlayerController controller;
-    HealthBarScript healthBarScript;
+    StatusBarScript healthBarScript;
     PlayerClimbing climbingScript;
     public bool justClimbed;
     bool canStartClimbing = false;
     Transform ladderTransform;
+
+    [SerializeField] float initialImmunityDuration;
+    public static float timeOfHit;
     
     void Awake() {
         lives = 3;
         playerAmmo = 0;
         controller = GetComponent<PlayerController>();
-        healthBarScript = FindObjectOfType<HealthBarScript>();
+        healthBarScript = FindObjectOfType<StatusBarScript>();
         climbingScript = GetComponent<PlayerClimbing>();
 
         HomingProjectile.playerTransform = transform;
@@ -55,19 +58,17 @@ public class PlayerManager : MonoBehaviour
     }
 
     void OnTriggerExit2D(Collider2D collision) {
-        climbingScript = null;
-        ladderTransform = null;
-        canStartClimbing = false;
+        if (collision.gameObject.layer == 12) { 
+            climbingScript = null;
+            ladderTransform = null;
+            canStartClimbing = false;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D coll) {
-        if (coll.gameObject.layer == 8 || coll.gameObject.layer == 10) {
-            //Enemy collision
-        }
         if (coll.gameObject.layer == 9) {
             //PickUpCollision
             var pickupScript = coll.gameObject.GetComponent<PickUpScript>();
-            print(pickupScript.pickupType);
             if (pickupScript.pickupType == PickUpScript.PickUpType.BigHp || 
                 pickupScript.pickupType == PickUpScript.PickUpType.SmallHp) {
                 UpdatePlayerHp(pickupScript.pickUpHpAmount);
@@ -75,6 +76,11 @@ public class PlayerManager : MonoBehaviour
             else if (pickupScript.pickupType == PickUpScript.PickUpType.BigAmmo ||
                      pickupScript.pickupType == PickUpScript.PickUpType.SmallAmmo) {
                 playerAmmo += pickupScript.pickUpAmmoAmount;
+                PlayerInventory inventory = GetComponent<PlayerInventory>();
+                inventory.specialAbilities
+                    [inventory.currentAbilityID].AbilityAmmoIncrement(pickupScript.pickUpAmmoAmount);
+                UpdatePlayerAmmo(inventory.specialAbilities
+                    [inventory.currentAbilityID].AbilityAmmoIncrement(0).ammoReturn);
             } else if (pickupScript.pickupType == PickUpScript.PickUpType.ExtraLife) {
                 lives++;
             }
@@ -82,6 +88,13 @@ public class PlayerManager : MonoBehaviour
     }
 
     public void UpdatePlayerHp(int hpChange) {
+
+        if (hpChange < 0 && initialImmunityDuration + timeOfHit > Time.time) {
+            return;
+        } else if (hpChange < 0) {
+            timeOfHit = Time.time;
+        }
+
         playerHp = Mathf.Clamp(playerHp += hpChange, 0, playerMaxHp);
         if (healthBarScript != null) { 
             healthBarScript.UpdateHealthBar();
@@ -89,6 +102,13 @@ public class PlayerManager : MonoBehaviour
         if (playerHp == 0 && !playingDeathAnimation) {
             StartCoroutine(controller.PlayerDeath());
             playingDeathAnimation = true;
+        }
+    }
+
+    public void UpdatePlayerAmmo(int ammoChange) {
+        playerAmmo = ammoChange;
+        if (healthBarScript != null) {
+            healthBarScript.UpdateHealthBar();
         }
     }
 

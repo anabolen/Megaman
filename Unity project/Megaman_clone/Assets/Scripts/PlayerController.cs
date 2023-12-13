@@ -10,11 +10,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
 
     Rigidbody2D rb;
-    Collider2D col;
+    Collider2D[] colliders;
 
     public float defaultGravityScale;
     [SerializeField] float shortJumpGravityScale;
@@ -52,6 +51,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float spawnTime;
     float scriptPausedTime;
     public bool scriptPaused;
+    bool playerVelocityFreeze = false;
 
     bool takingDamage;
     [SerializeField] float hitTime;
@@ -88,9 +88,12 @@ public class PlayerController : MonoBehaviour
     public int checkpoint;
     public GameObject[] checkpoints;
 
+    float timeOfHit;
+    [SerializeField] float initialImmunityDuration;
+
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<Collider2D>();
+        colliders = GetComponents<Collider2D>();
         playerManager = GetComponent<PlayerManager>();
         spriteRenderer = sprite.GetComponent<SpriteRenderer>();
         spriteTransform = sprite.transform;
@@ -120,9 +123,12 @@ public class PlayerController : MonoBehaviour
             if(freezeBugTime < freezeBugTimer)
                 scriptPaused = false;
             freezeBugTimer += Time.deltaTime;
+            if (playerVelocityFreeze)
+                rb.velocity = Vector2.zero;
             return;
         }
         freezeBugTimer = 0;
+        playerVelocityFreeze = false;
 
         if (Input.GetAxisRaw("Horizontal") != 0 && !changingHorizontalDirection) {
             StartCoroutine(HorizontalOffsetChange());
@@ -180,40 +186,40 @@ public class PlayerController : MonoBehaviour
                                                     0, solids);
     }
 
-    public IEnumerator PlayerHit()
-    {
-        if (rightHit)
-            xhitDirection = -1;
-        else
-            xhitDirection = 1;
-
-        if (playerManager.playerHp != 0 && takingDamage == false) { 
-            scriptPaused = true;
+    public void PlayerHitCheck(float knockbackForce, float hitDirection) {
+        if (!takingDamage && playerManager.playerHp != 0) {
             takingDamage = true;
-            rb.AddForce(hitForce * new Vector2(hitDirectionVector.x * xhitDirection, hitDirectionVector.y).normalized, ForceMode2D.Impulse);
-            //playerAnimation = PlayerAnimatorStates.Hit;
-            yield return new WaitForSeconds(hitTime);
-            scriptPaused = false;
-            float immunityStartTime = Time.time;
-            while (immunityStartTime + immunityTime > Time.time) {
-                if (spriteRenderer.enabled) { 
-                    spriteRenderer.enabled = false;
-                } else
-                    spriteRenderer.enabled = true;
-                yield return new WaitForSeconds(immunitySpriteToggleTime);
-            }
-            spriteRenderer.enabled = true;
-            takingDamage = false;
+            StartCoroutine(PlayerHit(knockbackForce, hitDirection));
         }
+    }
+
+    public IEnumerator PlayerHit(float knockbackForce, float hitDirection) {
+        scriptPaused = true;
+        rb.AddForce(knockbackForce * new Vector2(hitDirection, 1).normalized, ForceMode2D.Impulse);
+        //playerAnimation = PlayerAnimatorStates.Hit;
+        yield return new WaitForSeconds(hitTime);
+        scriptPaused = false;
+        float immunityStartTime = Time.time;
+        while (immunityStartTime + immunityTime > Time.time){
+            if (spriteRenderer.enabled) {
+                spriteRenderer.enabled = false;
+            }
+            else
+                spriteRenderer.enabled = true;
+            yield return new WaitForSeconds(immunitySpriteToggleTime);
+        }
+        spriteRenderer.enabled = true;
+        takingDamage = false;
     }
 
     public IEnumerator PlayerDeath() {
         //Play death animation
         playerManager.lives--;
-        col.enabled = false;
+        foreach (Collider2D col in colliders)
+            col.enabled = false;
         spriteRenderer.enabled = false;
         rb.gravityScale = 0;
-        rb.velocity = Vector2.zero;
+        playerVelocityFreeze = true;
         scriptPaused = true;
         scriptPausedTime = deathTime;
         yield return new WaitForSeconds(deathTime);
@@ -227,11 +233,12 @@ public class PlayerController : MonoBehaviour
         if (checkpoints.Any())
             transform.position = checkpoints[checkpoint].transform.position;
         //Play spawn animation
-        col.enabled = false;
+        foreach (Collider2D col in colliders)
+            col.enabled = true;
         spriteRenderer.enabled = false;
         rb.gravityScale = 0;
-        rb.velocity = Vector2.zero;
         scriptPaused = true;
+        playerVelocityFreeze = true;
         scriptPausedTime = spawnTime;
         //health bar fill animation
         yield return new WaitForSeconds(spawnTime);
@@ -240,7 +247,8 @@ public class PlayerController : MonoBehaviour
     }
 
     IEnumerator QuitTransitionAnimations() {
-        col.enabled = true;
+        foreach (Collider2D col in colliders)
+            col.enabled = true;
         spriteRenderer.enabled = true;
         scriptPaused = false;
         rb.gravityScale = defaultGravityScale;
