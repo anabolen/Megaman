@@ -5,12 +5,33 @@ public class SnowmanBossAI : MonoBehaviour {
     [Header("Boss ability settings")]
     [SerializeField] float[] phaseTransitionPercentages;
     public SnowmanBossAbility[] bossAbilities;
+    float closeRangeDistance;
+    [SerializeField] float firstPhaseCloseRangeDistance;
 
-    [Header("Boss ability stats")]
-    [SerializeField] float closeRangeDistance;
+    [Header("Second phase settings")]
+    [SerializeField] float secondPhaseCloseRangeDistance;
+    [SerializeField] int whirlAttackMaxInt = 2;
+    int whirlAttackInt;
+
+    [Header("Third phase settings")]
+    [SerializeField] int buttSlamMaxInt = 3;
+    int buttSlamInt;
+    [SerializeField] int slamWhirlComboMaxInt = 2;
+    int slamWhirlComboInt;
+    int shootingSequenceInt;
+    [SerializeField] float thirdPhaseStartCooldownDuration;
+    bool thirdPhaseStarted = false;
+
+
+    [Header("Cooldowns")]
     [SerializeField] float carrotRocketCooldownDuration;
     [SerializeField] float buttSlamCooldownDuration;
     [SerializeField] float whirlCooldownDuration;
+    [SerializeField] float secondPhaseShootCooldownDuration = 1.2f;
+    [SerializeField] float sidewaysButtSlamCooldownDuration = 0.5f;
+    [SerializeField] float whirlButtSlamTransitionCooldownDuration = 3;
+
+    [Header("Damage and knockback")]
     public int buttSlamDamage = 5;
     public float splashKnockback = 20;
     public int whirlDamage = 5;
@@ -23,7 +44,13 @@ public class SnowmanBossAI : MonoBehaviour {
     string currentAbilityName;
     public float bossDirection;
     Vector2 distanceVectorFromPlayer; 
-    string bossCarrotAnim = "BossShoot", bossButtSlamAnim = "BossButtSlam", bossWhirl = "BossWhirlWind";
+    string bossShootAnim = "BossShoot", 
+        bossButtSlamAnim = "BossButtSlam", 
+        bossWhirl = "BossWhirlWind", 
+        bossRapidShootAnim = "BossRapidShoot",
+        bossSidewaysButtSlamAnim = "BossSidewaysButtSlam";
+
+    public bool transitioned = false;
 
 
     float behaviourStartTime, behaviourCooldownDuration;
@@ -69,31 +96,82 @@ public class SnowmanBossAI : MonoBehaviour {
 
     void FirstPhaseBehaviour() {
         behaviourStartTime = Time.time;
+        closeRangeDistance = firstPhaseCloseRangeDistance;
+        CarrotRocketAbility.carrotSplitUpDisabled = false;
         if (distanceVectorFromPlayer.magnitude < closeRangeDistance) {
             AbilityAnimation(bossButtSlamAnim);
             behaviourCooldownDuration = buttSlamCooldownDuration;
         }
         else { 
-            AbilityAnimation(bossCarrotAnim);
+            AbilityAnimation(bossShootAnim);
             behaviourCooldownDuration = carrotRocketCooldownDuration;
         }
 
     }
 
+    void SecondPhaseShoot() {
+        AbilityAnimation(bossRapidShootAnim);
+        behaviourCooldownDuration = secondPhaseShootCooldownDuration;
+        transitioned = true;
+    }
+
     void SecondPhaseBehaviour() {
+        if (!transitioned) {
+            CarrotRocketAbility.carrotSplitUpDisabled = true;
+            SecondPhaseShoot();
+            behaviourStartTime = Time.time;
+            closeRangeDistance = secondPhaseCloseRangeDistance;
+            return;
+        }
         behaviourStartTime = Time.time;
-        if (distanceVectorFromPlayer.magnitude < closeRangeDistance) {
+        if (whirlAttackInt < whirlAttackMaxInt) {
             AbilityAnimation(bossWhirl);
             behaviourCooldownDuration = whirlCooldownDuration;
-        }
-        else {
-            AbilityAnimation(bossCarrotAnim);
-            behaviourCooldownDuration = carrotRocketCooldownDuration;
+            whirlAttackInt++;
+        } else {
+            SecondPhaseShoot();
+            whirlAttackInt = 0;
         }
     }
 
     void ThirdPhaseBehaviour() {
 
+        if (!thirdPhaseStarted) {
+            thirdPhaseStarted = true;
+            behaviourCooldownDuration = thirdPhaseStartCooldownDuration;
+            behaviourStartTime = Time.time;
+            //Play transition animation
+            return;
+        }
+
+        if (slamWhirlComboInt > slamWhirlComboMaxInt) {
+            if (shootingSequenceInt == 0 || shootingSequenceInt == 2) { 
+                AbilityAnimation(bossShootAnim);
+                CarrotRocketAbility.carrotSplitUpDisabled = false;
+                shootingSequenceInt++;
+            } else if (shootingSequenceInt == 1) {
+                AbilityAnimation(bossRapidShootAnim);
+                CarrotRocketAbility.carrotSplitUpDisabled = true;
+                shootingSequenceInt++;
+            } else { 
+                slamWhirlComboInt = 0;
+                shootingSequenceInt = 0;
+            }
+            return;
+        }
+
+        if (buttSlamInt < buttSlamMaxInt) {
+            AbilityAnimation(bossSidewaysButtSlamAnim);
+            behaviourStartTime = Time.time;
+            behaviourCooldownDuration = sidewaysButtSlamCooldownDuration;
+            buttSlamInt++;
+        }
+        else { 
+            AbilityAnimation(bossWhirl);
+            behaviourCooldownDuration = whirlButtSlamTransitionCooldownDuration;
+            buttSlamInt = 0;
+            slamWhirlComboInt++;
+        }
     }
 
     void FourthPhaseBehaviour() {

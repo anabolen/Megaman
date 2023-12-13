@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 public class SnowmanAnimFunctions : MonoBehaviour {
     CarrotRocketAbility carrotRocketAbility;
     SnowmanBossAI bossAI;
-    Collider2D splashDamageCollider;
+    Collider2D slamDamageCollider;
     Collider2D whirlDamageCollider;
     Collider2D defaultCollider;
     Rigidbody2D rb;
@@ -14,29 +14,36 @@ public class SnowmanAnimFunctions : MonoBehaviour {
 
     [Header("Shooting settings")]
     public bool shooting;
-    public Vector2 projectileOffset;
+    public Vector2 projectileOffset = new Vector2(0.98f, 0.22f);
 
     [Header("Butt slam settings")]
-    [SerializeField] float buttSlamJumpForce, buttSlamJumpGravityScale;
-    [SerializeField] float buttSlamLandingForce;
+    [SerializeField] float buttSlamJumpForce = 10, buttSlamJumpGravityScale = 5;
+    [SerializeField] float buttSlamLandingForce = 20;
+    [SerializeField] float sidewaysButtSlamJumpForce = 10;
+    [SerializeField] float sidewaysButtSlamLandingForce = 30;
 
-    [Header("Splash settings")]
-    [SerializeField] float splashDuration;
-    [SerializeField] float splashShockWaveSpeed;
+    [Header("Slam settings")]
+    [SerializeField] float slamDuration = 0.2f;
+    [SerializeField] float slamShockWaveSpeed = 50;
+    [SerializeField] float buttSlamJumpForce_xAxisComponent = 5;
     float timeOfSplash;
-    public bool splashing = false;
+    public bool slamming = false;
     public bool whirling = false;
-    float splashDamageArea_x;
+    float slamDamageArea_x;
 
     [Header("Whirl settings")]
-    [SerializeField] float whirlAccelerationForce;
-    [SerializeField] float whirlDeaccelerationForce;
-    [SerializeField] float whirlAccelerationTime;
-    [SerializeField] float whirlDeaccelerationTime;
+    [SerializeField] float whirlAccelerationForce = 15;
+    [SerializeField] float whirlDeaccelerationForce = 15;
+    [SerializeField] float whirlAccelerationTime = 1;
+    [SerializeField] float whirlDeaccelerationTime = 0.2f;
     bool stopWhirling;
     float whirlStartTime;
     float whirlStopTime;
 
+    [Header("Second phase shooting additional settings")]
+    [SerializeField] Vector2[] additionalLaunchDirections;
+    int directionIndex;
+    bool superShotStarted = false;
 
     void Awake() {
         rb = GetComponentInParent<Rigidbody2D>();
@@ -44,16 +51,15 @@ public class SnowmanAnimFunctions : MonoBehaviour {
         whirlStopTime = -10;
         animator = GetComponent<Animator>();
         bossAI = GetComponentInParent<SnowmanBossAI>();
-        splashDamageCollider = GameObject.Find("SplashDamageCollider").GetComponent<Collider2D>();
+        slamDamageCollider = GameObject.Find("SplashDamageCollider").GetComponent<Collider2D>();
         whirlDamageCollider = GameObject.Find("WhirlDamageCollider").GetComponent<Collider2D>();
         defaultCollider = GameObject.Find("BossHitboxes").GetComponent<Collider2D>();
         whirlDamageCollider.enabled = false;
-        splashDamageCollider.enabled = false;
-
+        slamDamageCollider.enabled = false;
     }
 
     private void FixedUpdate() {
-        SplashUpdate();
+        SlamUpdate();
         if (whirling)
             WhirlUpdate();
     }
@@ -81,20 +87,20 @@ public class SnowmanAnimFunctions : MonoBehaviour {
         }
     }
 
-    void SplashUpdate() {
+    void SlamUpdate() {
 
-        if (!splashing) {
-            splashDamageArea_x = 0;
-            splashDamageCollider.transform.localScale = Vector2.one;
-            splashDamageCollider.enabled = false;
+        if (!slamming) {
+            slamDamageArea_x = 0;
+            slamDamageCollider.transform.localScale = Vector2.one;
+            slamDamageCollider.enabled = false;
             return;
         }
 
-        splashDamageArea_x += Time.fixedDeltaTime * splashShockWaveSpeed;
-        splashDamageCollider.transform.localScale = new Vector2(splashDamageArea_x, 1);
+        slamDamageArea_x += Time.fixedDeltaTime * slamShockWaveSpeed;
+        slamDamageCollider.transform.localScale = new Vector2(slamDamageArea_x, 1);
 
-        if (timeOfSplash + splashDuration < Time.time)
-            splashing = false;
+        if (timeOfSplash + slamDuration < Time.time)
+            slamming = false;
     }
 
     public void Whirl() {
@@ -108,12 +114,29 @@ public class SnowmanAnimFunctions : MonoBehaviour {
     public void Shoot() {
         carrotRocketAbility = bossAI.bossAbilities[0] as CarrotRocketAbility;
         shooting = true;
+        carrotRocketAbility.LaunchDirection(additionalLaunchDirections[1]);
         carrotRocketAbility.AbilityBehaviour();
     }
 
-    public void Splash() {
-        splashing = true;
-        splashDamageCollider.enabled = true;
+    public void SecondPhaseShoot() {
+        if (!superShotStarted) {
+            superShotStarted = true;
+            directionIndex = 0;
+        }
+        carrotRocketAbility = bossAI.bossAbilities[0] as CarrotRocketAbility;
+        shooting = true;
+        carrotRocketAbility.LaunchDirection(additionalLaunchDirections[directionIndex]);
+        carrotRocketAbility.AbilityBehaviour();
+        directionIndex++;
+        print(directionIndex);
+        if (directionIndex > 2)
+            superShotStarted = false;
+    }
+
+    public void Slam() {
+        rb.velocity = Vector2.zero;
+        slamming = true;
+        slamDamageCollider.enabled = true;
         timeOfSplash = Time.time;
     }
 
@@ -126,9 +149,19 @@ public class SnowmanAnimFunctions : MonoBehaviour {
         rb.AddForce(buttSlamJumpForce * Vector2.up, ForceMode2D.Impulse);
     }
 
+    public void SidewaysButtSlamJump() {
+        rb.gravityScale = buttSlamJumpGravityScale;
+        rb.AddForce(new Vector2(buttSlamJumpForce_xAxisComponent * -bossAI.bossDirection, sidewaysButtSlamJumpForce), ForceMode2D.Impulse);
+    }
+
     public void ButtSlamLanding() {
         rb.gravityScale = 1;
         rb.AddForce(buttSlamLandingForce * Vector2.down, ForceMode2D.Impulse);
+    }
+
+    public void SidewaysButtSlamLanding() {
+        rb.gravityScale = 1;
+        rb.AddForce(sidewaysButtSlamLandingForce * Vector2.down, ForceMode2D.Impulse);
     }
 
     public void TurnToBossDirection() { //not necessary

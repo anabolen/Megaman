@@ -116,16 +116,89 @@ MonoBehaviour:
   m_GameObject: {fileID: 2091804976621981924}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae16b51446201d54c9429684d0ff9156, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bae690f87589fd41bd78b5fcb539d7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   shooting: 0
-  buttSlamJumpForce: 5
-  buttSlamJumpGravityScale: 0.5
+  projectileOffset: {x: 0.98, y: 0.22}
+  buttSlamJumpForce: 20
+  buttSlamJumpGravityScale: 5
   buttSlamLandingForce: 20
-  splashDuration: 0.1
-  splashShockWaveSpeed: 100
+  splashDuration: 0.2
+  splashShockWaveSpeed: 50
   splashing: 0
+  whirling: 0
+  whirlAccelerationForce: 15
+  whirlDeaccelerationForce: 15
+  whirlAccelerationTime: 1
+  whirlDeaccelerationTime: 0.5
+--- !u!1 &2290588023912523217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2876504097593483037}
+  - component: {fileID: 6158389517283927729}
+  m_Layer: 8
+  m_Name: WhirlDamageCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2876504097593483037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2290588023912523217}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4173074989676268938}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &6158389517283927729
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2290588023912523217}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!1 &6585686505881497996
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,6 +231,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2876504097593483037}
   - {fileID: 8492995378239018018}
   m_Father: {fileID: 4499370508516061121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -294,7 +368,12 @@ MonoBehaviour:
   - {fileID: 3307894789655761924, guid: d0d3fefa16298c543adc829e2b8988c3, type: 3}
   closeRangeDistance: 5
   carrotRocketCooldownDuration: 3
-  ButtSlamCooldownDuration: 1
+  buttSlamCooldownDuration: 0
+  whirlCooldownDuration: 0
+  buttSlamDamage: 5
+  splashKnockback: 20
+  whirlDamage: 5
+  whirlKnockback: 20
   playerTransform: {fileID: 0}
   bossDirection: 0
 --- !u!114 &8388223910802789791

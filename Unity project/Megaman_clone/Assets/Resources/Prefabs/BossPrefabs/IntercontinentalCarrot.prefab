@@ -50,19 +50,20 @@ MonoBehaviour:
   initialLaunchForce: 5
   carrotProjectileThrottleForce: 0.4
   timeBeforeTrottle: 0.2
-  timeBeforeSplitting: 0.7
+  timeBeforeSplitting: 0.3
   carrotDamage: 5
   carrotKnockback: 5
+  destructionTime: 2
   direction: 1
   smallRockets:
   - {fileID: 2288367013420096804, guid: e172c00f1a6d3bc499eb4e42ccc61e92, type: 3}
   - {fileID: 2288367013420096804, guid: e172c00f1a6d3bc499eb4e42ccc61e92, type: 3}
   - {fileID: 2288367013420096804, guid: e172c00f1a6d3bc499eb4e42ccc61e92, type: 3}
-  smallRocketLaunchForce: 5
-  smallRocketThrottleForce: 0.05
+  smallRocketLaunchForce: 3
+  smallRocketThrottleForce: 0.1
   smallRocketTimeBeforeThrottle: 0.1
   smallRockerVelocityMulitplier: 0.8
-  smallRocketDestructionTime: 0.5
+  smallRocketDestructionTime: 1
 --- !u!50 &2546524083705300538
 Rigidbody2D:
   serializedVersion: 4

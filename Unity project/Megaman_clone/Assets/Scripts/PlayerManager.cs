@@ -89,7 +89,7 @@ public class PlayerManager : MonoBehaviour
 
     public void UpdatePlayerHp(int hpChange) {
 
-        if (hpChange < 0 && initialImmunityDuration + timeOfHit > Time.time) {
+        if (hpChange < 0 && controller.takingDamage || initialImmunityDuration + timeOfHit > Time.time) {
             return;
         } else if (hpChange < 0) {
             timeOfHit = Time.time;
