@@ -15,7 +15,7 @@ public class EnemyManager : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.layer == 6) {
-            enemyHp--;
+            UpdateEnemyHp(-1);
         }
         if (coll.gameObject.layer == 7) {
             var vectorToPlayer = coll.gameObject.GetComponent<Transform>().position - transform.position;
