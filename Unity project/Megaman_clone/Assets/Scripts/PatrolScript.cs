@@ -11,7 +11,18 @@ public class PatrolScript : MonoBehaviour
     private Transform currentPoint;
     private Animator kurrewalk;
     public float speed;
-    
+    private float nextspeed;        
+    public void SetSpeed(float newspeed, float delay = 5)
+    {
+        nextspeed = newspeed;
+        speed = 0;
+        Invoke("Invokedspeed",delay);
+    }
+    public void Invokedspeed()
+    {
+        speed = nextspeed;
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
