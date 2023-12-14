@@ -12,7 +12,7 @@ public class SnowmanCarrotProjecile : HomingProjectile
     [SerializeField] float initialLaunchForce;
     [SerializeField] float carrotProjectileThrottleForce;
     [SerializeField] float timeBeforeTrottle;
-    [SerializeField] float timeBeforeSplitting;
+    public float timeBeforeSplitting;
     [SerializeField] int carrotDamage;
     [SerializeField] float carrotKnockback;
     [SerializeField] float destructionTime;

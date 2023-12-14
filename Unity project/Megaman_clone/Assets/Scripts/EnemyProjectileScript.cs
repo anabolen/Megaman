@@ -10,7 +10,7 @@ public class EnemyProjectileScript : MonoBehaviour
     [SerializeField] float knockbackForce;
 
     void Awake() {
-        Destroy(gameObject, 6f);
+        Destroy(gameObject, 4f);
     }
 
     void Update() {

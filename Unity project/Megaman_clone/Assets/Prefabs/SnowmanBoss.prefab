@@ -124,14 +124,25 @@ MonoBehaviour:
   buttSlamJumpForce: 20
   buttSlamJumpGravityScale: 5
   buttSlamLandingForce: 20
-  splashDuration: 0.2
-  splashShockWaveSpeed: 50
-  splashing: 0
+  sidewaysButtSlamJumpForce: 20
+  sidewaysButtSlamLandingForce: 100
+  normalSlamDuration: 0.2
+  normalSlamShockWaveSpeed: 50
+  sidewaysSlamDuration: 0.1
+  buttSlamJumpForce_xAxisComponent: 5
+  slamming: 0
   whirling: 0
   whirlAccelerationForce: 15
   whirlDeaccelerationForce: 15
   whirlAccelerationTime: 1
   whirlDeaccelerationTime: 0.5
+  quickWhirlAccelerationForce: 40
+  quickWhirlAccelerationTime: 0.7
+  additionalLaunchDirections:
+  - {x: 0, y: 10}
+  - {x: 0, y: 0}
+  - {x: 0, y: 5}
+  - {x: 2, y: 10}
 --- !u!1 &2290588023912523217
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,8 +152,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2876504097593483037}
-  - component: {fileID: 6158389517283927729}
-  m_Layer: 8
+  - component: {fileID: 1825432649804938287}
+  m_Layer: 3
   m_Name: WhirlDamageCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,14 +169,14 @@ Transform:
   m_GameObject: {fileID: 2290588023912523217}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -0.11, y: 1.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4173074989676268938}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &6158389517283927729
-CircleCollider2D:
+--- !u!70 &1825432649804938287
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -196,9 +207,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1
+  m_Offset: {x: -0.3543382, y: -0.13222405}
+  m_Size: {x: 2.485956, y: 1.9356089}
+  m_Direction: 1
 --- !u!1 &6585686505881497996
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +221,7 @@ GameObject:
   - component: {fileID: 4173074989676268938}
   - component: {fileID: 3411874805598770297}
   - component: {fileID: 8764239420366574386}
+  - component: {fileID: 214462509088877458}
   - component: {fileID: 396813755162344151}
   m_Layer: 8
   m_Name: BossHitboxes
@@ -294,8 +306,43 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 3}
-  m_Size: {x: 2, y: 3}
+  m_Offset: {x: 0, y: 2.8114781}
+  m_Size: {x: 1.7842121, y: 2.6229563}
+  m_Direction: 0
+--- !u!70 &214462509088877458
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6585686505881497996}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.005264282, y: 1.0554147}
+  m_Size: {x: 2.0687141, y: 2.0687141}
   m_Direction: 0
 --- !u!114 &396813755162344151
 MonoBehaviour:
@@ -361,21 +408,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phaseTransitionPercentages:
   - 0.8
-  - 0.6
-  - 0.3
+  - 0.5
+  - 0.2
   bossAbilities:
   - {fileID: 3377269383173072817, guid: a1e442d3b9de3a64da53865e09918098, type: 3}
   - {fileID: 3307894789655761924, guid: d0d3fefa16298c543adc829e2b8988c3, type: 3}
-  closeRangeDistance: 5
+  firstPhaseCloseRangeDistance: 5
+  secondPhaseCloseRangeDistance: 10
+  whirlAttackMaxInt: 2
+  buttSlamMaxInt: 3
+  slamWhirlComboMaxInt: 1
+  thirdPhaseStartCooldownDuration: 1
+  megaShootMaxInt: 1
+  quickWhirlMaxInt: 2
   carrotRocketCooldownDuration: 3
-  buttSlamCooldownDuration: 0
-  whirlCooldownDuration: 0
-  buttSlamDamage: 5
+  buttSlamCooldownDuration: 1
+  whirlCooldownDuration: 2.2
+  secondPhaseShootCooldownDuration: 1.2
+  sidewaysButtSlamCooldownDuration: 0.5
+  whirlButtSlamTransitionCooldownDuration: 2.4
+  quickWhirlCooldownDuration: 1.5
+  buttSlamDamage: 3
   splashKnockback: 20
-  whirlDamage: 5
+  whirlDamage: 2
   whirlKnockback: 20
   playerTransform: {fileID: 0}
   bossDirection: 0
+  transitioned: 0
 --- !u!114 &8388223910802789791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,7 +448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  maxHealth: 50
+  maxHealth: 60
 --- !u!50 &284613213190040635
 Rigidbody2D:
   serializedVersion: 4
@@ -462,7 +521,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8492995378239018018}
   - component: {fileID: 2360927089601976197}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: SplashDamageCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
