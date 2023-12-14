@@ -184,6 +184,7 @@ MonoBehaviour:
   deathTime: 1
   spawnTime: 1
   scriptPaused: 0
+  takingDamage: 0
   hitTime: 0.3
   immunityTime: 2
   immunitySpriteToggleTime: 0.03
@@ -206,6 +207,7 @@ MonoBehaviour:
     m_Bits: 1024
   checkpoint: 0
   checkpoints: []
+  initialImmunityDuration: 0.5
 --- !u!114 &7121940778540259767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,6 +243,7 @@ MonoBehaviour:
   lives: 0
   playingDeathAnimation: 0
   justClimbed: 0
+  initialImmunityDuration: 0.5
 --- !u!114 &4715667978466890856
 MonoBehaviour:
   m_ObjectHideFlags: 0

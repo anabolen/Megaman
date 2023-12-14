@@ -174,7 +174,6 @@ public class SnowmanAnimFunctions : MonoBehaviour {
         carrotRocketAbility.LaunchDirection(additionalLaunchDirections[directionIndex]);
         carrotRocketAbility.AbilityBehaviour();
         directionIndex++;
-        print(directionIndex);
         if (directionIndex > 2)
             superShotStarted = false;
     }

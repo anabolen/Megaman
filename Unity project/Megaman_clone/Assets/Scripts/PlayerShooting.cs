@@ -43,7 +43,6 @@ public class PlayerShooting : MonoBehaviour
                 Physics2D.IgnoreLayerCollision(7, 14, FoxJumpAbility.ignorePlayerCollisions);
                 Instantiate(projectile, transform.position + projectileOffset, transform.rotation);
                 var ammo = projectileClass.AbilityAmmoIncrement(0).ammoReturn;
-                print(ammo);
                 playerManager.playerAmmo = ammo;
                 playerManager.UpdatePlayerAmmo(ammo);
             }
