@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 456132349808924713}
   - component: {fileID: 4787546931190208566}
   - component: {fileID: 1937142938327070260}
-  m_Layer: 0
+  - component: {fileID: 5619775020199140189}
+  m_Layer: 8
   m_Name: tykk1_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 859351096763018769}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f4294e1c0c336dc4a8a406fc7df0cdb2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6b9981a44c09ee3479acc8b13ee6f651, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -120,8 +121,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 235f190409cccb347ab50378e2eabc52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
-  damageAmount: 1
+  enemyHp: 0
+  enemyMaxHp: 5
+  damageAmount: 2
+  knockbackForce: 2
 --- !u!114 &1937142938327070260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,3 +138,62 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tykkiprojectile: {fileID: 1999638032999568468, guid: ebc796b4be61d5446b42e92344379d30, type: 3}
+--- !u!60 &5619775020199140189
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859351096763018769}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.28, y: 1.28}
+    newSize: {x: 1.28, y: 1.28}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.32, y: 0}
+      - {x: 0.32, y: 0.049999997}
+      - {x: 0.17, y: 0.19}
+      - {x: -0.049999997, y: 0.39}
+      - {x: -0.32, y: 0.52}
+      - {x: -0.53999996, y: 0.62}
+      - {x: -0.59999996, y: 0.62}
+      - {x: -0.62, y: 0.59999996}
+      - {x: -0.62, y: -0.59999996}
+      - {x: -0.59999996, y: -0.62}
+      - {x: -0.53999996, y: -0.62}
+      - {x: -0.45, y: -0.59}
+      - {x: -0.01, y: -0.35999998}
+      - {x: 0.29999998, y: -0.04}
+  m_UseDelaunayMesh: 0
