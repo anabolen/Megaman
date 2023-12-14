@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class KurreScript : MonoBehaviour
+public class PatrolScript : MonoBehaviour
 {
     public GameObject pointA;
     public GameObject pointB;
