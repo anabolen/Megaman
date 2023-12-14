@@ -23,19 +23,29 @@ public class SnowmanAnimFunctions : MonoBehaviour {
     [SerializeField] float sidewaysButtSlamLandingForce = 30;
 
     [Header("Slam settings")]
-    [SerializeField] float slamDuration = 0.2f;
-    [SerializeField] float slamShockWaveSpeed = 50;
+    [SerializeField] float normalSlamDuration = 0.2f;
+    [SerializeField] float normalSlamShockWaveSpeed = 50;
+    [SerializeField] float sidewaysSlamDuration = 0.1f;
     [SerializeField] float buttSlamJumpForce_xAxisComponent = 5;
+    float currentSlamDuration;
     float timeOfSplash;
     public bool slamming = false;
     public bool whirling = false;
     float slamDamageArea_x;
+    enum SlamType { Normal, Sideways }
+    SlamType currentSlamType;
+    enum WhirlType { Normal, Quick }
+    WhirlType currentWhirlType;
 
     [Header("Whirl settings")]
     [SerializeField] float whirlAccelerationForce = 15;
     [SerializeField] float whirlDeaccelerationForce = 15;
     [SerializeField] float whirlAccelerationTime = 1;
     [SerializeField] float whirlDeaccelerationTime = 0.2f;
+    [SerializeField] float quickWhirlAccelerationForce = 20;
+    [SerializeField] float quickWhirlAccelerationTime = 1;
+
+
     bool stopWhirling;
     float whirlStartTime;
     float whirlStopTime;
@@ -66,6 +76,11 @@ public class SnowmanAnimFunctions : MonoBehaviour {
 
     void WhirlUpdate() {
 
+        if (currentWhirlType == WhirlType.Quick) {
+            QuickWhirlUpdate();
+            return;
+        }
+
         if (whirlStopTime + whirlDeaccelerationTime > Time.time && stopWhirling) { 
             rb.AddRelativeForce(new Vector2(bossAI.bossDirection, 0) * whirlDeaccelerationForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
         }
@@ -87,6 +102,15 @@ public class SnowmanAnimFunctions : MonoBehaviour {
         }
     }
 
+    void QuickWhirlUpdate() {
+        rb.AddRelativeForce(quickWhirlAccelerationForce * Time.fixedDeltaTime * new Vector2(-bossAI.bossDirection, 0), ForceMode2D.Impulse);
+        if (whirlStartTime + quickWhirlAccelerationTime < Time.time) {
+            rb.velocity = Vector2.zero;
+            whirling = false;
+            ReturnToIdleAnimation();
+        }
+    }
+
     void SlamUpdate() {
 
         if (!slamming) {
@@ -96,10 +120,18 @@ public class SnowmanAnimFunctions : MonoBehaviour {
             return;
         }
 
-        slamDamageArea_x += Time.fixedDeltaTime * slamShockWaveSpeed;
-        slamDamageCollider.transform.localScale = new Vector2(slamDamageArea_x, 1);
+        if (currentSlamType == SlamType.Normal) { 
+            slamDamageArea_x += Time.fixedDeltaTime * normalSlamShockWaveSpeed;
+            slamDamageCollider.transform.localScale = new Vector2(slamDamageArea_x, 1);
+            currentSlamDuration = normalSlamDuration;
+        } else {
+            slamDamageArea_x += Time.fixedDeltaTime * normalSlamShockWaveSpeed;
+            slamDamageCollider.transform.localScale = new Vector2(slamDamageArea_x, 1);
+            currentSlamDuration = sidewaysSlamDuration;
+        }
+        print(currentSlamType);
 
-        if (timeOfSplash + slamDuration < Time.time)
+        if (timeOfSplash + currentSlamDuration < Time.time)
             slamming = false;
     }
 
@@ -108,11 +140,23 @@ public class SnowmanAnimFunctions : MonoBehaviour {
         whirlDamageCollider.enabled = true;
         whirling = true;
         stopWhirling = false;
+        currentWhirlType = WhirlType.Normal;
+        whirlStartTime = Time.time;
+    }
+
+    public void QuickWhirl() {
+        defaultCollider.enabled = false;
+        whirlDamageCollider.enabled = true;
+        whirling = true;
+        stopWhirling = false;
+        currentWhirlType = WhirlType.Quick;
         whirlStartTime = Time.time;
     }
 
     public void Shoot() {
         carrotRocketAbility = bossAI.bossAbilities[0] as CarrotRocketAbility;
+        CarrotRocketAbility.carrotSplitUpDisabled = false;
+        CarrotRocketAbility.airStrike = false;
         shooting = true;
         carrotRocketAbility.LaunchDirection(additionalLaunchDirections[1]);
         carrotRocketAbility.AbilityBehaviour();
@@ -124,6 +168,8 @@ public class SnowmanAnimFunctions : MonoBehaviour {
             directionIndex = 0;
         }
         carrotRocketAbility = bossAI.bossAbilities[0] as CarrotRocketAbility;
+        CarrotRocketAbility.carrotSplitUpDisabled = true;
+        CarrotRocketAbility.airStrike = false;
         shooting = true;
         carrotRocketAbility.LaunchDirection(additionalLaunchDirections[directionIndex]);
         carrotRocketAbility.AbilityBehaviour();
@@ -131,6 +177,14 @@ public class SnowmanAnimFunctions : MonoBehaviour {
         print(directionIndex);
         if (directionIndex > 2)
             superShotStarted = false;
+    }
+
+    public void AirStrike() {
+
+        CarrotRocketAbility.airStrike = true;
+        CarrotRocketAbility.carrotSplitUpDisabled = false;
+        carrotRocketAbility.LaunchDirection(additionalLaunchDirections[3]);
+        carrotRocketAbility.AbilityBehaviour();
     }
 
     public void Slam() {
@@ -147,11 +201,13 @@ public class SnowmanAnimFunctions : MonoBehaviour {
     public void ButtSlamJump() {
         rb.gravityScale = buttSlamJumpGravityScale;
         rb.AddForce(buttSlamJumpForce * Vector2.up, ForceMode2D.Impulse);
+        currentSlamType = SlamType.Normal;
     }
 
     public void SidewaysButtSlamJump() {
         rb.gravityScale = buttSlamJumpGravityScale;
         rb.AddForce(new Vector2(buttSlamJumpForce_xAxisComponent * -bossAI.bossDirection, sidewaysButtSlamJumpForce), ForceMode2D.Impulse);
+        currentSlamType = SlamType.Sideways;
     }
 
     public void ButtSlamLanding() {

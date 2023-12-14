@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2546524083705300538}
   - component: {fileID: 7503222303221151498}
   m_Layer: 10
-  m_Name: IntercontinentalCarrot
+  m_Name: AirStrikeCarrot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,13 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 035a93917dd2c6f4fb7eb052506d458f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialLaunchForce: 5
+  initialLaunchForce: 0
   carrotProjectileThrottleForce: 0.4
-  timeBeforeTrottle: 0.2
-  timeBeforeSplitting: 0.3
-  carrotDamage: 3
+  timeBeforeTrottle: 0
+  timeBeforeSplitting: 0.5
+  carrotDamage: 5
   carrotKnockback: 5
-  destructionTime: 2
+  destructionTime: 10
   direction: 1
   smallRockets:
   - {fileID: 2288367013420096804, guid: e172c00f1a6d3bc499eb4e42ccc61e92, type: 3}

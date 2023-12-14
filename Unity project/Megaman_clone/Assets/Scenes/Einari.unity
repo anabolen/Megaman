@@ -1666,8 +1666,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: b0834d933c0ac644fabc2f76223920d1, type: 3}
     - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: sidewaysSlamDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: sidewaysButtSlamJumpForce
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: quickWhirlAccelerationTime
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: quickWhirlAccelerationForce
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: sidewaysButtSlamLandingForce
@@ -1675,7 +1687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: additionalLaunchDirections.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: additionalLaunchDirections.Array.data[0].x
@@ -1693,6 +1705,14 @@ PrefabInstance:
       propertyPath: additionalLaunchDirections.Array.data[2].y
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: additionalLaunchDirections.Array.data[3].x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: additionalLaunchDirections.Array.data[3].y
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6158389517283927729, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: m_Radius
       value: 1.3173151
@@ -1700,6 +1720,14 @@ PrefabInstance:
     - target: {fileID: 6158389517283927729, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: m_Offset.x
       value: 0.3173151
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: whirlDamage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: buttSlamDamage
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: buttSlamMaxInt
@@ -1726,6 +1754,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: quickWhirlCooldownDuration
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: firstPhaseCloseRangeDistance
       value: 5
       objectReference: {fileID: 0}
@@ -1735,7 +1767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: thirdPhaseStartCooldownDuration
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: secondPhaseShootCooldownDuration
@@ -1745,9 +1777,25 @@ PrefabInstance:
       propertyPath: secondPhaseTransitionCooldownDuration
       value: 1.2
       objectReference: {fileID: 0}
+    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: whirlButtSlamTransitionCooldownDuration
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: phaseTransitionPercentages.Array.data[1]
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: phaseTransitionPercentages.Array.data[2]
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 7023017951535292142, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: m_Name
       value: SnowmanBoss
+      objectReference: {fileID: 0}
+    - target: {fileID: 8388223910802789791, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+      propertyPath: maxHealth
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8720636930053067844, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: m_Layer
