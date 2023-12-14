@@ -39,7 +39,7 @@ public class HomingMissile : HomingProjectile
         if (coll.gameObject.layer == 7) {
             coll.gameObject.GetComponent<PlayerManager>().UpdatePlayerHp(-rocketDamage);
             float hitDirection = new Vector2(transform.TransformDirection(Vector2.right).normalized.x, 0).x;
-            coll.gameObject.GetComponent<PlayerController>().PlayerHitCheck(knockback, -hitDirection);
+            coll.gameObject.GetComponent<PlayerController>().PlayerHitCheck(knockback, hitDirection);
         }
     }
 }

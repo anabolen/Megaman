@@ -15,6 +15,7 @@ public class SnowmanCarrotProjecile : HomingProjectile
     [SerializeField] float timeBeforeSplitting;
     [SerializeField] int carrotDamage;
     [SerializeField] float carrotKnockback;
+    [SerializeField] float destructionTime;
 
     float initializationTime;
     public float direction = 1;
@@ -29,6 +30,7 @@ public class SnowmanCarrotProjecile : HomingProjectile
                             smallRocketDestructionTime;
     SpriteRenderer spriteRenderer;
     Rigidbody2D rb;
+    bool splitUpDisabled;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -38,6 +40,8 @@ public class SnowmanCarrotProjecile : HomingProjectile
         rb.AddForce(initialLaunchForce * direction * Vector2.right, ForceMode2D.Impulse);
         //FindPlayerTransform();
         initializationTime = Time.time;
+        Destroy(gameObject, destructionTime);
+        splitUpDisabled = CarrotRocketAbility.carrotSplitUpDisabled;
     }
 
     void FixedUpdate()
@@ -46,7 +50,7 @@ public class SnowmanCarrotProjecile : HomingProjectile
         {
             HomingThrottle(rb, carrotProjectileThrottleForce, transform, spriteRenderer.transform);
         }
-        if (initializationTime + timeBeforeSplitting < Time.time)
+        if (initializationTime + timeBeforeSplitting < Time.time && !splitUpDisabled)
             SplitUp();
     }
 

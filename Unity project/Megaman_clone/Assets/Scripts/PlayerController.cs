@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour {
     public bool scriptPaused;
     bool playerVelocityFreeze = false;
 
-    bool takingDamage;
+    public bool takingDamage;
     [SerializeField] float hitTime;
     [SerializeField] float immunityTime;
     [SerializeField] float immunitySpriteToggleTime;
@@ -88,7 +88,6 @@ public class PlayerController : MonoBehaviour {
     public int checkpoint;
     public GameObject[] checkpoints;
 
-    float timeOfHit;
     [SerializeField] float initialImmunityDuration;
 
     void Awake() {
