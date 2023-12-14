@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public interface ISpecialAbilities {
@@ -20,7 +19,7 @@ public interface ISpecialAbilities {
 
     GameObject AbilityProjectile();
 
-    AnimatorController AbilityPlayerAnimations();
+    //AnimatorController AbilityPlayerAnimations();
 
     Sprite UIAbilitySprite();
 

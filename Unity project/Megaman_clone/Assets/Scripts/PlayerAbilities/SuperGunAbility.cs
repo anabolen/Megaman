@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.Animations;
 
 public class SuperGunAbility : ISpecialAbilities {
 
@@ -13,9 +12,9 @@ public class SuperGunAbility : ISpecialAbilities {
         return "Super gun";
     }
 
-    public AnimatorController AbilityPlayerAnimations() {
-        return Resources.Load<AnimatorController>("PlayerAnimations/SuperGunAbilityAnimations"); ;
-    }
+    //public AnimatorController AbilityPlayerAnimations() {
+    //    return Resources.Load<AnimatorController>("PlayerAnimations/SuperGunAbilityAnimations"); ;
+    //}
 
     public GameObject AbilityProjectile() {
         if (ammoAmount == 0)

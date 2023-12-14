@@ -1070,46 +1070,6 @@ Transform:
   - {fileID: 1451131603}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &952533894 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2290588023912523217, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-  m_PrefabInstance: {fileID: 1603647157}
-  m_PrefabAsset: {fileID: 0}
---- !u!70 &952533896
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 952533894}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.3543382, y: -0.13222405}
-  m_Size: {x: 2.485956, y: 1.9356089}
-  m_Direction: 1
 --- !u!1 &1027563909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1609,18 +1569,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2290588023912523217, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2876504097593483037, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.11
-      objectReference: {fileID: 0}
-    - target: {fileID: 2876504097593483037, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.06
-      objectReference: {fileID: 0}
     - target: {fileID: 4499370508516061121, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.28
@@ -1661,219 +1609,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5628486973139692419, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: b0834d933c0ac644fabc2f76223920d1, type: 3}
-    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: sidewaysSlamDuration
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: sidewaysButtSlamJumpForce
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: quickWhirlAccelerationTime
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: quickWhirlAccelerationForce
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: sidewaysButtSlamLandingForce
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: additionalLaunchDirections.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: additionalLaunchDirections.Array.data[0].x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: additionalLaunchDirections.Array.data[0].y
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: additionalLaunchDirections.Array.data[2].x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: additionalLaunchDirections.Array.data[2].y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: additionalLaunchDirections.Array.data[3].x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6066235545701948323, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: additionalLaunchDirections.Array.data[3].y
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6158389517283927729, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: m_Radius
-      value: 1.3173151
-      objectReference: {fileID: 0}
-    - target: {fileID: 6158389517283927729, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.3173151
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: whirlDamage
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: buttSlamDamage
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: buttSlamMaxInt
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 1173692139}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: whirlAttackMaxInt
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: slamWhirlComboMaxInt
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: whirlCooldownDuration
-      value: 2.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: buttSlamCooldownDuration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: quickWhirlCooldownDuration
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: firstPhaseCloseRangeDistance
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: secondPhaseCloseRangeDistance
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: thirdPhaseStartCooldownDuration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: secondPhaseShootCooldownDuration
-      value: 1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: secondPhaseTransitionCooldownDuration
-      value: 1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: whirlButtSlamTransitionCooldownDuration
-      value: 2.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: phaseTransitionPercentages.Array.data[1]
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6916000106490405067, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: phaseTransitionPercentages.Array.data[2]
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 7023017951535292142, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: m_Name
       value: SnowmanBoss
       objectReference: {fileID: 0}
-    - target: {fileID: 8388223910802789791, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: maxHealth
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 8720636930053067844, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8764239420366574386, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: m_Size.x
-      value: 1.7842121
-      objectReference: {fileID: 0}
-    - target: {fileID: 8764239420366574386, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: m_Size.y
-      value: 2.6229563
-      objectReference: {fileID: 0}
-    - target: {fileID: 8764239420366574386, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: m_Offset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8764239420366574386, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      propertyPath: m_Offset.y
-      value: 2.8114781
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6158389517283927729, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6585686505881497996, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 8764239419788584328}
-    - targetCorrespondingSourceObject: {fileID: 2290588023912523217, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 952533896}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
 --- !u!1 &2035620471 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1375493572995965478, guid: ae9956068fd715a4ab19c0b5e98b3b0b, type: 3}
   m_PrefabInstance: {fileID: 746131540}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6585686506914170681 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6585686505881497996, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
-  m_PrefabInstance: {fileID: 1603647157}
-  m_PrefabAsset: {fileID: 0}
---- !u!70 &8764239419788584328
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6585686506914170681}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.005264282, y: 1.0554147}
-  m_Size: {x: 2.0687141, y: 2.0687141}
-  m_Direction: 0
 --- !u!1001 &9133805593822197846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1882,26 +1635,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 336994011609915125, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3758392127828716639, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: m_Name
       value: 'PlayerCharacter '
-      objectReference: {fileID: 0}
-    - target: {fileID: 4301215252530026446, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
-      propertyPath: initialImmunityDuration
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4715667978466890856, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: inventoryMenu
       value: 
       objectReference: {fileID: 2035620471}
-    - target: {fileID: 4763024786950256066, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
-      propertyPath: initialImmunityDuration
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 5311405581944802196, guid: 623a9942dab2c6d41a98903a876fe1eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.69

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.Animations;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using System;
 
@@ -18,10 +17,10 @@ public class NormalGunAbility : ISpecialAbilities
         return "Normal gun";
     }
 
-    public AnimatorController AbilityPlayerAnimations()
-    {
-        return Resources.Load<AnimatorController>("PlayerAnimations/NormalAbilityAnimations"); ;
-    }
+    //public AnimatorController AbilityPlayerAnimations()
+    //{
+    //    return Resources.Load<AnimatorController>("PlayerAnimations/NormalAbilityAnimations"); ;
+    //}
 
     public static List<GameObject> normalProjectiles = new();
     public int maxprojectiles = 3;
