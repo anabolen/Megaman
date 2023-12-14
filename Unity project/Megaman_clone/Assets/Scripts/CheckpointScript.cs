@@ -5,11 +5,9 @@ using UnityEngine;
 public class CheckpointScript : MonoBehaviour
 {
     PlayerController playerCon;
-    //[SerializeField] bool used;
     void Start()
     {
         playerCon = FindObjectOfType<PlayerController>();
-        //used = false;
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
