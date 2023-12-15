@@ -12,7 +12,7 @@ public class PatrolScript : MonoBehaviour
     private Animator kurrewalk;
     public float speed;
     private float nextspeed;        
-    public void SetSpeed(float newspeed, float delay = 5)
+    public void SetSpeed(float newspeed, float delay = 5f)
     {
         nextspeed = newspeed;
         speed = 0;
