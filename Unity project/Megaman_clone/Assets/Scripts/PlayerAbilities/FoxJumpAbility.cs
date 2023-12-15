@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static ISpecialAbilities;
 
 public class FoxJumpAbility : ISpecialAbilities { 
 
@@ -12,6 +13,10 @@ public class FoxJumpAbility : ISpecialAbilities {
 
     public string AbilityName() {
         return "Fox jump";
+    }
+
+    public AbilityShootingBehaviour ShootingBehaviour() {
+        return AbilityShootingBehaviour.PressToShoot;
     }
 
     //public AnimatorController AbilityPlayerAnimations() {

@@ -19,6 +19,10 @@ public interface ISpecialAbilities {
 
     GameObject AbilityProjectile();
 
+    public enum AbilityShootingBehaviour { PressToShoot, HoldToShoot, Chargeable }
+
+    AbilityShootingBehaviour ShootingBehaviour();
+
     //AnimatorController AbilityPlayerAnimations();
 
     Sprite UIAbilitySprite();

@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using System;
+using static ISpecialAbilities;
 
 public class NormalGunAbility : ISpecialAbilities
 {
 
-    public int AbilityID()
-    {
+    public int AbilityID() {
         return (0);
     }
 
-    public string AbilityName()
-    {
+    public string AbilityName() {
         return "Normal gun";
+    }
+
+    public AbilityShootingBehaviour ShootingBehaviour() {
+        return AbilityShootingBehaviour.PressToShoot;
     }
 
     //public AnimatorController AbilityPlayerAnimations()
