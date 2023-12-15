@@ -10,6 +10,7 @@ public class EnemyProjectileScript : MonoBehaviour
     [SerializeField] float knockbackForce;
 
     void Awake() {
+        AudioFW.Play("TurretShootAudio");
         Destroy(gameObject, 4f);
     }
 
