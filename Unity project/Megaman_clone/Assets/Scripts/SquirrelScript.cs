@@ -5,33 +5,43 @@ using UnityEngine;
 
 public class SquirrelScript : MonoBehaviour
 {
-    
+    public float normalspeed = 1;
+    public float angryspeed = 4;
     private Animator anim;
     bool transformed = false;
-
-    public int duration = 2;
+    public GameObject kurre;
 
     // Start is called before the first frame update
     void Start()
     {
-        anim = GameObject.Find("Kurre").GetComponent<Animator>();
+            kurre.GetComponent<PatrolScript>().SetSpeed(normalspeed, 0f);
+            anim = kurre.GetComponent<Animator>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
 
         if (other.gameObject.layer == 7 && !transformed) {
+            
             anim.Play("KurreTransform");
-            GameObject.Find("Kurre").GetComponent<PatrolScript>().speed *= 2;
+            kurre.GetComponent<PatrolScript>().SetSpeed(angryspeed, 0.5f);
             transformed = true;
         }
         
         
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        anim.Play("kurrewalk");
+        print("print");
+        if (other.gameObject.layer == 7)
+        {
+            print("print2");
+
+            kurre.GetComponent<PatrolScript>().SetSpeed(normalspeed, 0f);
+            anim.Play("KurreWalk");
+            transformed = false;
+        }
     }
     void Update()
     {

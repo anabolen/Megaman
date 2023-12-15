@@ -81,6 +81,7 @@ public class PlayerInventory : MonoBehaviour
         Time.timeScale = 0;
         paused = true;
         inventoryMenu.SetActive(true);
+        AudioFW.Play("OpenInventoryAudio");
     }
 
     void ClosePauseMenu() {
@@ -88,6 +89,7 @@ public class PlayerInventory : MonoBehaviour
         Time.timeScale = 1;
         paused = false;
         inventoryMenu.SetActive(false);
+        AudioFW.Play("OpenInventoryAudio");
     }
 
     void UpdatePauseMenuSprite() {

@@ -20,6 +20,7 @@ public class NormalPlayerProjectile : MonoBehaviour
         var offsetVector = new Vector2(playerShootingScript.projectileOffset.x, 0).normalized;
         projectileDirection = offsetVector.x;
         awakeTime = Time.time;
+        AudioFW.Play("DefaultPlayerWeaponAudio");
     }
 
     void Update() {

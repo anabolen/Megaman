@@ -102,6 +102,7 @@ public class PlayerManager : MonoBehaviour
         if (playerHp == 0 && !playingDeathAnimation) {
             StartCoroutine(controller.PlayerDeath());
             playingDeathAnimation = true;
+            AudioFW.Play("PlayerDeathAudio");
         }
     }
 
