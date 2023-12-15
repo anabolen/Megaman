@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class FoxJumpAbility : ISpecialAbilities { 
@@ -15,9 +14,9 @@ public class FoxJumpAbility : ISpecialAbilities {
         return "Fox jump";
     }
 
-    public AnimatorController AbilityPlayerAnimations() {
-        return Resources.Load<AnimatorController>("PlayerAnimations/FoxJumpAbilityAnimations");
-    }
+    //public AnimatorController AbilityPlayerAnimations() {
+    //    return Resources.Load<AnimatorController>("PlayerAnimations/FoxJumpAbilityAnimations");
+    //}
 
     public static bool foxJumpProjectileExists;
     public static bool ignorePlayerCollisions;

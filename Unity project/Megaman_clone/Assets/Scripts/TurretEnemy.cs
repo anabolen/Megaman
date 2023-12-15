@@ -5,19 +5,24 @@ using UnityEngine;
 public class TurretEnemy : MonoBehaviour
 {
     bool started;
+    bool dead;
     Vector2Int startRoomCoords;
-    Vector2 startPos;
     CameraMovement cam;
     [SerializeField] GameObject projectile;
     bool facingRight;
     bool notFired;
+    public bool turning;
     Transform playerTrans;
     [SerializeField] float firerate;
+    EnemyManager enemyManager;
+    SpriteRenderer spriteRenderer;
+    BoxCollider2D boxCollider;
+    Animator animator;
     void RoomReset(Vector2Int roomCoords) {
         if (roomCoords != startRoomCoords) return;
         print(name + " resetting");
-        transform.position = startPos;
         started = false;
+        enemyManager.enemyHp = enemyManager.enemyMaxHp;
     }
 
     void RoomStart(Vector2Int roomCoords) {
@@ -27,14 +32,18 @@ public class TurretEnemy : MonoBehaviour
     }
 
     void Start() {
-        startPos = transform.position;
         var grid = FindObjectOfType<Grid>();
         cam = FindObjectOfType<CameraMovement>();
         cam.roomStart.AddListener(RoomStart);
         cam.roomReset.AddListener(RoomReset);
         startRoomCoords = (Vector2Int)grid.WorldToCell(transform.position);
         playerTrans = GameObject.Find("PlayerCharacter ").transform;
+        enemyManager = GetComponent<EnemyManager>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        animator = GetComponentInChildren<Animator>();
         notFired = true;
+        turning = false;
 
     }
 
@@ -43,27 +52,45 @@ public class TurretEnemy : MonoBehaviour
         if (started) {
            if (transform.position.x > playerTrans.position.x) {
                 facingRight = false;
+                animator.Play("turretRotateLeft");
            } else {
                 facingRight = true;
-           }
-           if (facingRight == true && notFired == true) {
+                animator.Play("turretRotateRight");
+            }
+           if (facingRight == true && notFired == true && turning == false) {
                 ShootRight();
-           } else if (facingRight == false && notFired == true) {
+           } else if (facingRight == false && notFired == true && turning == false) {
                 ShootLeft();
            }
         }
+        if (enemyManager.enemyHp == 0) {
+            animator.enabled = false;
+            boxCollider.enabled = false;
+            spriteRenderer.enabled = false;
+            dead = true;
+        } else {
+            animator.enabled = true;
+            boxCollider.enabled = true;
+            spriteRenderer.enabled = true;
+            dead = false;
+        }
+
     }
 
     void ShootRight() {
-        Instantiate(projectile, transform.position, transform.rotation);
-        notFired = false;
-        Invoke("ResetFire", firerate);
+        if (!dead) {
+            Instantiate(projectile, transform.position, transform.rotation);
+            notFired = false;
+            Invoke("ResetFire", firerate);
+        }
     }
 
     void ShootLeft() {
-        Instantiate(projectile, transform.position, Quaternion.Euler( 0, 0, 180));
-        notFired = false;
-        Invoke("ResetFire", firerate);
+        if (!dead) {
+            Instantiate(projectile, transform.position, Quaternion.Euler(0, 0, 180));
+            notFired = false;
+            Invoke("ResetFire", firerate);
+        }
     }
 
     void ResetFire() {
