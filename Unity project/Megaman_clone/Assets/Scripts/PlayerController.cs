@@ -137,6 +137,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetAxisRaw("Jump") != 0 && !jumpingUp) {
             StartCoroutine(Jump());
             jumpingUp = true;
+            AudioFW.Play("PlayerJumpAudio");
         }
 
         CheckPlayerSpriteState(movementMultiplier);
