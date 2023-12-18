@@ -20,13 +20,26 @@ public class KurreScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (GetComponent<EnemyManager>().enemyHp == 0 && !died)
         {
+
             anim.Play("KurreDeath");
             died = true;
 
         }
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+            AudioFW.Play("SquirrelDamaged");
+        print("rara");
+    }
+    
+
+        
+
+
 }
 
 //    public void kurreDeath()
