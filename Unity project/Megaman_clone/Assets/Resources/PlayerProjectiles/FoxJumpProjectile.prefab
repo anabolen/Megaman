@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileForce: 5
   projectileLifeTime: 3
-  launchForce: 20
+  launchForce: 30
   ignoreCollisionsTime: 0
 --- !u!1 &6231444900394613779
 GameObject:

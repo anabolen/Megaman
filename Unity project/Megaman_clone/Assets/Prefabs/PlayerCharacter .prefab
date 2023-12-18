@@ -221,9 +221,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectiles: []
+  guanoBarrier: {fileID: 0}
+  guanoBarrierEnabled: 0
+  guanoBarrierLaunched: 0
+  guanoBarrierLaunchDirections:
+  - {x: 0, y: 1}
+  - {x: 1, y: 0}
+  - {x: -1, y: 0}
   playerOrientation: 0
   defaultProjectileOffset: {x: 0.34, y: 0.59, z: 0}
   projectileOffset: {x: 0.34, y: 0.59, z: 0}
+  statusBar: {fileID: 0}
+  currentAbilityAmmo: 0
+  currentAbilityMaxAmmo: 0
 --- !u!114 &4301215252530026446
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -53,6 +53,8 @@ public class GuanoBarrierHit : MonoBehaviour {
         }
         shootingScript.guanoBarrierLaunched = false;
         GetComponent<GuanoBarrierAnimation>().GuanoBarrierSpriteSwitch(false);
+        AudioFW.StopLoop("GuanoBarrierSpinning");
+
     }
 
     void OnTriggerEnter2D(Collider2D collision) {

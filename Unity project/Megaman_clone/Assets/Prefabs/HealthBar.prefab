@@ -561,7 +561,6 @@ GameObject:
   - component: {fileID: 4735837181824307328}
   - component: {fileID: 2922037574072324537}
   - component: {fileID: 3443688275249977556}
-  - component: {fileID: 7670382962219931972}
   m_Layer: 5
   m_Name: AmmoBarBackround
   m_TagString: Untagged
@@ -629,18 +628,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7670382962219931972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6014122181099772443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 368b5acbf3963ce4b8f508ff789759a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6225117813722630347
 GameObject:
   m_ObjectHideFlags: 0

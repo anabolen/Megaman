@@ -58,7 +58,8 @@ public class GuanoBarrierAnimation : MonoBehaviour {
         }
         guanoBarrierDeployed = enabled;
         collider.enabled = enabled;
-        
+        if (enabled)
+            AudioFW.PlayLoop("GuanoBarrierSpinning");
     }
 
     public void Update() {

@@ -115,6 +115,8 @@ public class PlayerInventory : MonoBehaviour
         playerShooting.currentAbilityAmmo = ammo.ammoReturn;
         playerShooting.currentAbilityMaxAmmo = ammo.maxAmmo;
         playerShooting.statusBar.UpdateStatusBar();
+        if (previousAbilityID != currentAbilityID)
+            AudioFW.Play("InventorySwitchAudio");
         UpdatePauseMenuSprite();
         print(currentAbilityString);
     }

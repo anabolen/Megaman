@@ -190,6 +190,7 @@ public class PlayerController : MonoBehaviour {
         if (!takingDamage && playerManager.playerHp != 0) {
             takingDamage = true;
             StartCoroutine(PlayerHit(knockbackForce, hitDirection));
+            AudioFW.Play("PlayerTakingDamage");
         }
     }
 

@@ -29,7 +29,7 @@ public class FoxJumpPlayerProjectile : MonoBehaviour
 
     void LaunchPlayer() {
         var pRb = player.GetComponent<Rigidbody2D>();
-        pRb.AddForce(Vector2.up * launchForce, ForceMode2D.Impulse);
+        pRb.AddForce(launchForce * Vector2.up, ForceMode2D.Impulse);
     }
 
     void Update()
