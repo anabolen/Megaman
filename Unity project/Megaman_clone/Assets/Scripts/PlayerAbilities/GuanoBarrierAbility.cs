@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ISpecialAbilities;
+using static UnityEngine.MonoBehaviour;
 
 public class GuanoBarrierAbility : ISpecialAbilities {
 
@@ -28,7 +29,7 @@ public class GuanoBarrierAbility : ISpecialAbilities {
     }
 
     public int AmmoReductionPerShot() {
-        return -1;
+        return -5;
     }
 
     public int ammoAmount = 20;

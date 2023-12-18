@@ -129,7 +129,7 @@ public class SnowmanAnimFunctions : MonoBehaviour {
             slamDamageCollider.transform.localScale = new Vector2(slamDamageArea_x, 1);
             currentSlamDuration = sidewaysSlamDuration;
         }
-        print(currentSlamType);
+        //print(currentSlamType);
 
         if (timeOfSplash + currentSlamDuration < Time.time)
             slamming = false;

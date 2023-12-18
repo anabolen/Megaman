@@ -9,6 +9,7 @@ public class PlayerShooting : MonoBehaviour
 
     public List<GameObject> projectiles;
     public GameObject guanoBarrier;
+    GuanoBarrierHit guanoBarrierHit;
     public bool guanoBarrierEnabled;
     public bool guanoBarrierLaunched;
     [SerializeField] Vector2[] guanoBarrierLaunchDirections;
@@ -26,7 +27,7 @@ public class PlayerShooting : MonoBehaviour
         invScript = GetComponent<PlayerInventory>();
         playerClimbing = GetComponent<PlayerClimbing>();
         playerManager = FindObjectOfType<PlayerManager>();
-        spriteTransform = GetComponentInChildren<SpriteRenderer>().GetComponent<Transform>();    
+        spriteTransform = GetComponentInChildren<SpriteRenderer>().GetComponent<Transform>();   
         projectileOffset = defaultProjectileOffset;
     }
 
@@ -70,9 +71,12 @@ public class PlayerShooting : MonoBehaviour
         else
             launchDirection = guanoBarrierLaunchDirections[1];
 
-        print(launchDirection);
-
-        if (guanoBarrierLaunched)
+        //print(launchDirection);
+        bool barrierReset = false;
+        if (guanoBarrierHit != null)
+            barrierReset = guanoBarrierHit.reset;
+        var barrierAmmo = projectileClass.AbilityAmmoIncrement(0).ammoReturn;
+        if (guanoBarrierLaunched || barrierReset || barrierAmmo == 0)
             return;
 
         if (Input.GetKey(KeyCode.F)) {
@@ -81,9 +85,10 @@ public class PlayerShooting : MonoBehaviour
                 guanoBarrier.GetComponent<GuanoBarrierAnimation>().GuanoBarrierSpriteSwitch(guanoBarrierEnabled);
             } else if (!guanoBarrierEnabled) { 
                 guanoBarrier = Instantiate(projectileClass.AbilityProjectile(), spriteTransform);
-                var barrierHit = guanoBarrier.GetComponent<GuanoBarrierHit>();
-                barrierHit.playerSpriteTransform = spriteTransform;
-                barrierHit.shootingScript = this;
+                guanoBarrierHit = guanoBarrier.GetComponent<GuanoBarrierHit>();
+                guanoBarrierHit.guanoBarrierAbility = projectileClass;
+                guanoBarrierHit.playerSpriteTransform = spriteTransform;
+                guanoBarrierHit.shootingScript = this;
             }
         } else if (guanoBarrierEnabled) {
             guanoBarrier.transform.parent = null;

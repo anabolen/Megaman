@@ -67,6 +67,7 @@ public class AudioFW : MonoBehaviour {
         loops[id].pitch = Mathf.Clamp(pitch, -3f, 3f);
         //print("Pitch adjusted");
     }
+
     static public AudioFW instance {
         get {
             if (!_instance) {

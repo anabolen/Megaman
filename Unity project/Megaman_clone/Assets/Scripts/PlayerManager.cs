@@ -58,10 +58,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     void OnTriggerExit2D(Collider2D collision) {
-        if (collision.gameObject.layer == 12) { 
-            climbingScript = null;
-            ladderTransform = null;
+        if (collision.gameObject.layer == 12 && climbingScript != null) { 
             canStartClimbing = false;
+            climbingScript.StopClimbing();
+            ladderTransform = null;
+            climbingScript = null;
         }
     }
 
