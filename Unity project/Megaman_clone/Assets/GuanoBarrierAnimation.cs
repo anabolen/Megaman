@@ -43,6 +43,7 @@ public class GuanoBarrierAnimation : MonoBehaviour {
                 newSprite.transform.name = cloningSprite.transform.name;
                 Destroy(newObjPivot.gameObject);
                 newSprite.transform.rotation = Quaternion.Euler(Vector2.zero);
+                newSprite.sortingOrder = 1;
                 newSprites.Add(newSprite);
                 cloningSprite = newSprite;
             }
@@ -56,6 +57,8 @@ public class GuanoBarrierAnimation : MonoBehaviour {
             collider.enabled = enabled;
         }
         guanoBarrierDeployed = enabled;
+        collider.enabled = enabled;
+        
     }
 
     public void Update() {

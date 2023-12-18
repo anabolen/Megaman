@@ -85,6 +85,8 @@ MonoBehaviour:
   playerSpriteTransform: {fileID: 0}
   shootingScript: {fileID: 0}
   launched: 0
+  reset: 0
+  graceWindowAfterReset: 0.5
 --- !u!58 &6604293738363253162
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -157,7 +159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5943417118964762742}
   - component: {fileID: 4216607065681253620}
-  m_Layer: 3
+  m_Layer: 15
   m_Name: GuanoBarrierProjectileStopper
   m_TagString: Untagged
   m_Icon: {fileID: 0}

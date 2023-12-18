@@ -9,6 +9,7 @@ public class PlayerShooting : MonoBehaviour
 
     public List<GameObject> projectiles;
     public GameObject guanoBarrier;
+    GuanoBarrierHit guanoBarrierHit;
     public bool guanoBarrierEnabled;
     public bool guanoBarrierLaunched;
     [SerializeField] Vector2[] guanoBarrierLaunchDirections;
@@ -21,12 +22,19 @@ public class PlayerShooting : MonoBehaviour
     PlayerManager playerManager;
     Transform spriteTransform;
 
+    public StatusBarScript statusBar;
+
+    public int currentAbilityAmmo;
+    public int currentAbilityMaxAmmo;
+    int previousFrameAbilityAmmo;
+
     void Awake() 
     {
         invScript = GetComponent<PlayerInventory>();
         playerClimbing = GetComponent<PlayerClimbing>();
         playerManager = FindObjectOfType<PlayerManager>();
-        spriteTransform = GetComponentInChildren<SpriteRenderer>().GetComponent<Transform>();    
+        statusBar = FindObjectOfType<StatusBarScript>();
+        spriteTransform = GetComponentInChildren<SpriteRenderer>().GetComponent<Transform>();   
         projectileOffset = defaultProjectileOffset;
     }
 
@@ -40,6 +48,11 @@ public class PlayerShooting : MonoBehaviour
         if (playerOrientation != 0) {
             projectileOffset = new Vector3(defaultProjectileOffset.x * playerOrientation
                                             , defaultProjectileOffset.y, defaultProjectileOffset.z);
+        }
+
+        if (previousFrameAbilityAmmo != currentAbilityAmmo) { 
+            statusBar.UpdateStatusBar();
+            previousFrameAbilityAmmo = currentAbilityAmmo;
         }
 
         var projectileClass = invScript.specialAbilities[invScript.currentAbilityID];
@@ -70,9 +83,11 @@ public class PlayerShooting : MonoBehaviour
         else
             launchDirection = guanoBarrierLaunchDirections[1];
 
-        print(launchDirection);
-
-        if (guanoBarrierLaunched)
+        //print(launchDirection);
+        bool barrierReset = false;
+        if (guanoBarrierHit != null)
+            barrierReset = guanoBarrierHit.reset;
+        if (guanoBarrierLaunched || barrierReset || currentAbilityAmmo == 0)
             return;
 
         if (Input.GetKey(KeyCode.F)) {
@@ -81,13 +96,17 @@ public class PlayerShooting : MonoBehaviour
                 guanoBarrier.GetComponent<GuanoBarrierAnimation>().GuanoBarrierSpriteSwitch(guanoBarrierEnabled);
             } else if (!guanoBarrierEnabled) { 
                 guanoBarrier = Instantiate(projectileClass.AbilityProjectile(), spriteTransform);
-                var barrierHit = guanoBarrier.GetComponent<GuanoBarrierHit>();
-                barrierHit.playerSpriteTransform = spriteTransform;
-                barrierHit.shootingScript = this;
+                guanoBarrierHit = guanoBarrier.GetComponent<GuanoBarrierHit>();
+                guanoBarrierHit.guanoBarrierAbility = projectileClass;
+                guanoBarrierHit.playerSpriteTransform = spriteTransform;
+                guanoBarrierHit.shootingScript = this;
             }
         } else if (guanoBarrierEnabled) {
             guanoBarrier.transform.parent = null;
             guanoBarrier.GetComponent<GuanoBarrierMovement>().LaunchBarrier(launchDirection);
+            var ammo = projectileClass.AbilityAmmoIncrement(projectileClass.AmmoReductionPerShot());
+            currentAbilityAmmo = ammo.ammoReturn;
+            currentAbilityMaxAmmo = ammo.maxAmmo;
             guanoBarrierLaunched = true;
         }
     }
@@ -96,12 +115,11 @@ public class PlayerShooting : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F)) {
             var projectile = projectileClass.AbilityProjectile();
             if (projectile != null) {
-                projectileClass.AbilityAmmoIncrement(projectileClass.AmmoReductionPerShot());
+                var ammo = projectileClass.AbilityAmmoIncrement(projectileClass.AmmoReductionPerShot());
+                currentAbilityAmmo = ammo.ammoReturn;
+                currentAbilityMaxAmmo = ammo.maxAmmo;
                 Physics2D.IgnoreLayerCollision(7, 14, FoxJumpAbility.ignorePlayerCollisions);
                 Instantiate(projectile, transform.position + projectileOffset, transform.rotation);
-                var ammo = projectileClass.AbilityAmmoIncrement(0).ammoReturn;
-                playerManager.playerAmmo = ammo;
-                playerManager.UpdatePlayerAmmo(ammo);
             }
         }
     }

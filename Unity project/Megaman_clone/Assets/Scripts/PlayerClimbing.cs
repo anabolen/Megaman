@@ -28,6 +28,11 @@ public class PlayerClimbing : MonoBehaviour
     }
 
     void Start() {
+        rb = GetComponent<Rigidbody2D>();
+        playerManager = GetComponent<PlayerManager>();
+        playerController = GetComponent<PlayerController>();
+        playerShooting = GetComponent<PlayerShooting>();
+        animator = GetComponentInChildren<Animator>();
     }
 
 
@@ -58,11 +63,7 @@ public class PlayerClimbing : MonoBehaviour
         animator.Play(currentClimbingDirection.ToString());
         
         if (Input.GetAxisRaw("Jump") != 0) {
-            rb.gravityScale = playerController.defaultGravityScale;
-            climbing = false;
-            playerController.enabled = false;
-            playerManager.justClimbed = true;
-            playerController.enabled = true;
+            StopClimbing();
         }
     }
 
@@ -84,11 +85,14 @@ public class PlayerClimbing : MonoBehaviour
 
     public void StartClimbing(Transform tf) {
         climbing = true;
-        rb = GetComponent<Rigidbody2D>();
-        playerManager = GetComponent<PlayerManager>();
-        playerController = GetComponent<PlayerController>();
-        playerShooting = GetComponent<PlayerShooting>();
-        animator = GetComponentInChildren<Animator>();
         ladderTransform = tf;
+    }
+
+    public void StopClimbing() {
+        rb.gravityScale = playerController.defaultGravityScale;
+        climbing = false;
+        playerController.enabled = false;
+        playerManager.justClimbed = true;
+        playerController.enabled = true;
     }
 }

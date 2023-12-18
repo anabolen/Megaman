@@ -24,7 +24,7 @@ public class NormalPlayerProjectile : MonoBehaviour
     }
 
     void Update() {
-        transform.position += transform.right * projectileSpeed * Time.deltaTime * projectileDirection;
+        transform.position += projectileSpeed * Time.deltaTime * projectileDirection * transform.right;
         if (awakeTime + projectileLifeTime < Time.time) {
             DestroyProjectile();
         }

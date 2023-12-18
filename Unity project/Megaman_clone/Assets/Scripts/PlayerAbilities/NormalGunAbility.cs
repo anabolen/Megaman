@@ -39,14 +39,13 @@ public class NormalGunAbility : ISpecialAbilities
         return projectile;
     }
 
-    public int AmmoReductionPerShot()
-    {
+    public int AmmoReductionPerShot() {
         return 0;
     }
 
-    public (int ammoReturn, bool isFinite) AbilityAmmoIncrement(int increment)
+    public (int ammoReturn, int maxAmmo, bool isFinite) AbilityAmmoIncrement(int increment)
     {
-        return (0, false);
+        return (0, 0, false);
     }
 
     public Sprite UIAbilitySprite()
