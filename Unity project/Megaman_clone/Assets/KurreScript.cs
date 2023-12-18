@@ -31,8 +31,9 @@ public class KurreScript : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 7) 
-        AudioFW.Play("kurreosuma");
+        
+            AudioFW.Play("SquirrelDamaged");
+        print("rara");
     }
     
 
