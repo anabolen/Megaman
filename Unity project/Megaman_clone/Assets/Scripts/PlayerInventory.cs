@@ -18,6 +18,7 @@ public class PlayerInventory : MonoBehaviour
     int previousIncrementDirection = 0;
     GameObject ammoBar;
     PlayerManager playerManager;
+    PlayerShooting playerShooting;
 
     public void AddItem(ISpecialAbilities ability) {
         int ID = ability.AbilityID();
@@ -40,6 +41,7 @@ public class PlayerInventory : MonoBehaviour
         UpdatePauseMenuSprite();
         ammoBar = GameObject.Find("AmmoBarBackround");
         playerManager = FindObjectOfType<PlayerManager>();
+        playerShooting = GetComponent<PlayerShooting>();
     }
 
     void Update() {
@@ -69,7 +71,7 @@ public class PlayerInventory : MonoBehaviour
             return;
         }
 
-        if (currentAbilityString == "Super gun" || currentAbilityString == "Fox jump") {
+        if (currentAbilityString == "Guano barrier" || currentAbilityString == "Fox jump") {
             ammoBar.SetActive(true);
         } else {
             ammoBar.SetActive(false);
@@ -109,8 +111,11 @@ public class PlayerInventory : MonoBehaviour
             currentAbilityID = previousAbilityID;
         }
         currentAbilityString = specialAbilities[currentAbilityID].AbilityName();
+        var ammo = specialAbilities[currentAbilityID].AbilityAmmoIncrement(0);
+        playerShooting.currentAbilityAmmo = ammo.ammoReturn;
+        playerShooting.currentAbilityMaxAmmo = ammo.maxAmmo;
+        playerShooting.statusBar.UpdateStatusBar();
         UpdatePauseMenuSprite();
-        playerManager.UpdatePlayerAmmo(specialAbilities[currentAbilityID].AbilityAmmoIncrement(0).ammoReturn);
         print(currentAbilityString);
     }
 

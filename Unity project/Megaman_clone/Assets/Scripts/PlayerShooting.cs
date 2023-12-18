@@ -22,11 +22,18 @@ public class PlayerShooting : MonoBehaviour
     PlayerManager playerManager;
     Transform spriteTransform;
 
+    public StatusBarScript statusBar;
+
+    public int currentAbilityAmmo;
+    public int currentAbilityMaxAmmo;
+    int previousFrameAbilityAmmo;
+
     void Awake() 
     {
         invScript = GetComponent<PlayerInventory>();
         playerClimbing = GetComponent<PlayerClimbing>();
         playerManager = FindObjectOfType<PlayerManager>();
+        statusBar = FindObjectOfType<StatusBarScript>();
         spriteTransform = GetComponentInChildren<SpriteRenderer>().GetComponent<Transform>();   
         projectileOffset = defaultProjectileOffset;
     }
@@ -41,6 +48,11 @@ public class PlayerShooting : MonoBehaviour
         if (playerOrientation != 0) {
             projectileOffset = new Vector3(defaultProjectileOffset.x * playerOrientation
                                             , defaultProjectileOffset.y, defaultProjectileOffset.z);
+        }
+
+        if (previousFrameAbilityAmmo != currentAbilityAmmo) { 
+            statusBar.UpdateStatusBar();
+            previousFrameAbilityAmmo = currentAbilityAmmo;
         }
 
         var projectileClass = invScript.specialAbilities[invScript.currentAbilityID];
@@ -75,8 +87,7 @@ public class PlayerShooting : MonoBehaviour
         bool barrierReset = false;
         if (guanoBarrierHit != null)
             barrierReset = guanoBarrierHit.reset;
-        var barrierAmmo = projectileClass.AbilityAmmoIncrement(0).ammoReturn;
-        if (guanoBarrierLaunched || barrierReset || barrierAmmo == 0)
+        if (guanoBarrierLaunched || barrierReset || currentAbilityAmmo == 0)
             return;
 
         if (Input.GetKey(KeyCode.F)) {
@@ -93,6 +104,9 @@ public class PlayerShooting : MonoBehaviour
         } else if (guanoBarrierEnabled) {
             guanoBarrier.transform.parent = null;
             guanoBarrier.GetComponent<GuanoBarrierMovement>().LaunchBarrier(launchDirection);
+            var ammo = projectileClass.AbilityAmmoIncrement(projectileClass.AmmoReductionPerShot());
+            currentAbilityAmmo = ammo.ammoReturn;
+            currentAbilityMaxAmmo = ammo.maxAmmo;
             guanoBarrierLaunched = true;
         }
     }
@@ -101,12 +115,11 @@ public class PlayerShooting : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F)) {
             var projectile = projectileClass.AbilityProjectile();
             if (projectile != null) {
-                projectileClass.AbilityAmmoIncrement(projectileClass.AmmoReductionPerShot());
+                var ammo = projectileClass.AbilityAmmoIncrement(projectileClass.AmmoReductionPerShot());
+                currentAbilityAmmo = ammo.ammoReturn;
+                currentAbilityMaxAmmo = ammo.maxAmmo;
                 Physics2D.IgnoreLayerCollision(7, 14, FoxJumpAbility.ignorePlayerCollisions);
                 Instantiate(projectile, transform.position + projectileOffset, transform.rotation);
-                var ammo = projectileClass.AbilityAmmoIncrement(0).ammoReturn;
-                playerManager.playerAmmo = ammo;
-                playerManager.UpdatePlayerAmmo(ammo);
             }
         }
     }

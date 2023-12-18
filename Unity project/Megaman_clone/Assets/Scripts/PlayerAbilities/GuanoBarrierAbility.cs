@@ -32,12 +32,17 @@ public class GuanoBarrierAbility : ISpecialAbilities {
         return -5;
     }
 
+    public int maxAmmo = 20;
     public int ammoAmount = 20;
 
-    public (int ammoReturn, bool isFinite) AbilityAmmoIncrement(int increment) {
+    public int AbilityMaxAmmo() {
+        return maxAmmo;
+    }
+
+    public (int ammoReturn, int maxAmmo, bool isFinite) AbilityAmmoIncrement(int increment) {
         ammoAmount += increment;
-        ammoAmount = Mathf.Clamp(ammoAmount, 0, 20);
-        return (ammoAmount, true);
+        ammoAmount = Mathf.Clamp(ammoAmount, 0, maxAmmo);
+        return (ammoAmount, maxAmmo, true);
     }
 
     public Sprite UIAbilitySprite() {

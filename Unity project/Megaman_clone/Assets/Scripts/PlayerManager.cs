@@ -14,8 +14,9 @@ public class PlayerManager : MonoBehaviour
     public int lives;
     public bool playingDeathAnimation;
     PlayerController controller;
-    StatusBarScript healthBarScript;
     PlayerClimbing climbingScript;
+    PlayerShooting shootingScript;
+    StatusBarScript healthBarScript;
     public bool justClimbed;
     bool canStartClimbing = false;
     Transform ladderTransform;
@@ -29,6 +30,7 @@ public class PlayerManager : MonoBehaviour
         controller = GetComponent<PlayerController>();
         healthBarScript = FindObjectOfType<StatusBarScript>();
         climbingScript = GetComponent<PlayerClimbing>();
+        shootingScript = GetComponent<PlayerShooting>();   
 
         HomingProjectile.playerTransform = transform;
     }
@@ -78,10 +80,8 @@ public class PlayerManager : MonoBehaviour
                      pickupScript.pickupType == PickUpScript.PickUpType.SmallAmmo) {
                 playerAmmo += pickupScript.pickUpAmmoAmount;
                 PlayerInventory inventory = GetComponent<PlayerInventory>();
-                inventory.specialAbilities
-                    [inventory.currentAbilityID].AbilityAmmoIncrement(pickupScript.pickUpAmmoAmount);
-                UpdatePlayerAmmo(inventory.specialAbilities
-                    [inventory.currentAbilityID].AbilityAmmoIncrement(0).ammoReturn);
+                shootingScript.currentAbilityAmmo = inventory.specialAbilities
+                    [inventory.currentAbilityID].AbilityAmmoIncrement(pickupScript.pickUpAmmoAmount).ammoReturn;
             } else if (pickupScript.pickupType == PickUpScript.PickUpType.ExtraLife) {
                 lives++;
             }
@@ -98,7 +98,7 @@ public class PlayerManager : MonoBehaviour
 
         playerHp = Mathf.Clamp(playerHp += hpChange, 0, playerMaxHp);
         if (healthBarScript != null) { 
-            healthBarScript.UpdateHealthBar();
+            healthBarScript.UpdateStatusBar();
         }
         if (playerHp == 0 && !playingDeathAnimation) {
             StartCoroutine(controller.PlayerDeath());
@@ -107,11 +107,10 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void UpdatePlayerAmmo(int ammoChange) {
-        playerAmmo = ammoChange;
-        if (healthBarScript != null) {
-            healthBarScript.UpdateHealthBar();
-        }
+    public void UpdatePlayerAmmo() {
+        //if (healthBarScript != null) {
+        //    healthBarScript.UpdateStatusBar();
+        //}
     }
 
     void HealthAndAmmoClamp() {

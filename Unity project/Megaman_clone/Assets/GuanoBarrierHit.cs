@@ -13,14 +13,13 @@ public class GuanoBarrierHit : MonoBehaviour {
     public PlayerShooting shootingScript;
     public bool launched;
     public bool reset = false;
-    float timeOfReset;
     [SerializeField] float graceWindowAfterReset = 0.5f;
     Collider2D hitCollider;
-    Collider2D projectileStopperCollider;
+    StatusBarScript statusBarScript;
 
     private void Awake() {
         hitCollider = GetComponent<Collider2D>();
-        projectileStopperCollider =GetComponentInChildren<Collider2D>();
+        statusBarScript = FindObjectOfType<StatusBarScript>();
     }
 
     void Update() {
@@ -47,9 +46,12 @@ public class GuanoBarrierHit : MonoBehaviour {
         transform.position = playerSpriteTransform.position;
         reset = true;
         shootingScript.guanoBarrierEnabled = false;
-        timeOfReset = Time.time;
+        if (!shootingScript.guanoBarrierLaunched) { 
+            var ammo = guanoBarrierAbility.AbilityAmmoIncrement(guanoBarrierAbility.AmmoReductionPerShot());
+            shootingScript.currentAbilityAmmo = ammo.ammoReturn;
+            shootingScript.currentAbilityMaxAmmo = ammo.maxAmmo;
+        }
         shootingScript.guanoBarrierLaunched = false;
-        guanoBarrierAbility.AbilityAmmoIncrement(guanoBarrierAbility.AmmoReductionPerShot());
         GetComponent<GuanoBarrierAnimation>().GuanoBarrierSpriteSwitch(false);
     }
 

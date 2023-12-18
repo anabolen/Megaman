@@ -31,12 +31,17 @@ public class FoxJumpAbility : ISpecialAbilities {
     }
 
     public int ammoAmount = 20;
+    public int maxAmmo = 20;
 
-    public (int ammoReturn, bool isFinite) AbilityAmmoIncrement(int increment)
+    public int AbilityMaxAmmo() {
+        return maxAmmo;
+    }
+
+    public (int ammoReturn, int maxAmmo, bool isFinite) AbilityAmmoIncrement(int increment)
     {
         ammoAmount += increment;
         Mathf.Clamp(ammoAmount, 0, 20);
-        return (ammoAmount, true);
+        return (ammoAmount, maxAmmo, true);
     }
 
     public GameObject AbilityProjectile()
