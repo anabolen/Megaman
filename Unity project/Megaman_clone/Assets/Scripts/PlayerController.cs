@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour {
         spriteTransform = sprite.transform;
         jumpAllowed = true;
         StartCoroutine(PlayerSpawn());
-        checkpoint = -1; //why?
+        checkpoint = -1;
         stepping = false;
 
         BoxCollider2D box = GetComponent<BoxCollider2D>();
