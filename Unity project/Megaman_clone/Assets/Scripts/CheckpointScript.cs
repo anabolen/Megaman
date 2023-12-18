@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class CheckpointScript : MonoBehaviour
 {
-    PlayerController playerCon;
+    BoxCollider2D boxCollider;
+    bool used;
     void Start()
     {
-        playerCon = FindObjectOfType<PlayerController>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        used = false;
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
-        playerCon.checkpoint++;
-        GetComponent<BoxCollider2D>().enabled = false;
+        boxCollider.enabled = false;
+        if (used == false) {
+            collision.GetComponent<PlayerController>().checkpoint += 1;
+            used = true;
+        }
     }
 }

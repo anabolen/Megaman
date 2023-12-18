@@ -2,11 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using static ISpecialAbilities;
 
 public class PlayerShooting : MonoBehaviour
 {
+
     public List<GameObject> projectiles;
+    public GameObject guanoBarrier;
+    public bool guanoBarrierEnabled;
+    public bool guanoBarrierLaunched;
+    [SerializeField] Vector2[] guanoBarrierLaunchDirections;
     //public List<GameObject> normalProjectiles;
     public float playerOrientation;
     public Vector3 defaultProjectileOffset;
@@ -14,12 +19,14 @@ public class PlayerShooting : MonoBehaviour
     PlayerInventory invScript;
     PlayerClimbing playerClimbing;
     PlayerManager playerManager;
+    Transform spriteTransform;
 
     void Awake() 
     {
         invScript = GetComponent<PlayerInventory>();
         playerClimbing = GetComponent<PlayerClimbing>();
         playerManager = FindObjectOfType<PlayerManager>();
+        spriteTransform = GetComponentInChildren<SpriteRenderer>().GetComponent<Transform>();    
         projectileOffset = defaultProjectileOffset;
     }
 
@@ -35,8 +42,58 @@ public class PlayerShooting : MonoBehaviour
                                             , defaultProjectileOffset.y, defaultProjectileOffset.z);
         }
 
+        var projectileClass = invScript.specialAbilities[invScript.currentAbilityID];
+
+        if (projectileClass.ShootingBehaviour() == AbilityShootingBehaviour.PressToShoot)
+            PressToShootCheck(projectileClass);
+        else if (projectileClass.ShootingBehaviour() == AbilityShootingBehaviour.HoldToShoot)
+            HoldToShootCheck(projectileClass);
+
+
+        //if (projectiles.Count < maxprojectiles && invScript.paused == false) {
+        //    if (Input.GetKeyDown(KeyCode.F)) {
+        //        var playerController = gameObject.GetComponent<PlayerController>();
+        //        StartCoroutine(playerController.ShootingAnimations());
+        //        Instantiate(projectile, transform.position + projectileOffset, transform.rotation);
+        //    }
+        //}
+    }
+
+    void HoldToShootCheck(ISpecialAbilities projectileClass) {
+
+        Vector2 launchDirection;
+
+        if (Input.GetAxisRaw("Vertical") > 0)
+            launchDirection = guanoBarrierLaunchDirections[0];
+        else if (projectileOffset.normalized.x < 0)
+            launchDirection = guanoBarrierLaunchDirections[2];
+        else
+            launchDirection = guanoBarrierLaunchDirections[1];
+
+        print(launchDirection);
+
+        if (guanoBarrierLaunched)
+            return;
+
+        if (Input.GetKey(KeyCode.F)) {
+            if (guanoBarrier != null && !guanoBarrierEnabled) {
+                guanoBarrierEnabled = true;
+                guanoBarrier.GetComponent<GuanoBarrierAnimation>().GuanoBarrierSpriteSwitch(guanoBarrierEnabled);
+            } else if (!guanoBarrierEnabled) { 
+                guanoBarrier = Instantiate(projectileClass.AbilityProjectile(), spriteTransform);
+                var barrierHit = guanoBarrier.GetComponent<GuanoBarrierHit>();
+                barrierHit.playerSpriteTransform = spriteTransform;
+                barrierHit.shootingScript = this;
+            }
+        } else if (guanoBarrierEnabled) {
+            guanoBarrier.transform.parent = null;
+            guanoBarrier.GetComponent<GuanoBarrierMovement>().LaunchBarrier(launchDirection);
+            guanoBarrierLaunched = true;
+        }
+    }
+
+    void PressToShootCheck(ISpecialAbilities projectileClass) {
         if (Input.GetKeyDown(KeyCode.F)) {
-            var projectileClass = invScript.specialAbilities[invScript.currentAbilityID];
             var projectile = projectileClass.AbilityProjectile();
             if (projectile != null) {
                 projectileClass.AbilityAmmoIncrement(projectileClass.AmmoReductionPerShot());
@@ -47,14 +104,6 @@ public class PlayerShooting : MonoBehaviour
                 playerManager.UpdatePlayerAmmo(ammo);
             }
         }
-        
-        //if (projectiles.Count < maxprojectiles && invScript.paused == false) {
-        //    if (Input.GetKeyDown(KeyCode.F)) {
-        //        var playerController = gameObject.GetComponent<PlayerController>();
-        //        StartCoroutine(playerController.ShootingAnimations());
-        //        Instantiate(projectile, transform.position + projectileOffset, transform.rotation);
-        //    }
-        //}
     }
 
     private void OnDrawGizmos() {

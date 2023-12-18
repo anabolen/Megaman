@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ISpecialAbilities;
 
-public class SuperGunAbility : ISpecialAbilities {
+public class GuanoBarrierAbility : ISpecialAbilities {
 
     public int AbilityID() {
         return (2);
     }
 
     public string AbilityName() {
-        return "Super gun";
+        return "Guano barrier";
+    }
+
+    public AbilityShootingBehaviour ShootingBehaviour() {
+        return AbilityShootingBehaviour.HoldToShoot;
     }
 
     //public AnimatorController AbilityPlayerAnimations() {
@@ -19,7 +24,7 @@ public class SuperGunAbility : ISpecialAbilities {
     public GameObject AbilityProjectile() {
         if (ammoAmount == 0)
             return null;
-        return Resources.Load<GameObject>("PlayerProjectiles/SuperGunProjectile");
+        return Resources.Load<GameObject>("PlayerProjectiles/GuanoBarrier");
     }
 
     public int AmmoReductionPerShot() {
