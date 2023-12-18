@@ -10,35 +10,37 @@ public class MenuManager : MonoBehaviour
 {
     enum menuItems {start, credits, quit}
     menuItems menuSelected;
-    TMP_Text startText;
-    TMP_Text quitText;
-    TMP_Text creditsText;
+    Image arrow;
+    public RectTransform startPos;
+    public RectTransform creditsPos;
+    public RectTransform quitPos;
+    GameObject credits;
+    bool creditsOn;
     void Start()
     {
         menuSelected = menuItems.start;
-        startText = GameObject.Find("StartText").GetComponent<TMP_Text>();
-        quitText = GameObject.Find("QuitText").GetComponent<TMP_Text>();
-        creditsText = GameObject.Find("CreditsText").GetComponent<TMP_Text>();
+        arrow = GameObject.Find("Arrow").GetComponent<Image>();
+        credits = GameObject.Find("Credits");
+        credits.SetActive(false);
+        creditsOn = false;
     }
 
     void Update()
     {
-            if (Input.GetButtonDown("Select") && menuSelected == menuItems.start ) {
+        if (creditsOn == false) {
+            if (Input.GetButtonDown("Select") && menuSelected == menuItems.start) {
                 menuSelected = menuItems.credits;
             } else if (Input.GetButtonDown("Select") && menuSelected == menuItems.credits) {
                 menuSelected = menuItems.quit;
             } else if (Input.GetButtonDown("Select") && menuSelected == menuItems.quit) {
-               menuSelected = menuItems.start;
+                menuSelected = menuItems.start;
             }
             if (menuSelected == menuItems.start) {
-                startText.color = Color.red;
-                quitText.color = Color.white;
+                arrow.rectTransform.position = startPos.position;
             } else if (menuSelected == menuItems.credits) {
-                creditsText.color = Color.red;
-                startText.color = Color.white;
+                arrow.rectTransform.position = creditsPos.position;
             } else if (menuSelected == menuItems.quit) {
-                quitText.color = Color.red;
-                creditsText.color = Color.white;
+                arrow.rectTransform.position = quitPos.position;
             }
             if (Input.GetButtonDown("Start") && menuSelected == menuItems.start) {
                 SceneManager.LoadScene(1);
@@ -46,7 +48,12 @@ public class MenuManager : MonoBehaviour
                 Application.Quit();
                 Debug.Log("Quitting game");
             } else if (Input.GetButtonDown("Start") && menuSelected == menuItems.credits) {
-                // Credits scene load
+                credits.SetActive(true);
+                creditsOn = true;
             }
+        } else if (Input.GetButtonDown("Start") && creditsOn == true) {
+            credits.SetActive(false);
+            creditsOn = false;
+        } 
     }
 }
