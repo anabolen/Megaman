@@ -111,6 +111,13 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.25
+    functionName: CarrotQuickLaunch
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.25
     functionName: SecondPhaseShoot
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -133,6 +140,13 @@ AnimationClip:
     messageOptions: 0
   - time: 0.8333333
     functionName: AirStrike
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.8333333
+    functionName: CarrotLaunch
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

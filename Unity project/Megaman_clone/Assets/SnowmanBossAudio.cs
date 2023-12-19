@@ -12,4 +12,21 @@ public class SnowmanBossAudio : MonoBehaviour {
         AudioFW.Play("SnowmanBossShotChargeShort");
     }
 
+    public void SlamAttack() {
+        AudioFW.Play("SnowmanBossSlamAttack");
+    }
+
+    public void WhirlAttack() {
+        AudioFW.Play("SnowmanBossWhirlAttack");
+    }
+
+    public void CarrotLaunch() {
+        AudioFW.Play("SnowmanBossCarrotLaunch");
+    }
+
+    public void CarrotQuickLaunch() {
+        AudioFW.Play("SnowmanBossCarrotLaunchQuick");
+
+    }
+
 }

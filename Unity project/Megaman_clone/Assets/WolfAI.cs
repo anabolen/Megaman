@@ -36,13 +36,13 @@ public class WolfAI : MonoBehaviour {
 
     public void ShootSmall() {
         var proj = Instantiate(smallProjectile);
-        AudioFW.Play("WolfShortSoundWave");
+        AudioFW.Play("WolfShortSoundwave");
         proj.transform.position = (Vector2)transform.position + offSet;
     }
 
     public void ShootLong() {
         var proj = Instantiate(longProjectile);
-        AudioFW.Play("WolfLongSoundWave");
+        AudioFW.Play("WolfLongSoundwave");
         proj.transform.position = (Vector2)transform.position + longOffSet;
     }
 
