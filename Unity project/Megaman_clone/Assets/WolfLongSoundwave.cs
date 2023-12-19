@@ -28,7 +28,7 @@ public class WolfLongSoundwave : MonoBehaviour {
         if (!vectorToPlayerSet) { 
             vectorToPlayer = -(transform.position - playerTransform.position).normalized;
             vectorToPlayerSet = true;
-            return;
+            //return;
         }
         rb.velocity = vectorToPlayer * velocity;
         if (launched)

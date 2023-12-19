@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3637151585149710922
 Transform:
   m_ObjectHideFlags: 0
@@ -229,8 +229,8 @@ MonoBehaviour:
   smallProjectile: {fileID: 2319832718903508144, guid: e154d36f61990fd4c8a758251dda994d, type: 3}
   longProjectile: {fileID: 6435516745595060747, guid: 1f37721bfffc92b4b833a715e974603f, type: 3}
   offSet: {x: 2.65, y: 0.16}
-  longOffSet: {x: 5.52, y: 0.06}
-  wolfDirection: -1
+  longOffSet: {x: 3.07, y: 0.06}
+  wolfDirection: 1
   linearHorizontalShot: 1
 --- !u!114 &6446839769713794366
 MonoBehaviour:
