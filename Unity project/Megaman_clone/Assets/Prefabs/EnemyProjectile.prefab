@@ -110,7 +110,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  damageAmount: 5
+  damageAmount: 2
+  direction: 0
+  knockbackForce: 2
 --- !u!1 &9083579282596926139
 GameObject:
   m_ObjectHideFlags: 0

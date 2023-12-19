@@ -9,12 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 02fdd8953bdd5de4ea5ca9c5b4401385
   - enabled: 0
+    path: Assets/Scenes/IntroScene.unity
+    guid: d69a3647ae20f794dafb762ea2b4374a
+  - enabled: 1
+    path: Assets/Scenes/LevelSelectScene.unity
+    guid: 6d07231f823f5ce4ca28b9e7e54367ad
+  - enabled: 1
+    path: Assets/Scenes/LevelScene.unity
+    guid: 1c8de89f63d7b1d4f906cdbe58271387
+  - enabled: 0
     path: Assets/Scenes/Main.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 0
     path: Assets/Scenes/Einari.unity
     guid: f34af16780dd30c4c93ca035c2318845
-  - enabled: 1
-    path: Assets/Scenes/LevelScene.unity
-    guid: 1c8de89f63d7b1d4f906cdbe58271387
   m_configObjects: {}

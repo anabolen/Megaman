@@ -15,13 +15,17 @@ public class FlyingEnemyMovementScript : MonoBehaviour
     Transform playerTransform;
     [SerializeField] bool chasing;
     Transform spriteTrans;
+    SpriteRenderer spriteRenderer;
+    FlyingEnemyDynamic dynamic;
 
     void Awake()
     {
         playerTransform = GameObject.Find("PlayerSprite").GetComponent<Transform>();
         chaseTime = 0;
         waitTime = maxWaitTime;
-        spriteTrans = GameObject.Find("FlyingEnemySprite").transform;
+        dynamic = GetComponentInParent<FlyingEnemyDynamic>();
+        spriteRenderer = dynamic.gameObject.GetComponentInChildren<SpriteRenderer>();
+        spriteTrans = spriteRenderer.gameObject.GetComponent<Transform>();
     }
 
     void Update()
