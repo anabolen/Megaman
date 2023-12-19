@@ -89,10 +89,3 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6166667
-    functionName: Death
-    data: 
-    objectReferenceParameter: {fileID: 11500000, guid: 5a12f84b30e4cd74da57d917df59a086, type: 3}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
