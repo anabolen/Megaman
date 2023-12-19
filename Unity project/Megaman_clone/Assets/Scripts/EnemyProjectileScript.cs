@@ -18,10 +18,10 @@ public class EnemyProjectileScript : MonoBehaviour
         transform.position += transform.right * speed * Time.deltaTime;
     }
 
-    void OnCollisionEnter2D(Collision2D coll) {
+    void OnTriggerEnter2D(Collider2D coll) {
         if (coll.gameObject.layer == 7) {
             coll.gameObject.GetComponent<PlayerManager>().UpdatePlayerHp(-damageAmount);
-            StartCoroutine(coll.gameObject.GetComponent<PlayerController>().PlayerHit(knockbackForce, direction));
+            coll.gameObject.GetComponent<PlayerController>().PlayerHitCheck(knockbackForce, direction);
         }
         Destroy(gameObject);
     }
