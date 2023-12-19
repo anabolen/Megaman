@@ -21,7 +21,7 @@ public class EnemyManager : MonoBehaviour
             var vectorToPlayer = coll.gameObject.GetComponent<Transform>().position - transform.position;
             float hitDirection = new Vector2(vectorToPlayer.x, 0).normalized.x;
             coll.gameObject.GetComponent<PlayerManager>().UpdatePlayerHp(-damageAmount);
-            StartCoroutine(coll.gameObject.GetComponent<PlayerController>().PlayerHit(knockbackForce, hitDirection));
+            coll.gameObject.GetComponent<PlayerController>().PlayerHitCheck(knockbackForce, hitDirection);
         }
     }
 
