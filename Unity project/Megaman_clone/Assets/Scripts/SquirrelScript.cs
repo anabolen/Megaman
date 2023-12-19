@@ -10,6 +10,7 @@ public class SquirrelScript : MonoBehaviour
     private Animator anim;
     bool transformed = false;
     public GameObject kurre;
+    public KurreScript kurreScript;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,7 @@ public class SquirrelScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (other.gameObject.layer == 7 && !transformed) {
+        if (other.gameObject.layer == 7 && !transformed && kurreScript.died == false) {
             
             anim.Play("KurreTransform");
             kurre.GetComponent<PatrolScript>().SetSpeed(angryspeed, 0.5f);

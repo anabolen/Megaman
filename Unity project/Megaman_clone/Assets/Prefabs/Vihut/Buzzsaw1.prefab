@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 7527752393314328214}
   - component: {fileID: 6175767221355312943}
   - component: {fileID: 7193721824419460448}
-  - component: {fileID: 6154022028465386721}
   - component: {fileID: 4060992851093450021}
   m_Layer: 8
   m_Name: Buzzsaw1
@@ -187,18 +186,6 @@ CircleCollider2D:
   m_Offset: {x: 0.024407089, y: 0.032542884}
   serializedVersion: 2
   m_Radius: 0.42847234
---- !u!114 &6154022028465386721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5992423279494972106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a12f84b30e4cd74da57d917df59a086, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4060992851093450021
 MonoBehaviour:
   m_ObjectHideFlags: 0

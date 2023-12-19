@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using UnityEngine.Video;
+using UnityEditor.SearchService;
 
 public class MenuManager : MonoBehaviour
 {
@@ -16,6 +18,9 @@ public class MenuManager : MonoBehaviour
     public RectTransform quitPos;
     GameObject credits;
     bool creditsOn;
+    bool videoStarted;
+    public VideoPlayer videoPlayer;
+    public GameObject canvas;
     void Start()
     {
         menuSelected = menuItems.start;
@@ -23,6 +28,8 @@ public class MenuManager : MonoBehaviour
         credits = GameObject.Find("Credits");
         credits.SetActive(false);
         creditsOn = false;
+        videoPlayer.loopPointReached += CheckOver;
+        videoStarted = false;
     }
 
     void Update()
@@ -42,18 +49,26 @@ public class MenuManager : MonoBehaviour
             } else if (menuSelected == menuItems.quit) {
                 arrow.rectTransform.position = quitPos.position;
             }
-            if (Input.GetButtonDown("Start") && menuSelected == menuItems.start) {
+            if (Input.GetButtonDown("Start") && menuSelected == menuItems.start && videoStarted == false) {
+                canvas.SetActive(false);
+                videoPlayer.Play();
+                videoStarted = true;
+            } else if (Input.GetButtonDown("Start") && videoStarted == true) {
                 SceneManager.LoadScene(1);
-            } else if (Input.GetButtonDown("Start") && menuSelected == menuItems.quit) {
+            }
+            else if (Input.GetButtonDown("Start") && menuSelected == menuItems.quit) {
                 Application.Quit();
                 Debug.Log("Quitting game");
             } else if (Input.GetButtonDown("Start") && menuSelected == menuItems.credits) {
                 credits.SetActive(true);
                 creditsOn = true;
-            }
+            } 
         } else if (Input.GetButtonDown("Start") && creditsOn == true) {
             credits.SetActive(false);
             creditsOn = false;
         } 
+    }
+    void CheckOver(UnityEngine.Video.VideoPlayer vp) {
+        Debug.Log("Video Over");
     }
 }
