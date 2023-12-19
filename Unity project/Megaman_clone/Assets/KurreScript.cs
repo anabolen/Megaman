@@ -6,7 +6,7 @@ public class KurreScript : MonoBehaviour
 {
 
     private SpriteRenderer Renderer;
-    Collider m_Collider;
+    Collider2D m_Collider;
     private Animator anim;
     bool died = false;
     int previousHp;
@@ -14,7 +14,7 @@ public class KurreScript : MonoBehaviour
     void Start()
     {
         Renderer = GetComponent<SpriteRenderer>();
-        m_Collider = GetComponent<Collider>();
+        m_Collider = GetComponent<Collider2D>();
         anim = GetComponent<Animator>();
         previousHp = GetComponent<EnemyManager>().enemyHp;    
     }
@@ -39,10 +39,7 @@ public class KurreScript : MonoBehaviour
     public void kurreDeath()
     {
         Renderer.enabled = false;
-
-
-
-
+        m_Collider.enabled = false;
     }
 
 }

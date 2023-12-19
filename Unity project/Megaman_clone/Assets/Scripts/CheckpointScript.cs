@@ -13,8 +13,8 @@ public class CheckpointScript : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
-        boxCollider.enabled = false;
-        if (used == false) {
+        if (used == false && collision.GetComponent<PlayerController>() != null) {
+            boxCollider.enabled = false;
             collision.GetComponent<PlayerController>().checkpoint += 1;
             used = true;
         }
