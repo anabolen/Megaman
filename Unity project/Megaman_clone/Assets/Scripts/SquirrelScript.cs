@@ -34,7 +34,6 @@ public class SquirrelScript : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        print("print");
         if (other.gameObject.layer == 7)
         {
             print("print2");
@@ -44,16 +43,6 @@ public class SquirrelScript : MonoBehaviour
             transformed = false;
         }
     }
-    void Update()
-    {
-
-
-
-            
-
-    }
-
-
 }
 
 

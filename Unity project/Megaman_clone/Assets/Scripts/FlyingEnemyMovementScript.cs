@@ -17,6 +17,8 @@ public class FlyingEnemyMovementScript : MonoBehaviour
     Transform spriteTrans;
     SpriteRenderer spriteRenderer;
     FlyingEnemyDynamic dynamic;
+    [SerializeField] Sprite chaseSprite;
+    [SerializeField] Sprite normalSprite;
 
     void Awake()
     {
@@ -53,6 +55,16 @@ public class FlyingEnemyMovementScript : MonoBehaviour
             chaseTimeReset = true;
         }
         spriteTrans.position = transform.position;
+        if (chasing) {
+            spriteRenderer.sprite = chaseSprite;
+        } else {
+            spriteRenderer.sprite = normalSprite;
+        }
+        if (playerTransform.position.x < transform.position.x) {
+            spriteRenderer.flipX = false;
+        } else {
+            spriteRenderer.flipX = true;
+        }
 
     }
     void OnDrawGizmos() {

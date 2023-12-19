@@ -29,7 +29,6 @@ public class KurreScript : MonoBehaviour
         }
         if (GetComponent<EnemyManager>().enemyHp == 0 && !died)
         {
-
             anim.Play("KurreDeath");
             died = true;
             AudioFW.Play("Kurredeath");
