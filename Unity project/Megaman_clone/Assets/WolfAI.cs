@@ -11,11 +11,9 @@ public class WolfAI : MonoBehaviour {
     public float wolfDirection;
     public bool linearHorizontalShot;
     int shootingIndex;
-    Animator anim;
 
     void Awake() {
         SwitchDirection();    
-        anim = GetComponent<Animator>();
         longOffSet = new Vector2(longOffSet.x * wolfDirection, longOffSet.y);
         offSet = new Vector2(offSet.x * wolfDirection, offSet.y);
     }
@@ -38,11 +36,13 @@ public class WolfAI : MonoBehaviour {
 
     public void ShootSmall() {
         var proj = Instantiate(smallProjectile);
+        AudioFW.Play("WolfShortSoundWave");
         proj.transform.position = (Vector2)transform.position + offSet;
     }
 
     public void ShootLong() {
         var proj = Instantiate(longProjectile);
+        AudioFW.Play("WolfLongSoundWave");
         proj.transform.position = (Vector2)transform.position + longOffSet;
     }
 
