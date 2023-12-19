@@ -60,8 +60,7 @@ public class SnowmanCarrotProjecile : HomingProjectile
             transform.TransformDirection(Vector2.down),
         };
         var i = 0;
-        foreach (var rocket in smallRockets)
-        {
+        foreach (var rocket in smallRockets) {
             var r = Instantiate(rocket);
             var script = r.GetComponent<HomingMissile>();
             script.LaunchProjectile(rb, smallRocketLaunchDirections[i], smallRocketLaunchForce, smallRocketTimeBeforeThrottle, smallRocketThrottleForce, smallRockerVelocityMulitplier, smallRocketDestructionTime);

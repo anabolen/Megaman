@@ -64,10 +64,11 @@ public class SnowmanBossAI : MonoBehaviour {
 
     float behaviourStartTime, behaviourCooldownDuration;
 
-    void Start() {
+    void Awake() {
         healthScript = GetComponent<BossHealth>();
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        playerTransform = GameObject.Find("PlayerCharacter ").GetComponent<Transform>();
         maxHealth = healthScript.maxHealth;
         //playerTransform = GameObject.Find("PlayerCharacter ").GetComponent<Transform>();
     }

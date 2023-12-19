@@ -24,7 +24,8 @@ public class HomingMissile : HomingProjectile
     public void LaunchProjectile(Rigidbody2D sourceRb, Vector2 launchDirection, float launchForce, float timeBeforeTh, float thForce, float vMultiplier, float destructionTime) {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        rb.MovePosition(sourceRb.position);
+        rb.position = sourceRb.position;
+        //rb.MovePosition(sourceRb.position);
         rb.velocity = sourceRb.velocity;
         timeBeforeThrottle = timeBeforeTh;
         throttleForce = thForce;
