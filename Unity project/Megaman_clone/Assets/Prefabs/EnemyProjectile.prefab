@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  damageAmount: 5
+  damageAmount: 3
   direction: 0
   knockbackForce: 10
 --- !u!1 &9083579282596926139

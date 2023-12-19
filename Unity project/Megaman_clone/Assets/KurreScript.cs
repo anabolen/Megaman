@@ -8,7 +8,7 @@ public class KurreScript : MonoBehaviour
     private SpriteRenderer Renderer;
     Collider2D m_Collider;
     private Animator anim;
-    bool died = false;
+    public bool died = false;
     int previousHp;
 
     void Start()
@@ -40,6 +40,7 @@ public class KurreScript : MonoBehaviour
     {
         Renderer.enabled = false;
         m_Collider.enabled = false;
+        anim.enabled = false;
     }
 
 }

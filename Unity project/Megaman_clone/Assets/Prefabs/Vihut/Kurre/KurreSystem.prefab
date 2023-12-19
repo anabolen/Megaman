@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5533915075502301251}
   - component: {fileID: 412077269360955762}
   - component: {fileID: 8319766307621745973}
-  m_Layer: 4
+  m_Layer: 0
   m_Name: KurreTriggerZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,6 +93,7 @@ MonoBehaviour:
   normalspeed: 1
   angryspeed: 4
   kurre: {fileID: 5689096248029555720}
+  kurreScript: {fileID: 5418234721862509064}
 --- !u!1 &5689096248029555720
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,6 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dab3e105155f72c48be56228d385a966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  died: 0
 --- !u!114 &462273757411704541
 MonoBehaviour:
   m_ObjectHideFlags: 0
