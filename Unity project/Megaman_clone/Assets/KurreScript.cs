@@ -9,43 +9,40 @@ public class KurreScript : MonoBehaviour
     Collider m_Collider;
     private Animator anim;
     bool died = false;
+    int previousHp;
 
     void Start()
     {
         Renderer = GetComponent<SpriteRenderer>();
         m_Collider = GetComponent<Collider>();
         anim = GetComponent<Animator>();
+        previousHp = GetComponent<EnemyManager>().enemyHp;    
     }
 
     // Update is called once per frame
-    void Update()
+    void Update() 
     {
+        if (GetComponent<EnemyManager>().enemyHp < previousHp) {            
+            previousHp = GetComponent<EnemyManager>().enemyHp;
+            AudioFW.Play("SquirrelDamaged");
 
+        }
         if (GetComponent<EnemyManager>().enemyHp == 0 && !died)
         {
 
             anim.Play("KurreDeath");
             died = true;
-
+            AudioFW.Play("Kurredeath");
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        
-            AudioFW.Play("SquirrelDamaged");
-        print("rara");
-    }
     
+    public void kurreDeath()
+    {
+        Renderer.enabled = false;
 
-        
 
+
+
+    }
 
 }
-
-//    public void kurreDeath()
-//    {
-//        Renderer.enabled = false;
-//        m_Collider.enabled = false;
-//    }
-
-//}
