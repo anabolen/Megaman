@@ -23,7 +23,6 @@ public class StatusBarScript : MonoBehaviour {
 
         //var ammo = playerManager.playerAmmo;
         var ammo = playerShooting.currentAbilityAmmo;
-        print(ammo);
         var hp = playerManager.playerHp;
         healthbar.value = hp;
         ammoBar.maxValue = playerShooting.currentAbilityMaxAmmo;
