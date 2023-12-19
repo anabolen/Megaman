@@ -67,6 +67,7 @@ public class SnowmanCarrotProjecile : HomingProjectile
             script.LaunchProjectile(rb, smallRocketLaunchDirections[i], smallRocketLaunchForce, smallRocketTimeBeforeThrottle, smallRocketThrottleForce, smallRockerVelocityMulitplier, smallRocketDestructionTime);
             i++;
         }
+        AudioFW.Play("SnowmanBossCarrotSplitUp");
         Destroy(gameObject);
     }
 
