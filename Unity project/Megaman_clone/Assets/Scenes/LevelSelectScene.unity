@@ -202,7 +202,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3067002029709372913, guid: b2a539e07ff751c4c951f8985b7838be, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8014450979499458179, guid: b2a539e07ff751c4c951f8985b7838be, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5925834428808880078, guid: b2a539e07ff751c4c951f8985b7838be, type: 3}
@@ -228,8 +229,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   videoPlayer: {fileID: 1717760861}
   levelSelect: {fileID: 930666489}
-  time: 0
-  currentTime: 0
 --- !u!1 &930666487
 GameObject:
   m_ObjectHideFlags: 0
