@@ -12,6 +12,7 @@ public class FlyingEnemyDynamic : MonoBehaviour
     EnemyManager manager;
     CircleCollider2D collider;
     SpriteRenderer spriteRenderer;
+
     void RoomReset(Vector2Int roomCoords) {
         if (roomCoords != startRoomCoords) return;
         print(name + " resetting");

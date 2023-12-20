@@ -13,10 +13,12 @@ public class GuanoBarrierAnimation : MonoBehaviour {
     public bool guanoBarrierDeployed;
     bool guanoBarrierSwitched;
     Collider2D collider;
+    Collider2D barrierCollider;
 
     private void Awake() {
         sprites = GetComponentsInChildren<SpriteRenderer>();
-        collider = GetComponent<Collider2D>();
+        collider = GetComponent<Collider2D>();      
+        barrierCollider = GameObject.Find("GuanoBarrierProjectileStopper").GetComponent<Collider2D>();
         DrawSprites();
         //System.Numerics.Vector<int> lol = new(0);
         //System.Numerics.Vector.Add(lol, new System.Numerics.Vector<int>(10));
@@ -54,10 +56,10 @@ public class GuanoBarrierAnimation : MonoBehaviour {
     public void GuanoBarrierSpriteSwitch(bool enabled) {
         foreach (var sprite in sprites) {
             sprite.enabled = enabled;
-            collider.enabled = enabled;
         }
         guanoBarrierDeployed = enabled;
         collider.enabled = enabled;
+        barrierCollider.enabled = enabled;
         if (enabled)
             AudioFW.PlayLoop("GuanoBarrierSpinning");
     }

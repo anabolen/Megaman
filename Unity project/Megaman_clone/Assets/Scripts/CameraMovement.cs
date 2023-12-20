@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 [System.Serializable]
 public class RoomEvent : UnityEvent<Vector2Int> {
+
 }
 
 public class CameraMovement : MonoBehaviour
