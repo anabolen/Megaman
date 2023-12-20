@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SnowmanBossInteractions : MonoBehaviour {
 
@@ -11,6 +12,7 @@ public class SnowmanBossInteractions : MonoBehaviour {
     SnowmanAnimFunctions animations;
     float hitTime;
     [SerializeField] float playerImmunityTime;
+    public bool died = false;
 
     void Start () {
         animations = GameObject.Find("BossSprite").GetComponent<SnowmanAnimFunctions>();
@@ -18,6 +20,9 @@ public class SnowmanBossInteractions : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D coll) {
+        if (died && coll.gameObject.layer == 7) {
+            SceneManager.LoadScene(3);
+        }
         if (coll.gameObject.layer == 7) {
             if (hitTime + playerImmunityTime > Time.time) {
                 return;

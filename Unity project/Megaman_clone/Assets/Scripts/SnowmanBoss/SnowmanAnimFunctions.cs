@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class SnowmanAnimFunctions : MonoBehaviour {
     CarrotRocketAbility carrotRocketAbility;
@@ -72,6 +73,18 @@ public class SnowmanAnimFunctions : MonoBehaviour {
         SlamUpdate();
         if (whirling)
             WhirlUpdate();
+    }
+
+    public void Death() {
+        bossAI.GetComponentInChildren<SnowmanBossInteractions>().died = true;
+        Collider2D[] colliders = bossAI.GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D collider in colliders) {
+            collider.enabled = false;
+        }
+        bossAI.GetComponent<Collider2D>().enabled = true;
+        GameObject.Find("BossBallCollider").GetComponent<Collider2D>().enabled = true;
+        bossAI.enabled = false;
+        bossAI.GetComponent<BossHealth>().enabled = false;
     }
 
     void WhirlUpdate() {

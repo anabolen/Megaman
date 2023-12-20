@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class SnowmanBossAI : MonoBehaviour {
@@ -99,8 +100,15 @@ public class SnowmanBossAI : MonoBehaviour {
             SecondPhaseBehaviour();
         else if (healthPercentage > phaseTransitionPercentages[2])
             ThirdPhaseBehaviour();
-        else
+        else if (healthPercentage > 0)
             FourthPhaseBehaviour();
+        else
+            BossDeath();
+        
+    }
+
+    public void BossDeath() {
+        animator.Play("BossDeath");
     }
 
     void AbilityAnimation(string ability) {

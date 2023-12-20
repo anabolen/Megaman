@@ -6,6 +6,7 @@ public class BossTrigger : MonoBehaviour {
     bool bossSpawned;
     [SerializeField] GameObject boss;
     [SerializeField] Vector2 spawnPosition;
+    [SerializeField] GameObject door;
 
     void Awake() {
         spawnPosition = GetComponentInChildren<Transform>().position;
@@ -16,5 +17,6 @@ public class BossTrigger : MonoBehaviour {
             return;
         bossSpawned = true;
         boss.SetActive(true);
+        door.SetActive(true);
     }
 }
