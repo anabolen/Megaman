@@ -2479,7 +2479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7023017951535292142, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7812634376568555995, guid: f296487070c340e478cf18e6d764d9c1, type: 3}
       propertyPath: m_Enabled
@@ -5317,6 +5317,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 43287923211272313, guid: 3f1f82ec2933d7b44a16009e0c7058d9, type: 3}
   m_PrefabInstance: {fileID: 1392684755}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1397275610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1397275612}
+  - component: {fileID: 1397275611}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1397275611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397275610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411f8c52d998d14468594a56d6005db1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1397275612
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397275610}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 100.950836, y: -66.916374, z: -0.78126425}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1417491701 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 81047582685081592, guid: d66fbf6eb524d2d42810dba4287749de, type: 3}
@@ -24170,3 +24214,4 @@ SceneRoots:
   - {fileID: 1729830797}
   - {fileID: 183716571}
   - {fileID: 1423426356}
+  - {fileID: 1397275612}

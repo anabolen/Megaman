@@ -66,6 +66,8 @@ public class SnowmanBossAI : MonoBehaviour {
     float behaviourStartTime, behaviourCooldownDuration;
 
     void Awake() {
+        AudioFW.StopLoop("LevelMusic");
+        AudioFW.PlayLoop("BossMusic");
         healthScript = GetComponent<BossHealth>();
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -109,6 +111,7 @@ public class SnowmanBossAI : MonoBehaviour {
 
     public void BossDeath() {
         animator.Play("BossDeath");
+        AudioFW.StopLoop("BossMusic");
     }
 
     void AbilityAnimation(string ability) {
