@@ -24,7 +24,7 @@ TagManager:
   - PlayerAbilities
   - BarrierLayer
   - BossTrigger
-  - 
+  - IgnorePlayer
   - 
   - 
   - 

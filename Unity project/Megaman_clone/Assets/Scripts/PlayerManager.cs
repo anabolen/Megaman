@@ -100,11 +100,6 @@ public class PlayerManager : MonoBehaviour
         if (healthBarScript != null) { 
             healthBarScript.UpdateStatusBar();
         }
-        if (playerHp == 0 && !playingDeathAnimation) {
-            StartCoroutine(controller.PlayerDeath());
-            playingDeathAnimation = true;
-            AudioFW.Play("PlayerDeathAudio");
-        }
     }
 
     public void UpdatePlayerAmmo() {

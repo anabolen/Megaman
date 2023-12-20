@@ -38,8 +38,9 @@ public class PlayerController : MonoBehaviour {
     Dictionary<Enum, Enum> correspondingShootingAnimations = new();
     //enum ShootingAnimationStates { StandingShooting, RunningShooting, AirborneShooting }
     public enum PlayerAnimatorStates { Left, Right, Airborne, Idle, Step, Running, Hit, 
-                                       StandingShooting, RunningShooting, AirborneShooting }
-    PlayerAnimatorStates playerSpriteDirection;
+                                       StandingShooting, RunningShooting, AirborneShooting,
+                                       Death, Spawn }
+    public PlayerAnimatorStates playerSpriteDirection;
     public PlayerAnimatorStates playerAnimation;
 
     bool stepping;
@@ -89,6 +90,9 @@ public class PlayerController : MonoBehaviour {
     public GameObject[] checkpoints;
 
     [SerializeField] float initialImmunityDuration;
+
+    public bool dying;
+    public bool spawning;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -191,6 +195,10 @@ public class PlayerController : MonoBehaviour {
             takingDamage = true;
             StartCoroutine(PlayerHit(knockbackForce, hitDirection));
             AudioFW.Play("PlayerTakingDamage");
+        } else if (playerManager.playerHp == 0 && !playerManager.playingDeathAnimation) {
+            StartCoroutine(PlayerDeath());
+            playerManager.playingDeathAnimation = true;
+            AudioFW.Play("PlayerDeathAudio");
         }
     }
 
@@ -218,12 +226,13 @@ public class PlayerController : MonoBehaviour {
         playerManager.lives--;
         foreach (Collider2D col in colliders)
             col.enabled = false;
-        spriteRenderer.enabled = false;
         rb.gravityScale = 0;
         playerVelocityFreeze = true;
         scriptPaused = true;
-        scriptPausedTime = deathTime;
-        yield return new WaitForSeconds(deathTime);
+        dying = true;
+        playerAnimation = PlayerAnimatorStates.Death;
+        while (dying) 
+            yield return null;
         yield return StartCoroutine(QuitTransitionAnimations());
         if (playerManager.lives > 0) {
             StartCoroutine(PlayerSpawn());
@@ -236,21 +245,23 @@ public class PlayerController : MonoBehaviour {
         //Play spawn animation
         foreach (Collider2D col in colliders)
             col.enabled = true;
-        spriteRenderer.enabled = false;
         rb.gravityScale = 0;
         scriptPaused = true;
         playerVelocityFreeze = true;
-        scriptPausedTime = spawnTime;
+        spawning = true;
+        playerAnimation = PlayerAnimatorStates.Spawn;
+        playerManager.playerHp = playerManager.playerMaxHp;
+        playerManager.UpdatePlayerHp(0);
         //health bar fill animation
-        yield return new WaitForSeconds(spawnTime);
-        playerManager.UpdatePlayerHp(playerManager.playerMaxHp);
+        while (spawning)
+            yield return null;
         yield return StartCoroutine(QuitTransitionAnimations());
     }
 
     IEnumerator QuitTransitionAnimations() {
         foreach (Collider2D col in colliders)
             col.enabled = true;
-        spriteRenderer.enabled = true;
+        //spriteRenderer.enabled = true;
         scriptPaused = false;
         rb.gravityScale = defaultGravityScale;
         yield return null;

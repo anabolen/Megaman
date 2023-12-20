@@ -15,7 +15,23 @@ public class PlayerAnimation : MonoBehaviour
 
     }
     void Update() {
+        if (controller.dying) {
+            animator.Play(PlayerController.PlayerAnimatorStates.Death.ToString());
+            return;
+        }
+        if (controller.spawning) {
+            animator.Play(PlayerController.PlayerAnimatorStates.Spawn.ToString());
+            return;
+        }
         if (!playerClimbing.climbing)
             animator.Play(controller.playerAnimation.ToString());
+    }
+
+    public void QuitDying() {
+        controller.dying = false;
+    }
+
+    public void QuitSpawning() {
+        controller.spawning = false;
     }
 }
