@@ -16,7 +16,7 @@ public class PlayerManager : MonoBehaviour
     PlayerController controller;
     PlayerClimbing climbingScript;
     PlayerShooting shootingScript;
-    StatusBarScript healthBarScript;
+    public StatusBarScript healthBarScript;
     public bool justClimbed;
     bool canStartClimbing = false;
     Transform ladderTransform;
@@ -31,12 +31,12 @@ public class PlayerManager : MonoBehaviour
         healthBarScript = FindObjectOfType<StatusBarScript>();
         climbingScript = GetComponent<PlayerClimbing>();
         shootingScript = GetComponent<PlayerShooting>();   
-
         HomingProjectile.playerTransform = transform;
     }
 
     private void Start() {
         UpdatePlayerHp(playerMaxHp);
+        healthBarScript.UpdateStatusBar();
         climbingScript = null;
     }
 
@@ -48,6 +48,8 @@ public class PlayerManager : MonoBehaviour
             climbingScript.StartClimbing(ladderTransform);
             controller.enabled = false;
         }
+        if (playerHp == 0 && !controller.dying)
+            controller.PlayerDeathCheck();
     }
 
     void OnTriggerStay2D(Collider2D coll) {

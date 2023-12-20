@@ -43,6 +43,8 @@ public class SnowmanBossAI : MonoBehaviour {
     public int whirlDamage = 5;
     public float whirlKnockback = 20;
 
+    Vector2 startPosition;
+
     [SerializeField] Transform playerTransform;
     Animator animator;
     BossHealth healthScript;
@@ -65,8 +67,7 @@ public class SnowmanBossAI : MonoBehaviour {
     float behaviourStartTime, behaviourCooldownDuration;
 
     void Awake() {
-        AudioFW.StopLoop("LevelMusic");
-        AudioFW.PlayLoop("BossMusic");
+        startPosition = transform.position;
         healthScript = GetComponent<BossHealth>();
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -105,7 +106,16 @@ public class SnowmanBossAI : MonoBehaviour {
             FourthPhaseBehaviour();
         else
             BossDeath();
-        
+        AudioFW.StopLoop("LevelMusic");
+        AudioFW.PlayLoop("BossMusic");
+    }
+
+    public void BossReset() {
+        healthScript.health = healthScript.maxHealth;
+        transform.position = startPosition;
+        AudioFW.StopLoop("BossMusic");
+        AudioFW.PlayLoop("LevelMusic");
+        gameObject.SetActive(false);
     }
 
     public void BossDeath() {

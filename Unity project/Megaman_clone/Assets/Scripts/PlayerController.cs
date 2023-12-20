@@ -96,6 +96,7 @@ public class PlayerController : MonoBehaviour {
 
     public bool dying;
     public bool spawning;
+    public bool immune = false;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -225,10 +226,14 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void PlayerDeathCheck() {
+        if (immune || playerAnimation == PlayerAnimatorStates.Spawn)
+            return;
         if (playerManager.lives <= 0)
             SceneManager.LoadScene(1);
-        else 
+        else {
+            immune = true;
             StartCoroutine(PlayerDeath());
+        }
 
     }
 
@@ -239,8 +244,8 @@ public class PlayerController : MonoBehaviour {
             col.enabled = false;
         rb.gravityScale = 0;
         playerVelocityFreeze = true;
-        scriptPaused = true;
         dying = true;
+        scriptPaused = true;
         playerAnimation = PlayerAnimatorStates.Death;
         while (dying) 
             yield return null;
@@ -263,10 +268,10 @@ public class PlayerController : MonoBehaviour {
         spawning = true;
         playerAnimation = PlayerAnimatorStates.Spawn;
         playerManager.playerHp = playerManager.playerMaxHp;
-        playerManager.UpdatePlayerHp(0);
         //health bar fill animation
         while (spawning)
             yield return null;
+        immune = false;
         yield return StartCoroutine(QuitTransitionAnimations());
     }
 
