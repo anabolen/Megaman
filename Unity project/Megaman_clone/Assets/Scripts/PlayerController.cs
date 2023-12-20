@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
@@ -61,6 +62,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] float hitForce;
     [SerializeField] float freezeBugTime;
     float freezeBugTimer;
+
+    
 
 
     [SerializeField] Vector2 groundCheckDimensions;
@@ -196,7 +199,7 @@ public class PlayerController : MonoBehaviour {
             StartCoroutine(PlayerHit(knockbackForce, hitDirection));
             AudioFW.Play("PlayerTakingDamage");
         } else if (playerManager.playerHp == 0 && !playerManager.playingDeathAnimation) {
-            StartCoroutine(PlayerDeath());
+            PlayerDeathCheck();
             playerManager.playingDeathAnimation = true;
             AudioFW.Play("PlayerDeathAudio");
         }
@@ -221,6 +224,14 @@ public class PlayerController : MonoBehaviour {
         takingDamage = false;
     }
 
+    public void PlayerDeathCheck() {
+        if (playerManager.lives <= 0)
+            SceneManager.LoadScene(1);
+        else 
+            StartCoroutine(PlayerDeath());
+
+    }
+
     public IEnumerator PlayerDeath() {
         //Play death animation
         playerManager.lives--;
@@ -242,6 +253,7 @@ public class PlayerController : MonoBehaviour {
     public IEnumerator PlayerSpawn() {
         if (checkpoints.Any())
             transform.position = checkpoints[checkpoint].transform.position;
+        playerManager.playingDeathAnimation = false;
         //Play spawn animation
         foreach (Collider2D col in colliders)
             col.enabled = true;

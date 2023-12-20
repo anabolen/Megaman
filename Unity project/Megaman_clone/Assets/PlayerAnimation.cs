@@ -7,9 +7,11 @@ public class PlayerAnimation : MonoBehaviour
     Animator animator;
     PlayerController controller;
     PlayerClimbing playerClimbing;
+    PlayerManager manager;
 
     private void Awake() {
         controller = GetComponentInParent<PlayerController>();
+        manager = GetComponentInParent<PlayerManager>();
         animator = GetComponent<Animator>();
         playerClimbing = GetComponentInParent<PlayerClimbing>();
 

@@ -21,7 +21,7 @@ public class SnowmanBossInteractions : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D coll) {
         if (died && coll.gameObject.layer == 7) {
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene(1);
         }
         if (coll.gameObject.layer == 7) {
             if (hitTime + playerImmunityTime > Time.time) {

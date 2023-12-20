@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class WolfTrigger : MonoBehaviour {
-    [SerializeField] GameObject wolf;
-
+public class KillZone : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.layer != 7)
             return;
-        wolf.SetActive(true);
+        collision.gameObject.GetComponent<PlayerManager>().playerHp = 0;
+        collision.gameObject.GetComponent<PlayerController>().PlayerHitCheck(0, 0);
     }
+
 }
