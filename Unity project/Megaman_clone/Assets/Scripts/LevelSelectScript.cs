@@ -11,10 +11,12 @@ public class LevelSelectScript : MonoBehaviour
     public RawImage levelSelect;
     void Start() {
         videoPlayer.loopPointReached += CheckOver;
+        AudioFW.PlayLoop("LevelSelectMusic");
     }
 
     void Update() {
         if (Input.GetButtonDown("Start")) {
+            AudioFW.StopLoop("LevelSelectMusic");
             videoPlayer.Play();
             levelSelect.enabled = false;
         }

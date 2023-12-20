@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Einari.unity
     guid: f34af16780dd30c4c93ca035c2318845
+  - enabled: 1
+    path: Assets/Scenes/EndScene.unity
+    guid: 842d2e40413f4624c81cf0d0133d646c
   m_configObjects: {}
