@@ -30,6 +30,7 @@ public class MenuManager : MonoBehaviour
         creditsOn = false;
         videoPlayer.loopPointReached += CheckOver;
         videoStarted = false;
+        AudioFW.PlayLoop("MainMenuMusic");
     }
 
     void Update()
