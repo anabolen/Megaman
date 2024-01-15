@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
-    private void Start() {
+    void Start() {
         AudioFW.PlayLoop("LevelMusic");
     }
 }

@@ -179,6 +179,7 @@ MonoBehaviour:
   horizontalAccelerationTime: 0.1
   initialHorizontalOffset: 0.15
   sprite: {fileID: 8131439427060688638}
+  playerSpriteDirection: 0
   playerAnimation: 0
   shootingAnimationTime: 0.2
   deathTime: 1
@@ -208,6 +209,9 @@ MonoBehaviour:
   checkpoint: 0
   checkpoints: []
   initialImmunityDuration: 0.5
+  dying: 0
+  spawning: 0
+  immune: 0
 --- !u!114 &7121940778540259767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,6 +256,7 @@ MonoBehaviour:
   playerMaxAmmo: 0
   lives: 0
   playingDeathAnimation: 0
+  healthBarScript: {fileID: 0}
   justClimbed: 0
   initialImmunityDuration: 0.5
 --- !u!114 &4715667978466890856

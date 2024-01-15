@@ -185,8 +185,7 @@ public class PlayerController : MonoBehaviour {
 
         rb.velocity = new Vector2(maxHorizontalVelocity * movementMultiplier, rb.velocity.y);
 
-        if (!jumpAllowed)
-        {
+        if (!jumpAllowed) {
             grounded = false;
             return;
         }
@@ -234,7 +233,6 @@ public class PlayerController : MonoBehaviour {
             immune = true;
             StartCoroutine(PlayerDeath());
         }
-
     }
 
     public IEnumerator PlayerDeath() {
